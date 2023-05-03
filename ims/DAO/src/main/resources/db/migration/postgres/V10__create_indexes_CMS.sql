@@ -1,0 +1,1 @@
+CREATE INDEX container_monitor_stat_index ON container_monitor_stat (container_id, mem_perc, dt)

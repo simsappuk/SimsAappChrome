@@ -1,0 +1,1 @@
+ALTER TABLE reset ADD COLUMN move_to_awaiting_dispatch boolean;

@@ -1,0 +1,1 @@
+ALTER TABLE activity_log ADD COLUMN seller_order_id CHARACTER VARYING(255);

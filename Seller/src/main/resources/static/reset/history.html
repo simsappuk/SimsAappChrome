@@ -1,0 +1,40 @@
+<div class="page-content-wrap">
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reset History Information</h3>
+                    &nbsp;&nbsp;<input ng-model="params.date" type="date" style="border:inset;margin-top:2px;line-height: 23px;" ng-change="loadResetHistoryByDate()">
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th style="text-align: center;">Title</th>
+                            <th style="text-align: center;">Price Sold For</th>
+                            <th style="text-align: center;">Quantity Sold</th>
+                            <th style="text-align: center;">Sold Date</th>
+                        </tr>
+                        <tr ng-repeat="x in reset|orderBy:'lastEffectiveDate':true">
+                            <td style="text-align: left"><a href="https://www.ebay.co.uk/itm/{{x.ebayItemId}}" tooltip-placement="top-right" uib-tooltip="URL" target="_blank">{{x.ebayItemId}}</a>
+                            </td>
+                            <td title="{{x.title}}" data-toggle="tooltip" data-placement="right"  style="text-align: center;max-width: 110px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{x.title}}</td>
+                            <td style="text-align: center">{{x.ebayPrice}}</td>
+                            <td style="text-align: center"><a href="#!/reset-edit/{{params.appId}}/{{x.id}}">{{x.quantity}}</a>
+                            </td>
+                            <td style="text-align: center">{{x.lastEffectiveDate|date:'medium'}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" ng-model="page.currentPage" ng-change=""></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

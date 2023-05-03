@@ -1,0 +1,52 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a href="#!/compete/form/{{params.appId}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Add to Compete's</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Compete Information</h3>
+                    <ul class="panel-controls">
+                        <!--<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>-->
+                        <li ng-if="data.upload"><a uib-tooltip="Uploading Data from EBay" class="panel-collapse btn-info disabled"><span class="btn-info fa fa-refresh fa-spin"></span></a></li>
+                        <li ng-if="!data.upload"><a ng-if="!page.loading" href="#!/compete/{{params.appId}}" class="panel-refresh"><span class="fa fa-refresh"></span></a><a ng-if="page.loading"  class="panel-refresh btn-info disabled"><span class="fa fa-refresh fa-spin"></span></a></li>
+                        <!--<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>-->
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width:10%">Compete Link ID</th>
+                            <th style="text-align: center;width:9%">Buying Price</th>
+                            <th style="text-align: center;width:10%">Item ID</th>
+                            <th style="width:7%;text-align: center">SKU</th>
+                            <th style="text-align: center;width:10%">Ebay Selling Price</th>
+                            <th style="text-align: center;width:13%">Last Revised Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in compete|orderBy:'lastEffectiveDate':true">
+                            <td style="text-align: left"><a href="{{x.link}}" tooltip-placement="top-right" uib-tooltip="compete URL" target="_blank">{{x.link}}</a></td>
+                            <td style="text-align: center">{{x.sellerPrice}}</td>
+                            <td ng-if='x.pause==false' style="text-align: center"><a href="#!/compete-edit/{{params.appId}}/{{x.id}}">{{x.ebayItemId}}</a></td>
+                            <td ng-if='x.pause==true' style="text-align: center;"><a tooltip-placement="top-right" uib-tooltip="on Pause" href="#!/compete-edit/{{params.appId}}/{{x.id}}" style="color:crimson;">{{x.ebayItemId}}</a></td>
+                            <td ng-if="x.variantSku!=null" style="text-align: center">{{x.variantSku}}</td>
+                            <td ng-if="x.variantSku==null" style="text-align: center">Not Required</td>
+                            <td style="text-align: center">{{x.ebayPrice}}</td>
+                            <td style="text-align: center">{{x.lastEffectiveDate|date:'medium'}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination  items-per-page="200" max-size="10"  total-items="page.totalElements" ng-model="page.currentPage" ng-change=""></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

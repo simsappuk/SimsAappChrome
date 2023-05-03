@@ -1,0 +1,1 @@
+ALTER TABLE dropship ADD COLUMN last_effective_date timestamp;

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="body-full-height" xmlns:th="http://www.thymeleaf.org" xmlns:p="http://www.w3.org/1999/html">
+<head>
+    <!-- META SECTION -->
+    <title>Stock & Inventory Management System</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+    <!-- EOF CSS INCLUDE -->
+</head>
+<body>
+
+
+    <div class="login-container lightmode">
+    <div class="login-box animated fadeInDown">
+
+        <div class="login-logo"></div>
+        <div th:if="${isLogout}" class="alert alert-success" role="alert">
+            <span th:text="${message}"></span>
+        </div>
+        <div class="login-body">
+            <div class="login-title"><strong>Log In</strong> to your account</div>
+            <form action="/login" class="form-horizontal" method="post">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" id="email" name="email"  th:placeholder="Email"
+                               class="form-control" />                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="password"  th:placeholder="Password"
+                               id="password" name="password" class="form-control" />                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <a href="#" class="btn btn-link btn-block">Forgot your password?</a>
+                    </div>
+                    <div class="col-md-6">
+                        <button id="log" class="btn btn-info btn-block">Log In</button>
+                    </div>
+                </div>
+                <div th:if="${param.error}"> <div class="alert alert-danger"> Invalid username and password. </div> </div>
+
+
+
+                <!--<div class="login-subtitle">
+                    Don't have an account yet? <a href="#">Create an account</a>
+                </div>-->
+            </form>
+        </div>
+
+        <div class="login-footer">
+            <div class="pull-left">
+                &copy; 2020
+            </div>
+            <div class="pull-right">
+                <a href="https://www.termsfeed.com/live/1db242d6-abd4-4092-b477-443fa321875c" target="_blank">Privacy</a> |
+                <a href="https://www.termsfeed.com/live/1db242d6-abd4-4092-b477-443fa321875c" target="_blank">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,1 @@
+ALTER TABLE compete ADD COLUMN pause boolean;

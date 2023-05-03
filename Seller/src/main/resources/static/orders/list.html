@@ -1,0 +1,144 @@
+
+<div class="page-content-wrap">
+
+        <div class="panel panel-default ">
+
+            <div class="panel-body tab-content">
+                <div class="tab-pane active" >
+                    <div ng-if="items.length>0" class="row">
+                        <div class="col-md-12" style="min-height:33px;"><input uib-tooltip="Sheet Name" type="text" ng-blur="updateSheetName(sSheet)" class="txtSize" ng-model="sSheet.name"/>&nbsp;&nbsp;&nbsp;&nbsp;<input uib-tooltip="Rows" type="text"  class="txtSize" style="background-color:#1caf9a;width:50px" ng-blur="loadURL()" ng-model="sheet.sheetSize"/>&nbsp;&nbsp;
+                            <button ng-click="save(items)" ng-disabled="!orderEdit" class="btn btn-primary pull-right">Save</button>
+                            <button ng-click="newSheet(sheet)" class="btn btn-primary pull-right" style="margin-right:7px; background-color:#1caf9a">New Sheet</button>
+<!--
+                            <button ng-click="refreshPurchaseOrders()" class="btn btn-primary pull-right" style="margin-right:7px; background-color:#1caf9a;">Refresh Orders</button>
+-->
+                          <a href="#!/ordersPdf/invoices/{{params.id}}/{{params.spreadSheetId}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Orders PDF</a>
+                            <a ng-click="refreshPage()" class="btn btn-primary pull-right" style="margin-right:7px;"><span class="fa fa-refresh"></span></a>
+                            <text style="font-size: larger;">Search By :&nbsp;</text><select ng-model="selection" class="btn btn-primary" style="margin-right:7px; background-color:#6c7574">
+                                <option value="orderNumber">Order Number</option>
+                                <option value="date">Date</option>
+                                <option value="title">Title</option>
+                                <option value="category">Category</option>
+                                <option value="sku">SKU</option>
+                                <option value="user">User Name</option>
+                                <option value="address">1st Line of Address</option>
+                                <option value="none">None</option>
+                            </select>
+                            <input type="date" ng-model="date" ng-enter="getSearchDetails(date,sheet,selection)" ng-show="selection!=null && selection=='date'" style="height:28px;" >
+                            <span class="help-block" ng-show="selection!=null && selection=='date'" style="float: right;margin-right: 26px;font-weight:bold; color:black;">Press Enter</span>
+                            <!--<text ng-show="selection!=null && selection=='date'">To</text>
+                            <input type="date" ng-show="selection!=null && selection=='date'" style="height:28px;" >-->
+                            <input type="text" ng-model="data" placeholder="Enter {{selection}}" ng-enter="getSearchDetails(data,sheet,selection)" ng-show="selection!=null && selection!='date' && selection!='none'" style="height:28px;width:185px;">
+                            <span class="help-block" ng-show="selection!=null && selection!='date'" style="float: right;margin-right: 3px;font-weight:bold; color:black;">Press Enter</span>
+                        </div>
+
+                        <div class="col-md-12"  data-ng-controller="MainCtrl as ctrl" style="z-index: 1;">
+                           <!-- <div class="scroll">-->
+                            <div class="horizontal">
+                                <hot-table
+                                    settings="ctrl.settings"
+                                    row-headers="ctrl.rowHeaders"
+                                    col-headers="ctrl.colHeaders"
+                                    datarows="ctrl.db.items"
+
+                            >
+              <hot-column ng-repeat="column in ctrl.columns" data="{{column.data}}" title="column.title" read-only="column.readOnly"></hot-column>
+<!--
+              <hot-column width="ctrl.cols[0].width" data="id" title="'ID'" read-only></hot-column>
+-->
+              <hot-column width="ctrl.cols[1].width" data="createdDate" title="'Date'" dateFormat="DD/MM/YYYY" correctFormat="'true'" defaultDate="'01/01/1900'" type="date"></hot-column>
+              <hot-column  width="ctrl.cols[2].width" data="extendedOrderId" title="'Order Number'" type="'text'" ></hot-column>
+              <hot-column width="ctrl.cols[3].width" data="title" title="'Title'" type="'text'"></hot-column>
+              <hot-column width="ctrl.cols[5].width" data="category" title="'Category'" type="'text'"></hot-column>
+              <hot-column width="ctrl.cols[4].width" data="sku" title="'SKU'" type="'text'"></hot-column>
+              <hot-column width="ctrl.cols[5].width" data="conditionDisplayName" source=conditions title="'Condition'" type="'dropdown'" ></hot-column>
+              <hot-column width="ctrl.cols[6].width" data="totalAmount"  title="'Price'" type="'text'" ></hot-column>
+              <hot-column width="ctrl.cols[7].width" data="quantityPurchased" title="'QTY'" type="'text'" ></hot-column>
+              <hot-column width="ctrl.cols[8].width" data="sellerUserId" title="'Seller ID'" type="'text'" ></hot-column>
+              <hot-column width="ctrl.cols[9].width" data="orderTrackingId" title="'Tracking Number'" type="'text'"></hot-column>
+              <hot-column width="ctrl.cols[10].width" data="buyerName" title="'First Name'" type="'text'"></hot-column>
+              <hot-column width="ctrl.cols[11].width" data="buyerStreet1" title="'Address'" type="'text'"></hot-column>
+              <hot-column width="ctrl.cols[12].width" data="buyerPostalCode" title="'PostalCode'" type="'text'"></hot-column>
+              <hot-column width="ctrl.cols[13].width" data="status" title="'status'" type="'text'"></hot-column>
+              </hot-table>
+                        </div>
+                           <ul uib-pagination total-items="page.totalElements" class="hidden" ng-model="page.currentPage" ng-change="loadOrders()"></ul>
+                        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+<div class="tabs">
+            <ul class="nav nav-tabs" role="tablist">
+                <li ng-repeat="c in channels" class="{{c.id==params.channelId?'active':''}}" style="margin-top:3px;"><a href="#!/orders/{{sheet.spreadSheetId}}/{{c.id}}/{{sheet.accountId}}" role="tab" data-toggle="tab">{{c.name}}</a></li>
+                <li ng-repeat="s in sheetNumbers" style="margin-top:3px;"><a href="#!/orders/{{sheet.spreadSheetId}}/{{s}}/{{sheet.accountId}}" role="tab">{{s}}</a></li>
+           </ul></div>
+
+        </div>
+
+<style>
+    .nav-tabs > li > a {
+    margin-right: 0px!important;
+    border: 0px!important;
+    font-size:13px!important;
+    }
+     .nav-tabs > li.active >a {
+        background:#1caf9a!important;
+        color:white!important;
+    }
+</style>
+<!--
+  <div class="col-md-12">
+      <a href="#!/orders-new" class="btn btn-info pull-right">Add New Order</a>
+  </div>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-right"> Save</a>
+  <a ng-click="updateData()"  ng-if="orderEdit" class=" btn btn-info pull-right"> Save</a>
+  <a ng-click=""  ng-if="!name" class="disabled btn btn-info pull-left">eBay</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">CEX</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">GAME</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">MUSIC MAGPIE</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">Grainger Games</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">Beatthebomb</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">Tesco</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">cash generator</a>
+  <a ng-click=""  ng-if="!orderEdit" class="disabled btn btn-info pull-left">accesories</a>
+
+
+
+
+
+      <div ng-if="items.length>0" class="row">
+      <div class="col-md-12"  data-ng-controller="MainCtrl as ctrl">
+
+          <hot-table
+                  settings="ctrl.settings"
+                  row-headers="ctrl.rowHeaders"
+                  col-headers="ctrl.colHeaders"
+                  datarows="ctrl.db.items"
+          >
+
+              <hot-column width="80" data="id" title="'ID'" read-only></hot-column>
+
+              <hot-column width="80" data="id" title="'ID'"></hot-column>
+             <hot-column width="80" data=orderDate title="'Date'" type="'text'">
+              </hot-column>
+              <hot-column width="80" data="orderReferenceNumber" title="'Orders:Ref'" type="'text'" ></hot-column>
+              <hot-column width="80" data="category" title="'Cateogry'" type="'text'" ></hot-column>
+              <hot-column width="80" data="condition.name" title="'Condition'" type="'text'" ></hot-column>
+              <hot-column width="80"data="price" title="'Price'" type="'text'" ></hot-column>
+              <hot-column width="80"data="price" title="'Price'" type="'text'" ></hot-column>
+              <hot-column width="80" data="quantity" title="'QTY'" type="'text'" ></hot-column>
+              <hot-column width="80" data="vendorid" title="'Vendor'" type="'text'" ></hot-column>
+              <hot-column width="80" data="status" title="'Status'" type="'text'"></hot-column>
+              <hot-column width="80"data="receivedDate" title="'Receive Date'" type="'text'"></hot-column>
+              <hot-column width="100" data="total" title="'Total Spending'" type="'text'" ></hot-column>
+
+              <hot-column width="80" data="notes" title="'Notes'" type="'text'"></hot-column>
+          </hot-table>
+          <div>
+              <ul uib-pagination total-items="page.totalElements" ng-model="page.currentPage" ng-change="load()"></ul>
+          </div>
+      </div>
+  </div>-->

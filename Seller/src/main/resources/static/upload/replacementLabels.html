@@ -1,0 +1,70 @@
+&nbsp;
+<div class="page-content-wrap">
+    <div class="col-md-12"></div>
+    <link href='https://fonts.googleapis.com/css?family=Libre Barcode 39' rel='stylesheet'>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a ng-click="replacementsPrint()" class="btn btn-info pull-right" style="border-color: antiquewhite;margin-top: 1px;">Print Labels</a>
+                </div>
+                <div  class="panel-body">
+                    <div class="page-content-wrap" style="margin-top:2%;">
+                        <div id="printDiv" class="row" style="margin-left:50px;">
+                            <style scoped>
+                               @import "https://fonts.googleapis.com/css?family=Libre Barcode 39";
+                            </style>
+                            <div  class="col-md-6" ng-repeat="x in replacements">
+                                <!-- CONTACT ITEM -->
+                                <a ng-click="removeLabel(x.orderRef)"><i class="fa fa-trash-o" style="font-size:20px;float:left;margin-right:3px;"></i></a>
+                                <a ng-click="replaceLabel(x.orderRef)"><i class="fa fa-exchange" style="font-size:20px;margin-left:4px;"></i></a>
+                                <div class="panel panel-default" style="font-size:17px;width:384px;height:611px;border:ridge;border-color:#555555;">
+                                    <div>
+                                        <img  ng-if="(x.orderTrackingId!=null || !x.shippingServiceSelected.includes('International') && !x.shippingServiceSelected.includes('Abroad') && x.statusId!='Hide') && (x.switch==null ||x.switch =='FIRST_CLASS')" src="/img/FIRST_CLASS_LABEL.png" style="width:100%;">
+                                        <img  ng-if="(x.orderTrackingId!=null || !x.shippingServiceSelected.includes('International') && !x.shippingServiceSelected.includes('Abroad') && x.statusId!='Hide') && (x.switch =='SECOND_CLASS')" src="/img/SECOND_CLASS_LABEL.png" style="width:100%;">
+                                    </div>
+                                    <div style="margin-left:20px;">
+                                        <b style="text-transform:capitalize;font-size:23px;">{{x.buyerName}}</b>
+                                        <br/>
+                                        <large >{{x.buyerStreet1}},</large>
+                                        <large >{{x.buyerStreet2}}</large>
+                                        <br>
+                                        <large >{{x.buyerCity}},</large>
+                                        <large >{{x.buyerState}}
+                                            <br>
+                                        </large>
+                                        <large >{{x.buyerPostalCode}},</large>
+                                        <br>
+                                        <large >{{x.buyerCountry}}</large>
+                                    </div>
+                                    <br>
+                                    <hr style="border-top:1px solid;">
+                                    <div>
+                                        <small class="barcode" style="font-family: 'Libre Barcode 39'!important;font-size: 47px!important;margin-left:9px!important;"> *{{x.recordNumber}}*</small>
+                                        <small>{{x.recordNumber}}</small>
+                                        <small style="float:right;margin-top: 23px;margin-right:5px;">{{x.updatedOn|date:'mediumDate'}}</small>
+                                    </div>
+                                    <b style="font-weight:600;font-size:13px; margin-left:9px;">{{x.orderId}}</b>
+                                    <b style="font-weight:600;font-size:13px; margin-left:9px;">{{x.quantity}}</b>
+                                    <div style="float:left;position:absolute;bottom:63px;">
+                                        <b style="font-size:11px;margin-left:10px;">RETURN TO</b>
+                                        <br>
+                                        <small style="font-size:11px;float:left;margin-left:10px;">Unit 7A,1st Floor,Premier House,43 Constance Road,Leicester,Leicestershire,LE5 5DB,United Kingdom</small>
+                                        <small style="float:right;">{{x.accountName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END DEFAULT DATATABLE -->
+                <div>
+                    <ul uib-pagination items-per-page="20" max-size="10" total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadOrders()"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
+<!-- PAGE CONTENT WRAPPER -->

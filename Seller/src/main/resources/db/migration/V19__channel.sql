@@ -1,0 +1,1 @@
+ALTER TABLE channel RENAME id To channel_id;

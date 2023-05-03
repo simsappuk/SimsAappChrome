@@ -1,0 +1,147 @@
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Third Party Item Dropship Details</strong></h3>
+                        <ul class="panel-controls">
+                            <li><a href="#!/dropship/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Dropship Item Source</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group">
+                                    <select ng-model="dropship.source" class="form-control select" style="width:153px;">
+                                        <option value="ebay">eBay</option>
+                                        <option value="amazon">Amazon</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="dropship.source=='amazon'" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Insert Link</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.link" style="border-radius: 0px;" ng-change="amazonValue(dropship)" class="form-control"/>
+                                </div>
+                                <span class="help-block" style="color:#717273">EXAMPLE: 'https://www.amazon.co.uk/gp/offer-listing/B07D7LH3R4/ref=olp_f_primeEligible?f_new=true&f_primeEligible=true'</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="dropship.source=='ebay'" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Insert Dropship Item ID</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.link" style="border-radius: 0px;" ng-change="amazonValue(dropship)" class="form-control"/>
+                                </div>
+                                <span class="help-block" style="color:#717273">https://www.ebay.co.uk/itm/<b>111797016679</b></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Buying Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.sellerPrice"  class="form-control" style="color: black;" readonly/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Condition</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <select ng-model="dropship.condition" ng-change="calculate(dropship)" class="form-control">
+                                        <option value="New">New</option>
+                                        <option value="Used">Used</option>
+                                    </select>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Ebay-PayPal %</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.ebayPaypalPercent" ng-change="calculate(dropship)" class="form-control"/>
+                                </div>
+                                <span class="help-block">Default Value is 12</span>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <label class="col-md-3 col-xs-1 control-label">Profit %</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.profitPercent" ng-change="calculate(dropship)" class="form-control"/>
+                                </div>
+                                <span class="help-block" style="margin-left:70px;">Default value is 10</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Selling Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.ebayPrice" class="form-control" style="color: black;" readonly/>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Out of stock Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.outOfStockPrice" class="form-control" style="color: black;border-radius: 0px;">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Enter ItemId</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.itemId"  class="form-control"/>
+                                </div>
+                                <span class="help-block">Updates Item Selling Price</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">VAT Amount</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="dropship.vatPercent" ng-click="calculateVat(dropship)" class="form-control"/>
+                                </div>
+                                <span class="help-block">Click to get Final VAT amount</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <button ng-click="updateItem()" popover-placement="bottom" uib-popover="Processing Item Revise..." class="btn btn-primary pull-right m-r-xs">Update</button>
+                        <button ng-click="deleteItem()" class="btn btn-primary pull-right m-r-xs">Delete</button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

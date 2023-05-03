@@ -1,0 +1,56 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a href="#!/stock-new" class="btn btn-info pull-right">Add Item</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Stock Sales</h3>
+                    <ul class="panel-controls">&nbsp;&nbsp;
+                        <label><input type="search" class="form-control " ng-change="search()" ng-model="searchText"></label>
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li ng-if="data.upload"><a uib-tooltip="Uploading Data from EBay" class="panel-collapse btn-info disabled"><span class="btn-info fa fa-refresh fa-spin"></span></a></li>
+                        <li ng-if="!data.upload"><a ng-click="getFromEbay()" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Item Id</th>
+                            <th>SKU</th>
+                            <th>Order Type</th>
+                            <th>Quantity</th>
+                            <th>Created Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in tableVal" >
+                            <td> <img src="{{x.imageUrl}}"/>&nbsp;&nbsp;{{x.title}}</td>
+                            <td>{{x.itemId}}</td>
+                            <td>{{x.sku}}</td>
+                            <td>{{x.orderType}}</td>
+                            <td>{{x.quantity}}</td>
+                            <td>{{x.createdDate | date}}</td>
+                        </tr>
+                        <style>
+            .myInput{border-style:none;}
+            .myInput:hover{ border-style:solid; border:1px solid green;}
+            .myInput:focus{ border-style:solid; border:1px solid red;}</style>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadStockSales()"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- PAGE CONTENT WRAPPER -->

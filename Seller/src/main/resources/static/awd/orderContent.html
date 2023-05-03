@@ -1,0 +1,46 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a ng-click="setOrderToDropshipped(check)" class="btn btn-info pull-right" style="border-color: antiquewhite;">Mark as Dropship</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width:8%">Record ID</th>
+                            <th style="width:30%">Item Title</th>
+                            <th style="text-align: center;">Qty</th>
+                            <th style="text-align: center;width:14%">Buyer Name</th>
+                            <th style="text-align: center;width:14%">Individual Amount</th>
+                            <th style="text-align: center;width:20%">Ext.Order ID</th>
+                            <th style="text-align: center;">Paid Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in EbayListing|orderBy:'orderRef'" ng-click="getStock(x.id)">
+                            <td style="text-align: left">{{x.orderRef}}</td>
+                            <td style="text-align:left"><label ng-show="x.transactionArrayLength>1 && x.orderDropshipStatus!='DROPSHIPPED'"  class="container"><input type="checkbox" checked="checked"  ng-model="check" ng-change="selected(check,x.id)" style="width: 26px;vertical-align: bottom;height:17px;"><span class="checkmark"></span></label>{{x.title}}</td>
+                            <td style="text-align: center">{{x.quantity}}</td>
+                            <td style="text-transform:capitalize;text-align: center;">{{x.buyerName}}</td>
+                            <td style="text-align: center"><i ng-if="x.totalAmountCurrencyId=='GBP'" class="fa fa-gbp"></i><i ng-if="x.totalAmountCurrencyId=='EUR'" class="fa fa-eur"></i>&nbsp;{{x.totalAmount}}</td>
+                            <td style="width:100px;text-align:center;">{{x.extendedOrderId}}</td>
+                            <td style="text-align: center">{{x.paidDate | date:'mediumDate'}}</td>
+
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination max-size="page.pageSize" total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadOrderContents(x.orderRef)"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

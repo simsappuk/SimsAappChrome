@@ -1,0 +1,117 @@
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Get Stock Availability Details</strong></h3>
+                        <ul class="panel-controls">
+                            <li><a href="#!/externalStockLinks/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Marketplace</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="width: 174px;">
+                                    <select ng-model="externalStockLinks.check" class="form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
+                                        <option value="magpie">MUSIC MAGPIE</option>
+                                        <option value="ebay">EBAY</option>
+                                        <option value="cex">CEX</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" ng-if="externalStockLinks.check=='magpie'">
+                            <label class="col-md-3 col-xs-12 control-label">Insert Link</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="border-radius: 0px;" ng-model="externalStockLinks.link"  ng-change="magpieOrEbayData(externalStockLinks)" class="form-control"/>
+                                </div>
+                                <span class="help-block">Example: https://www.musicmagpie.co.uk/store/products/eavancouveasportsfi-1da16b2a-4c6a-44d1-b028-55290b72abec</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="externalStockLinks.check=='ebay'">
+                            <label class="col-md-3 col-xs-12 control-label"> Insert Item ID</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="number" style="border-radius: 0px;" ng-model="externalStockLinks.link"  ng-change="magpieOrEbayData(externalStockLinks)" class="form-control"/>
+                                </div>
+                                <span class="help-block">Example: https://www.ebay.co.uk/itm/<b>113822961626</b></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="externalStockLinks.check=='cex'" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Insert ID</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="border-radius: 0px;" ng-disabled="externalStockLinks.link!=null" ng-model="externalStockLinks.cexId" ng-change="cexData(externalStockLinks)" class="form-control"/>
+                                </div>
+                                <span class="help-block">Example: https://uk.webuy.com/product-detail/?<b>id=0885370861440</b>&categoryName=xbox-one-software&superCatName=gaming&title=forza-horizon-2</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" ng-if="externalStockLinks.check!=null" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Item Title</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="externalStockLinks.title"  class="form-control" style="color: black;border-radius: 0px;" readonly/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="externalStockLinks.check!=null" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Condition</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="border-radius: 0px;" value="Used" ng-model="externalStockLinks.condition" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" ng-if="externalStockLinks.check!=null">
+                            <label class="col-md-3 col-xs-12 control-label">Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="externalStockLinks.price" class="form-control" style="color: black;border-radius: 0px;" readonly/>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" ng-if="externalStockLinks.check!=null" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Enter SKU</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="externalStockLinks.sku" style="border-radius: 0px;"  class="form-control"/>
+                                </div>
+                                <span class="help-block">Updates Stock</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="panel-footer" ng-if="externalStockLinks.check!=null">
+                        <button ng-click="save()" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

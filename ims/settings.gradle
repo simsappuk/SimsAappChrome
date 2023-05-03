@@ -1,0 +1,4 @@
+rootProject.name = 'Inventory-Management-System'
+
+include 'DAO'
+include 'Webapp'

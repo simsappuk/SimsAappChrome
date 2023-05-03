@@ -1,0 +1,1 @@
+ALTER TABLE reset ADD COLUMN sold_from_reset bigint;

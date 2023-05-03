@@ -1,0 +1,60 @@
+CREATE TABLE domain_blacklist (
+     domain VARCHAR(1024) PRIMARY KEY,
+     created_date TIMESTAMP WITHOUT TIME ZONE DEFAULT now()
+);
+
+
+INSERT INTO domain_blacklist (domain) VALUES ('amazon.com');
+INSERT INTO domain_blacklist (domain) VALUES ('apera.com');
+INSERT INTO domain_blacklist (domain) VALUES ('atlantis.com');
+INSERT INTO domain_blacklist (domain) VALUES ('att.net');
+INSERT INTO domain_blacklist (domain) VALUES ('aws.com');
+INSERT INTO domain_blacklist (domain) VALUES ('bmc.com');
+INSERT INTO domain_blacklist (domain) VALUES ('calm.io');
+INSERT INTO domain_blacklist (domain) VALUES ('cirba.com');
+INSERT INTO domain_blacklist (domain) VALUES ('cisco.com');
+INSERT INTO domain_blacklist (domain) VALUES ('cloudability.com');
+INSERT INTO domain_blacklist (domain) VALUES ('cloudbolt.io');
+INSERT INTO domain_blacklist (domain) VALUES ('cloudcruiser.com');
+INSERT INTO domain_blacklist (domain) VALUES ('cloudharmony.com');
+INSERT INTO domain_blacklist (domain) VALUES ('cloudhealth.com');
+INSERT INTO domain_blacklist (domain) VALUES ('cloudimizer.com');
+INSERT INTO domain_blacklist (domain) VALUES ('cloudyn.com');
+INSERT INTO domain_blacklist (domain) VALUES ('comcast.net');
+INSERT INTO domain_blacklist (domain) VALUES ('dell.com');
+INSERT INTO domain_blacklist (domain) VALUES ('dellemc.com');
+INSERT INTO domain_blacklist (domain) VALUES ('densify.com');
+INSERT INTO domain_blacklist (domain) VALUES ('digitalocean.com');
+INSERT INTO domain_blacklist (domain) VALUES ('docker.com');
+INSERT INTO domain_blacklist (domain) VALUES ('emc.com');
+INSERT INTO domain_blacklist (domain) VALUES ('factioninc.com');
+INSERT INTO domain_blacklist (domain) VALUES ('gmail.com');
+INSERT INTO domain_blacklist (domain) VALUES ('google.com');
+INSERT INTO domain_blacklist (domain) VALUES ('hotmail.com');
+INSERT INTO domain_blacklist (domain) VALUES ('hpe.com');
+INSERT INTO domain_blacklist (domain) VALUES ('huawei.com');
+INSERT INTO domain_blacklist (domain) VALUES ('ibm.com');
+INSERT INTO domain_blacklist (domain) VALUES ('kubernetes.io');
+INSERT INTO domain_blacklist (domain) VALUES ('mail.ru');
+INSERT INTO domain_blacklist (domain) VALUES ('mesosphere.com');
+INSERT INTO domain_blacklist (domain) VALUES ('microsoft.com');
+INSERT INTO domain_blacklist (domain) VALUES ('mirantis.com');
+INSERT INTO domain_blacklist (domain) VALUES ('netapp.com');
+INSERT INTO domain_blacklist (domain) VALUES ('nimblestorage.com');
+INSERT INTO domain_blacklist (domain) VALUES ('nutanix.com');
+INSERT INTO domain_blacklist (domain) VALUES ('onapp.com');
+INSERT INTO domain_blacklist (domain) VALUES ('pivot3.com');
+INSERT INTO domain_blacklist (domain) VALUES ('platform9.com');
+INSERT INTO domain_blacklist (domain) VALUES ('purestorage.com');
+INSERT INTO domain_blacklist (domain) VALUES ('rancherlabs.com');
+INSERT INTO domain_blacklist (domain) VALUES ('redhat.com');
+INSERT INTO domain_blacklist (domain) VALUES ('rightscale.com');
+INSERT INTO domain_blacklist (domain) VALUES ('scalecomputing.com');
+INSERT INTO domain_blacklist (domain) VALUES ('scalr.com');
+INSERT INTO domain_blacklist (domain) VALUES ('simplivity.com');
+INSERT INTO domain_blacklist (domain) VALUES ('stratoscale.com');
+INSERT INTO domain_blacklist (domain) VALUES ('turbonomic.com');
+INSERT INTO domain_blacklist (domain) VALUES ('vce.com');
+INSERT INTO domain_blacklist (domain) VALUES ('veritas.com');
+INSERT INTO domain_blacklist (domain) VALUES ('vmware.com');
+INSERT INTO domain_blacklist (domain) VALUES ('yahoo.com');

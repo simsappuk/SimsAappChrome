@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="modal-content"><div class="modal-header ng-scope">
+    <h3 class="modal-title" id="modal-title">ADD Model Name</h3>
+</div>
+    <div class="modal-body ng-scope" id="modal-body" style="height:180px;">
+        <div class="form-group">
+            <label class="col-md-1 col-xs-12 control-label" style="width:154px;margin-top:6px;">Model Name option</label>
+            <div class="col-md-1 col-xs-12">
+                <div class="input-group" style="width: 74px;margin-left: -16px;">
+                    <select ng-model="model.condition"  class="form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
+                        <option value="add">Add</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                </div>
+            </div>
+
+            <label class="col-md-1 col-xs-12 control-label" style="width:154px;margin-top:6px;">Console</label>
+            <div class="col-md-1 col-xs-12">
+                <div class="input-group" style="width: 74px;margin-left: -16px;">
+                    <select ng-model="model.console" ng-change="getCategories('stockLog',model.console)" class="form-control" style="margin-left: -69px;width: 114px;">
+                        <option value="Sony PlayStation 4">PS4</option>
+                        <option value="Sony PlayStation 3">PS3</option>
+                        <option value="Sony PlayStation Vita">PS Vita</option>
+                        <option value="Microsoft Xbox One">Xbox One</option>
+                        <option value="Microsoft Xbox 360">Xbox 360</option>
+                        <option value="Microsoft Xbox">Xbox</option>
+                        <option value="Nintendo Wii">Wii</option>
+                        <option value="Nintendo Wii U">Wii U</option>
+                        <option value="Nintendo Switch">Switch</option>
+                        <option value="Nintendo DS">DS</option>
+                        <option value="Nintendo 3DS">3DS</option>
+                    </select>
+                </div>
+            </div>
+
+            <label ng-show="model.condition=='add' && model.console!=null" class="col-md-1 col-xs-12 control-label" style="width:100px;margin-top:6px;margin-left:16px;">Add Name</label>
+            <div ng-show="model.condition=='add' && model.console!=null" class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                    <input type="text" ng-enter="categoryContent(model.title,model.console)" ng-model="model.title" class="form-control"/>
+                </div>
+                <span class="help-block">Press enter to save</span>
+            </div>
+
+            <label ng-show="model.condition=='delete' && model.console!=null" class="col-md-1 col-xs-10 control-label" style="width:122px;margin-top:6px;margin-left:-22px;">Delete Name</label>
+            <div ng-show="model.condition=='delete' && model.console!=null" class="col-md-4 col-xs-10">
+                <div class="input-group" style="margin-left:-38px;">
+                    <select ng-model="model.delete" ng-options="y for y in names" class="form-control" style="width:260px;">
+                    </select>
+                </div>
+            </div>
+
+            <a ng-show="model.condition=='delete' && model.console!=null" ng-click="deleteModalName(model.console,model.delete)" class="btn btn-info" style="border-color: antiquewhite;margin-right: -100px;margin-left:-37px;">Delete</a>
+        </div>
+    </div>
+    <div class="modal-footer ng-scope">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div></div>
+</body>
+</html>

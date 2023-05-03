@@ -1,0 +1,54 @@
+
+<div class="page-content-wrap">
+
+    <div class="panel panel-default ">
+
+        <div class="panel-body tab-content">
+            <div class="tab-pane active" >
+                <div ng-if="items.length>0" class="row">
+                    <div class="col-md-12" style="min-height:33px;">
+                        <button ng-click="save(items)" ng-disabled="!orderEdit" class="btn btn-primary pull-right">Save</button>
+                    </div>
+
+                    <div class="col-md-12"  data-ng-controller="MainCtrl as ctrl" style="z-index: 1;">
+                        <!-- <div class="scroll">-->
+                        <div class="horizontal">
+                            <hot-table
+                                    settings="ctrl.settings"
+                                    row-headers="ctrl.rowHeaders"
+                                    col-headers="ctrl.colHeaders"
+                                    datarows="ctrl.db.items"
+
+                            >
+                                <hot-column ng-repeat="column in ctrl.columns" data="{{column.data}}" title="column.title" read-only="column.readOnly"></hot-column>
+                                <hot-column width="ctrl.cols[0].width" data=date title="'Date'" type="'text'"></hot-column>
+                                <hot-column width="ctrl.cols[1].width" data="buyerId" title="'Buyer ID'" ></hot-column>
+                                <hot-column  width="ctrl.cols[2].width" data="salesRecordNumber" title="'Sales Record Num'" type="'text'"></hot-column>
+                                <hot-column  width="ctrl.cols[3].width" data="orderNumber" title="'Order Num'" type="'text'"></hot-column>
+                                <hot-column width="ctrl.cols[4].width" data="returnDate" title="'Return received on'" type="'text'"></hot-column>
+                                <hot-column  width="ctrl.cols[5].width" data="title" title="'Item Title'" type="'text'"></hot-column>
+                                <hot-column width="ctrl.cols[6].width" data="reason" title="'Reason for refund'" type="'text'" ></hot-column>
+                                <hot-column width="ctrl.cols[7].width"data="actionNeeded" title="'Action Needed'" type="'text'" ></hot-column>
+                            </hot-table>
+                        </div>
+                        <ul uib-pagination total-items="page.totalElements" class="hidden" ng-model="page.currentPage" ng-change="loadOrders()"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            <li ng-repeat="c in channels" class="{{c.id==channelId?'active':''}}" style="margin-top:3px;"><a href="#!/log/{{params.id}}/{{sheet.spreadSheetId}}/{{c.id}}/{{c.logName}}" role="tab" data-toggle="tab">{{c.logName}}</a></li>
+        </ul></div>
+
+</div>
+
+<style>
+    .nav-tabs > li > a {
+    margin-right: 2px!important;
+    border: 0px!important;
+    font-size: 11px!important;
+    }
+</style>

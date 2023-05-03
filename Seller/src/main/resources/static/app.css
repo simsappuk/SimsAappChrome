@@ -1,0 +1,276 @@
+/* app css stylesheet */
+
+#noty_topRight_layout_container{
+top:19px!important;
+right:9px!important;
+margin:-2px!important;
+}
+.noty_message{
+    font-size: 13px!important;
+    line-height: 14px;
+    text-align: left;
+    padding: 8px 10px 9px;
+    width: auto;
+    position: relative;
+}
+
+.panel .panel-body {
+  overflow-y: scroll;
+}
+
+.noty_container_type_success{
+   overflow: hidden!important;
+   background: rgb(149, 183, 93)!important;
+   border-radius: 0px!important;
+    border: 1px solid rgb(149, 183, 93)!important;
+   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px!important;
+   color: rgb(255, 255, 255)!important;
+   opacity: 1!important; width: 310px!important;
+   cursor: pointer!important;
+}
+
+.noty_container_type_warning{
+overflow: hidden;
+background: rgb(254, 162, 35);
+border-radius: 0px!important;
+border: 1px solid rgb(254, 162, 35);
+box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
+color: rgb(255, 255, 255);
+opacity: 1;
+width: 310px;
+cursor: pointer;
+}
+
+.noty_container_type_error{
+overflow: hidden;
+background: rgb(182, 70, 69);
+border-radius: 0px!important;
+border: 1px solid rgb(182, 70, 69);
+box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
+color: rgb(255, 255, 255);
+opacity: 1;
+width: 310px;
+cursor: pointer;
+}
+
+.tooltip .tooltip-inner {
+color: black;
+background-color: lightBlue;
+border-radius:5px;
+    max-width: 100% !important;
+
+}
+.container {
+  width:0px!important;
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  height: 19px;
+  width: 19px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #6dcbd0;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 7.5px;
+  top: 4px;
+  width: 6px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.txtSize{
+    font-size: 17px;
+        border: 0px;background-color:#1caf9a;color:white
+}
+.hot-container {
+    height: 100%!important;
+    overflow: hidden;
+}
+ .txtSize:hover{color:yellow;text-decoration: underline;font-size: 17px;    border-width: 2px;
+                                                                           border-style: inset;
+                                                                           border-color: initial;
+                                                                           border-image: initial;}
+.x-navigation.x-navigation-horizontal > li > ul:after{
+left:42px!important;
+border-width: 4px!important;
+}
+
+select{
+    border: 2px solid transparent;
+}
+.m-r-xs{
+margin-right:10px;
+}
+.dropdown-menu1:before{
+border-width:0!important;
+}
+.x-navigation.x-navigation-horizontal > li > ul ul {
+    top: 2px!important;
+    }
+.x-navigation.x-navigation-horizontal > li > ul ul:after{
+border-width:0!important;
+}
+.x-navigation.x-navigation-horizontal > li ul {
+width:180px!important;
+}
+
+.dropdown-submenu1>a:after{
+    border-left-color: Black!important;
+    margin-right: -4px!important;
+}
+.dropdown-submenu1 {
+    position: relative;
+
+}
+.dropdown-submenu1>.dropdown-menu1 {
+    top: 0;
+    left: 100%;
+    margin-top: -4px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu1:hover>.dropdown-menu1 {
+    display: block;
+}
+
+.dropdown-submenu1>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu1:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu1.pull-left {
+    float: none;
+}
+.li{
+    display: block;
+    background-color: white;}
+
+.dropdown-submenu1.pull-left>.dropdown-menu1 {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+li.open> ul.dropdown-menu1{ display:block!important;}
+li.open> ul.dropdown-menu1.multi-level1>li { background-color:white!important;}
+
+.nav-tabs > li > a{border-top: 0px!important; border-botton: 2px solid #1b1e24!important;}
+.m-r-md{margin-right:10px;}
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+.gallery {
+    float: left;
+    width: 100%;
+}
+.gallery .gallery-item {
+    float: left;
+    width: 25%;
+    padding: 10px 5px 10px 5px;
+    text-decoration: none;
+}
+/*div.scroll
+{
+overflow-x:scroll;
+white-space: nowrap;
+}}*/
+div.horizontal {
+    width: 100%;
+    height: 70vh;
+    overflow: auto;
+}
+.nav-tabs, .nav-tabs.nav-justified {
+    border-bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: -40px;
+    padding: 0px 5px;
+}
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}

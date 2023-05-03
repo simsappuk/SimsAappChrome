@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="modal-content" style="font-size:13px;border: navy;"><div class="modal-header ng-scope" >
+    <h3 class="modal-title text-center" id="modal-title" style="font-size: 15px;">Profit Calculator</h3>
+    <ul class="panel-controls">
+        <li style="margin-top:-28px;"><a ng-click="refreshCal(cal)" class="panel-refresh ng-scope"><span class="fa fa-refresh"></span></a></li></a></li>
+    </ul>
+</div>
+    <div class="modal-body ng-scope" id="modal-body" style="/* height:295px; */">
+        <div class="row form-group profit-calc">
+
+            <label class="col-md-2 col-xs-12 control-label">Calculate</label><div class="col-md-10">
+            <div class="input-group">
+                <select type="text" ng-model="cal.selected" ng-change="refreshCal(cal)" class="form-control ng-pristine ng-valid ng-empty ng-touched">
+                    <option value="profit">Profit</option>
+                    <option value="sellingPrice">Selling Price</option>
+                </select>
+            </div>
+        </div><label class="col-md-2 col-xs-12 control-label">Buy Price</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="number" min="0" ng-model="cal.bp" ng-change="profit(cal)" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">Selling Price</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="number" min="0" ng-if="cal.selected!='sellingPrice'" ng-model="cal.sp" ng-change="profit(cal)" class="form-control ng-pristine ng-untouched ng-valid ng-scope ng-empty ng-valid-min">
+                    <input type="number" min="0" style="color:black;" ng-if ="cal.selected=='sellingPrice'" ng-model="cal.sp" class="form-control" readonly>
+                </div>
+            </div>
+
+            <label class="col-md-2 col-xs-12 control-label">Condition</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <select type="text" ng-model="cal.condition" ng-change="profit(cal)" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+                    </select>
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">Sponsor %</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="number" min="0" ng-model="cal.sponsor" ng-change="profit(cal)" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-min">
+                </div>
+            </div>
+
+            <label class="col-md-2 col-xs-12 control-label">Postage</label>
+            <div class="col-md-10 col-xs-12">
+                <div class="input-group">
+                    <input type="text" list="post" ng-model="cal.postage" ng-change="profit(cal)" class="form-control ng-pristine ng-valid ng-empty ng-touched">
+                    <datalist id="post">
+                        <option value="0.95">RM 1st Class Letter (£0.95)</option>
+                        <option value="1.40">RM 1st Class Large Letter (£1.40)</option>
+                        <option value="3.35">RM 1st Class Small Parcel (£3.35)</option>
+                        <option value="2.55">Hermes - Small Parcel (£2.55)</option>
+                        <option value="6.50">UPS (£6.50)</option>
+                        <option value="8">Parcel Force (£8)</option>
+                        <option value="0">None</option>
+                    </datalist>
+                </div>
+            </div>
+
+            <label class="col-md-2 col-xs-12 control-label">eBay Fee</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="number" min="0" ng-change="calculateChange(cal)" ng-model="cal.fee" class="form-control">
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">VAT</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="number" min="0" ng-model="cal.vat" ng-change="calculateChange(cal)" style="color:black;" class="form-control">
+                </div>
+            </div>
+
+            <label class="col-md-2 col-xs-12 control-label ng-hide" ng-show="cal.selected=='sellingPrice'">Profit</label>
+            <div class="col-md-10 col-xs-12">
+                <div class="input-group">
+                    <input type="number" min="0" ng-show="cal.selected=='sellingPrice'" ng-model="cal.profit" ng-change="profit(cal)" class="form-control">
+                </div>
+            </div>
+
+        </div>
+        <h3 ng-show="cal.profit!=null && cal.profit>=0 && cal.selected!='sellingPrice'" style="color: #1ca504;margin-top:15px;font-size:17px;" class="text-center">Profit : {{cal.profit}} ( {{cal.profitPercent}}% )</h3>
+        <h3 ng-show="cal.profit!=null && cal.profit<0 && cal.selected!='sellingPrice'" style="color:Red;margin-top:15px;font-size:17px;" class="text-center">Loss : {{cal.profit}} ( {{cal.profitPercent}}% )</h3>
+    </div>
+    <div class="modal-footer ng-scope">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+    .profit-calc {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.profit-calc label, .profit-calc>div {
+    margin-top: 25px;
+}
+@media (max-width: 736px){
+.profit-calc>div {
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+.profit-calc label {
+    margin-top: 15px;
+}
+}
+.input-group {
+    position: relative;
+    display: block;
+    border-collapse: separate;
+}
+</style>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="modal-content" style="font-size:13px;border: navy;"><div class="modal-header ng-scope" >
+    <h3 class="modal-title text-center" id="modal-title" style="font-size: 15px;">Add Replacement Details</h3>
+</div>
+    <div class="modal-body ng-scope" id="modal-body" style="/* height:295px; */">
+        <div class="row form-group profit-calc">
+            <label class="col-md-2 col-xs-12 control-label">Title</label><div class="col-md-10">
+            <div class="input-group">
+                <input type="text"  ng-model="replacement.title"  class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+            </div>
+        </div>
+            <label class="col-md-2 col-xs-12 control-label">Order ID</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.orderId" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">Record Number</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="number"  ng-model="replacement.recordNumber" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <label class="col-md-2 col-xs-12 control-label">Buyer Street1</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.buyerStreet1" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">Buyer Street2</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.buyerStreet2" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+
+            <label class="col-md-2 col-xs-12 control-label">Buyer City</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.buyerCity" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">Buyer State</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.buyerState" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+
+
+            <label class="col-md-2 col-xs-12 control-label">Buyer Postal Code</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.buyerPostalCode" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">Buyer country</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.buyerCountry" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+
+            <label class="col-md-2 col-xs-12 control-label">Buyer Name</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="text"  ng-model="replacement.buyerName" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+            <label class="col-md-2 col-xs-12 control-label">Quantity</label>
+            <div class="col-md-4 col-xs-12">
+                <div class="input-group">
+                    <input type="number" min="1"  ng-model="replacement.quantity" class="form-control ng-pristine ng-valid ng-empty ng-valid-min ng-touched">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer ng-scope" style="margin-top:20px;">
+        <button type="button" class="btn btn-default" style="border-color: antiquewhite;margin-top: 1px;background-color:#1caf9a" ng-disabled="!replacement.quantity && !replacement.recordNumber && !replacement.orderId " ng-click="saveReplacements()">Save</button>
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+    .profit-calc {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.profit-calc label, .profit-calc>div {
+    margin-top: 25px;
+}
+@media (max-width: 736px){
+.profit-calc>div {
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+.profit-calc label {
+    margin-top: 15px;
+}
+}
+.input-group {
+    position: relative;
+    display: block;
+    border-collapse: separate;
+}
+</style>

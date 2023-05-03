@@ -1,0 +1,6 @@
+ALTER TABLE compete ADD COLUMN listing_type CHARACTER VARYING(255);
+ALTER TABLE compete ADD COLUMN first_variation_name CHARACTER VARYING(255);
+ALTER TABLE compete ADD COLUMN first_variation_value CHARACTER VARYING(255);
+ALTER TABLE compete ADD COLUMN second_variation_name CHARACTER VARYING(255);
+ALTER TABLE compete ADD COLUMN second_variation_value CHARACTER VARYING(255);
+ALTER TABLE compete ADD COLUMN variant_sku CHARACTER VARYING(255);

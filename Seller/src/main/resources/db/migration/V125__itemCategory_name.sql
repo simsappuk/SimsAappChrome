@@ -1,0 +1,1 @@
+ALTER TABLE item_category ADD COLUMN selection CHARACTER VARYING(255);

@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN spreadsheet_id character varying(255);

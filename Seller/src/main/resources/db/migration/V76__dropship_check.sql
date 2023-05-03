@@ -1,0 +1,1 @@
+ALTER TABLE dropship ADD COLUMN check_revise character varying(255);

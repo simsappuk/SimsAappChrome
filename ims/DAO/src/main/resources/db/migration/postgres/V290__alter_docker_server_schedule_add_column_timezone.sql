@@ -1,0 +1,1 @@
+ALTER TABLE docker_server_schedule ADD COLUMN client_time_zone character varying(255);

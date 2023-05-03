@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN check_reset_order BOOLEAN;

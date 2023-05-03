@@ -1,0 +1,119 @@
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a ng-click="showPopupWindow()" class="btn btn-info" style="border-color: antiquewhite;margin-top: 1px;float:right;">Updates</a>
+        <a ng-click="labelPrint()" class="btn btn-info pull-right" style="border-color: antiquewhite;margin-top: 1px;">Print Labels</a>
+        <select ng-model="labelClass" ng-change="replaceAllLabels(labelClass)" style="margin-top:2px;float:right;height:28px;margin-right:4px;">
+            <option value="FIRST_CLASS">FIRST_CLASS</option>
+            <option value="SECOND_CLASS">SECOND_CLASS</option>
+        </select>
+    </div>
+    <link href='https://fonts.googleapis.com/css?family=Libre Barcode 39' rel='stylesheet'>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <Label>
+                        <input type="search" placeholder="Search..." uib-tooltip="Enter Sales Record Num" tooltip-placement="top-right" class="form-control" ng-enter="addLabel(recordNumber)" ng-model="recordNumber" style="width:132px;margin-top: 1px;border-radius:13px;">
+                    </Label>
+                    <text>FIRST_CLASS: {{page.firstClass}} SECOND_CLASS: {{page.secondClass}}</text>
+                    <ul class="panel-controls">
+                        Enter Range:
+                        <Label>
+                            <input type="number" class="form-control"  ng-model="initialRecordNumber" min="0" ng-change="addition(initialRecordNumber)" style="height:30px;width: 143px;margin-top: 1px;border-radius:0px;">
+                        </Label>&nbsp;To
+
+                        <Label>
+                            <input type="number" class="form-control"  ng-model="finalRecordNumber"  style="height:30px;width: 143px;margin-top: 1px;border-radius:0px;">
+                        </Label>&nbsp;
+
+                        <select ng-model="value" style="margin-right:4px;height:30px;">
+                            <option value="PCL">Picking List</option>
+                            <option value="POL">Postage Labels</option>
+                        </select>
+                        <a href="#!/upload/{{params.id}}/{{initialRecordNumber}}/{{finalRecordNumber}}"ng-hide="value=='PCL'" ng-disabled="finalRecordNumber==null||initialRecordNumber==null||value==null" class="btn btn-info pull-right" style="border-color: antiquewhite;margin-top: 1px;">Submit</a>
+                        <a href="#!/upload/list/{{params.id}}/{{initialRecordNumber}}/{{finalRecordNumber}}" ng-hide="value=='POL'||value==null" ng-disabled="finalRecordNumber==null||initialRecordNumber==null" class="btn btn-info pull-right" style="border-color: antiquewhite;margin-top: 1px;">Submit</a>
+                    </ul>
+                </div>
+                <div  class="panel-body">
+                    <div class="page-content-wrap" style="margin-top:2%;">
+                        <div id="printDiv" class="row" style="margin-left:50px;">
+                            <style scoped>
+                               @import "https://fonts.googleapis.com/css?family=Libre Barcode 39";
+                            </style>
+                            <div  class="col-md-6" ng-repeat="x in labelList|orderBy:'orderRef':true">
+                                <!-- CONTACT ITEM -->
+                                <a ng-click="removeLabel(x.orderRef)"><i class="fa fa-trash-o" style="font-size:20px;float:left;margin-right:3px;"></i></a>
+                                <a ng-click="replaceLabel(x.orderRef)"><i class="fa fa-exchange" style="font-size:20px;margin-left:4px;"></i></a>
+                                <!--<label class="container">
+                                    <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.orderRef)">
+                                    <span class="checkmark" style="left:-405px;top:0px;"></span>
+                                </label>-->
+                                <div class="panel panel-default" style="font-size:17px;width:384px;height:611px;border:ridge;border-color:#555555;">
+                                    <div ng-if="x.shippingServiceSelected.includes('International') && x.orderTrackingId==null || x.shippingServiceSelected.includes('Abroad')  && x.statusId!='Hide'">
+                                        <text style="width: 288px;float:right;font-weight: bold;font-size: x-large;">INTERNATIONAL</text>
+                                    </div>
+                                    <div ng-if="(x.orderTrackingId!=null || !x.shippingServiceSelected.includes('International') && !x.shippingServiceSelected.includes('Abroad') && x.statusId!='Hide') && (x.switch==null ||x.switch =='FIRST_CLASS')">
+                                        <img src="/img/FIRST_CLASS_LABEL.png" style="width:100%;">
+                                    </div>
+                                    <div ng-if="(x.orderTrackingId!=null || !x.shippingServiceSelected.includes('International') && !x.shippingServiceSelected.includes('Abroad') && x.statusId!='Hide') && x.switch=='SECOND_CLASS'">
+                                        <img src="/img/SECOND_CLASS_LABEL.png" style="width:100%;">
+                                    </div>
+                                    <!--<div ng-if="(x.orderTrackingId!=null || !x.shippingServiceSelected.includes('International') && !x.shippingServiceSelected.includes('Abroad') && x.statusId!='Hide') && x.sellerUserId=='excelstuff'">
+                                        <img src="/img/48Label.jpg" style="width:100%;">
+                                    </div>-->
+                                    <!--<img ng-src="{{x.shippingServiceSelected=='UK_RoyalMailAirsureInternational' && '">-->
+                                    <!--<img ng-src="{{x.shippingServiceSelected!='UK_RoyalMailAirsureInternational' && ''||''}}" style="width:355px;margin-top:-1px;">-->
+                                    <div style="margin-left:20px;">
+                                        <b style="text-transform:capitalize;font-size:23px;" contenteditable>{{x.buyerName}}</b>
+                                        <br/>
+                                        <large contenteditable>{{x.buyerStreet1}},</large>
+                                        <large contenteditable>{{x.buyerStreet2}}</large>
+                                        <br>
+                                        <large contenteditable>{{x.buyerCity}},</large>
+                                        <large contenteditable>{{x.buyerState}}
+                                            <br>
+                                        </large>
+                                        <large contenteditable style="background-color:yellow;color:red;" ng-if="x.buyerPostalCode.toUpperCase().startsWith('AB36')||x.buyerPostalCode.toUpperCase().startsWith('AB37')||x.buyerPostalCode.toUpperCase().startsWith('AB38')||x.buyerPostalCode.toUpperCase().startsWith('AB54')||x.buyerPostalCode.toUpperCase().startsWith('AB55')||x.buyerPostalCode.toUpperCase().startsWith('AB56')||x.buyerPostalCode.toUpperCase().startsWith('BF')||x.buyerPostalCode.toUpperCase().startsWith('BT')||x.buyerPostalCode.toUpperCase().startsWith('FK17')||x.buyerPostalCode.toUpperCase().startsWith('FK22')||x.buyerPostalCode.toUpperCase().startsWith('GY')||x.buyerPostalCode.toUpperCase().startsWith('HS')||x.buyerPostalCode.toUpperCase().startsWith('IM')||x.buyerPostalCode.toUpperCase().startsWith('IV')||x.buyerPostalCode.toUpperCase().startsWith('JE')||x.buyerPostalCode.toUpperCase().startsWith('KA27')||x.buyerPostalCode.toUpperCase().startsWith('KA28')||x.buyerPostalCode.toUpperCase().startsWith('KW')||x.buyerPostalCode.toUpperCase().startsWith('PA20')||x.buyerPostalCode.toUpperCase().startsWith('PA80')||x.buyerPostalCode.toUpperCase().startsWith('PH15')||x.buyerPostalCode.toUpperCase().startsWith('PH50')||x.buyerPostalCode.toUpperCase().startsWith('TR21')||x.buyerPostalCode.toUpperCase().startsWith('TR25')||x.buyerPostalCode.toUpperCase().startsWith('ZE')">{{x.buyerPostalCode}},</large>
+                                        <large contenteditable ng-if="!(x.buyerPostalCode.toUpperCase().startsWith('AB36')||x.buyerPostalCode.toUpperCase().startsWith('AB37')||x.buyerPostalCode.toUpperCase().startsWith('AB38')||x.buyerPostalCode.toUpperCase().startsWith('AB54')||x.buyerPostalCode.toUpperCase().startsWith('AB55')||x.buyerPostalCode.toUpperCase().startsWith('AB56')||x.buyerPostalCode.toUpperCase().startsWith('BF')||x.buyerPostalCode.toUpperCase().startsWith('BT')||x.buyerPostalCode.toUpperCase().startsWith('FK17')||x.buyerPostalCode.toUpperCase().startsWith('FK22')||x.buyerPostalCode.toUpperCase().startsWith('GY')||x.buyerPostalCode.toUpperCase().startsWith('HS')||x.buyerPostalCode.toUpperCase().startsWith('IM')||x.buyerPostalCode.toUpperCase().startsWith('IV')||x.buyerPostalCode.toUpperCase().startsWith('JE')||x.buyerPostalCode.toUpperCase().startsWith('KA27')||x.buyerPostalCode.toUpperCase().startsWith('KA28')||x.buyerPostalCode.toUpperCase().startsWith('KW')||x.buyerPostalCode.toUpperCase().startsWith('PA20')||x.buyerPostalCode.toUpperCase().startsWith('PA80')||x.buyerPostalCode.toUpperCase().startsWith('PH15')||x.buyerPostalCode.toUpperCase().startsWith('PH50')||x.buyerPostalCode.toUpperCase().startsWith('TR21')||x.buyerPostalCode.toUpperCase().startsWith('TR25')||x.buyerPostalCode.toUpperCase().startsWith('ZE'))">{{x.buyerPostalCode}},</large>
+                                        <br>
+                                        <large contenteditable>{{x.buyerCountry}}</large><br>
+                                        <large contenteditable>{{x.vatIossNumber}}</large>
+                                    </div>
+                                    <br>
+                                    <hr style="border-top:1px solid;">
+                                    <div>
+                                        <small class="barcode" style="font-family: 'Libre Barcode 39'!important;font-size: 47px!important;margin-left:9px!important;"> *{{x.orderRef}}*</small>
+                                        <small>{{x.orderRef}}</small>
+                                        <small style="float:right;margin-top: 23px;margin-right:5px;">{{x.replaceDate|date:'mediumDate'}}</small>
+                                    </div>
+                                    <b ng-if="x.totalAmount>19.97 && x.shippingServiceCost==0.0 && x.itemId!=(112925285212||362950137020)" style="font-weight:600;font-size:13px; margin-left:9px;">'Signed For'</b>
+                                    <b ng-if="x.shippingServiceCost!=0.0" style="font-weight:600;font-size:13px; margin-left:9px;">'Signed For'</b>
+                                    <b ng-if="x.itemId==(112925285212||362950137020) && x.quantityPurchased>=3 && x.shippingServiceCost==0.0" style="font-weight:600;font-size:13px; margin-left:9px;">'Signed For'</b>
+                                    <b style="font-weight:600;font-size:13px; margin-left:9px;">{{x.extendedOrderId}}</b>
+                                    <b style="font-weight:600;font-size:13px; margin-left:9px;" ng-if="x.sellerUserId=='excelstuff'">{{x.sku}}</b>
+                                    <b style="font-weight:600;font-size:13px; margin-left:9px;" ng-if="x.sellerUserId=='excelstuff'" >{{x.quantityPurchased}}</b>
+                                    <b style="font-weight:600;font-size:13px; margin-left:9px;" ng-if="x.sellerUserId=='excelstuff' && x.itemId=='363011102296'" >{{x.orderVariationValue}}</b>
+                                    <hr ng-if="x.statusId!='Hide'" style="border-top: 1px solid;">
+                                    <small style="text-transform:capitalize;;font-size:11px;float:left;margin-left:10px;font-weight:800">{{x.buyerCheckoutMessage}}</small><br>
+                                    <div ng-if="x.statusId!='Hide'" style="float:left;bottom:63px;">
+                                        <b style="font-size:11px;margin-left:10px;">RETURN TO</b>
+                                        <br>
+                                        <small style="font-size:11px;float:left;margin-left:10px;">Unit 7A,1st Floor,Premier House,43 Constance Road,Leicester,Leicestershire,LE5 5DB,United Kingdom</small>
+                                        <small style="float:right;">{{x.accountName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END DEFAULT DATATABLE -->
+                <div>
+                    <ul uib-pagination items-per-page="20" max-size="10" total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadOrders()"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
+<!-- PAGE CONTENT WRAPPER -->

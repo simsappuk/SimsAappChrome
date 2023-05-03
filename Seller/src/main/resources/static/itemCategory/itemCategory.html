@@ -1,0 +1,43 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Item Category Update</strong></h3>
+                        <ul class="panel-controls">
+                            <li><a href="#!/category" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-md-1 col-xs-12 control-label" style="width:100px;">Add Category</label>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="stock.title" class="form-control"/>
+                                </div>
+                                <span class="help-block">Enter Item Category</span>
+                            </div>
+
+                            <button class="col-md-1 col-xs-12 control-label" style="Padding-Top:2px;margin-top: 4px;width:100px;text-align: center;" ng-click="categoryContent(stock.title)">CLick to Add</button>
+                            <label class="col-md-1 col-xs-10 control-label" style="width:124px;">Item Category</label>
+                            <div class="col-md-4 col-xs-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <select ng-model="stock.itemCategory[0]" ng-options="x for x in names" class="form-control">
+                                    </select>
+                                </div>
+                                <span class="help-block">Check Item Category</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

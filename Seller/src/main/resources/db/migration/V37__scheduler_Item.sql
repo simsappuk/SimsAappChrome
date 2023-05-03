@@ -1,0 +1,21 @@
+CREATE TABLE public.scheduler_Item(
+  id character varying(255) ,
+  buyer_email_id character varying(255),
+  selling_record_number character varying(255),
+  buyer_name character varying(255),
+  shipped_to_country character varying(255),
+  quantity_available integer,
+  watch_count bigint,
+  sku character varying(255),
+  item_name character varying(255),
+  item_description character varying(255),
+  account_id character varying(255),
+  item_id character varying(255),
+  order_id character varying(255),
+  scheduler_id character varying(255),
+    FOREIGN KEY(scheduler_id) REFERENCES scheduler(id),
+  purchase_order_id character varying(255),
+    FOREIGN KEY(purchase_order_id) REFERENCES orders(id),
+  stock_id character varying(255),
+    FOREIGN KEY(stock_id) REFERENCES stock(id)
+  );

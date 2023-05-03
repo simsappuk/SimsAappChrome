@@ -1,0 +1,1 @@
+INSERT INTO spreadsheet(id) VALUES(0);

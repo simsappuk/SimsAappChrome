@@ -1,0 +1,5 @@
+INSERT INTO channel(id,log_name)VALUES('22','FACEBOOK ORDERS');
+INSERT INTO channel(id,log_name)VALUES('23','AMAZON TRACKING');
+ALTER TABLE activity_log ADD COLUMN paypal_email_id CHARACTER VARYING(255);
+ALTER TABLE activity_log ADD COLUMN status CHARACTER VARYING(255);
+ALTER TABLE activity_log ADD COLUMN courier_service CHARACTER VARYING(255);

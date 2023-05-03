@@ -1,0 +1,1 @@
+ALTER TABLE stock ALTER COLUMN created_date DROP NOT NULL;

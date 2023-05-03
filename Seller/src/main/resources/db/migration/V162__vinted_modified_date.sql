@@ -1,0 +1,1 @@
+ALTER TABLE vinted ADD COLUMN modified_date timestamp without time zone;

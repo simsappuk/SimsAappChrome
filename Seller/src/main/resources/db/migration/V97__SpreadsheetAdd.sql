@@ -1,0 +1,1 @@
+ALTER TABLE spreadsheet ADD COLUMN account_id CHARACTER VARYING(255);

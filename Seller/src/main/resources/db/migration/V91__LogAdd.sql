@@ -1,0 +1,11 @@
+ALTER TABLE channel ADD COLUMN log_name CHARACTER VARYING(255);
+
+INSERT INTO channel(id,log_name)VALUES('14','REPLY & ADJUSTMENT');
+INSERT INTO channel(id,log_name)VALUES('15','DROPSHIPPED');
+INSERT INTO channel(id,log_name)VALUES('16','TRACKING NUMBERS');
+INSERT INTO channel(id,log_name)VALUES('17','NOT SENT ITEMS');
+INSERT INTO channel(id,log_name)VALUES('18','RETURNS');
+INSERT INTO channel(id,log_name)VALUES('19','REFUNDS');
+INSERT INTO channel(id,log_name)VALUES('20','REPLACEMENTS');
+INSERT INTO channel(id,log_name)VALUES('21','POSTAGE & GOODWILL GESTURE REFUNDS');
+

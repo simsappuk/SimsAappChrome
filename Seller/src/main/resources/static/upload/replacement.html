@@ -1,0 +1,34 @@
+&nbsp;
+<div class="page-content-wrap">
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <button ng-click="showReplacementPopupWindow()" class="btn btn-info pull-right" style="border-color: antiquewhite;margin-top: 1px;">New Replacement Order</button>
+                    <a href="#!/list/replacementLabels" class="btn btn-info pull-right" style="border-color: antiquewhite;margin-top: 1px;">Order Labels</a>
+                </div>
+                <div class="panel-body">
+                    <div class="page-content-wrap">
+                            <div class="col-md-3" ng-repeat="x in replacements">
+                                <div class="panel panel-default" style="font-size:15px;width:277px;color:black;">
+                                    <div class="panel-body">
+                                       <small style="font-weight:600;" class="ng-binding ng-scope">{{x.recordNumber}}</small>
+                                        <small class="ng-binding">({{x.orderId}})</small>
+                                        <small style="font-size:13px;text-transform:capitalize;" class="ng-binding ng-scope">{{x.title}}</small>
+                                        <br>
+                                    <small style="font-weight:600;" class="ng-binding ng-scope">Total Qty: {{x.quantity}}
+                                        <br>
+                                    </small>
+                                        <small style="text-transform:capitalize;" class="ng-binding">{{x.buyerName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

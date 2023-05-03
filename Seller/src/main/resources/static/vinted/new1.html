@@ -1,0 +1,155 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap" >
+
+  <div class="row" style="font-size:13px;">
+    <div class="col-md-12">
+
+      <form name="myForm" class="form-horizontal" enctype="multipart/form-data">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Sell Now Item</strong></h3>
+            <!--ul class="panel-controls">
+                <a href="#!/stock-automatic/{{params}}" class="btn btn-info pull-left" style="border-color: antiquewhite;">Automatic</a>
+                <li><a href="#!/stock/{{params}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+            </ul-->
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Image</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <input type="file" ng-model="stock.image" class="form-control"/>
+                </div>
+                <span class="help-block">Upload an image</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Title</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.title" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Description</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-align-justify"></span></span>
+                  <textarea class="form-control" rows="3" ng-model="stock.description"></textarea>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Category</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <input class="form-control"  type="search" ng-model="stock.category" ng-change="changeSelected()" name="stock.categoryF">
+                  <select class="form-control" ng-model="stock.category1">
+                    <option ng-repeat="x in stockList" value="{{x.zipsale_category_id}}">{{x.full_readable_path}}</option>
+                  </select>
+
+                </div>
+                <span class="help-block">Select Category</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Brand</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.brand" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Color</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.color" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Size</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.size" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Condition</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.condition" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Price</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.price" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">SKU</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.sku" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Quantity</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.quantity" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">URL</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.url" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">EAN</label>
+              <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="stock.ean" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label"></label>
+              <div class="col-md-6 col-xs-12">
+                <button type="button" ng-click="vintedSaveStock()" class="btn btn-primary">upload</button>
+              </div>
+            </div></div></div></form></div></div></div>

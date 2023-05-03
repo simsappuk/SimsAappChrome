@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN order_tracking_id CHARACTER VARYING(255);

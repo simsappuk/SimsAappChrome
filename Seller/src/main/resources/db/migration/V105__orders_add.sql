@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN sent_text_message CHARACTER VARYING(255);

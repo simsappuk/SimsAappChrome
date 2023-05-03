@@ -1,0 +1,1 @@
+ALTER TABLE stock ADD COLUMN  owner_id character varying(255);

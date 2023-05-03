@@ -1,0 +1,3 @@
+ALTER TABLE reset ADD COLUMN title CHARACTER VARYING(255);
+ALTER TABLE reset DROP COLUMN updated;
+ALTER TABLE reset ADD COLUMN updated boolean;

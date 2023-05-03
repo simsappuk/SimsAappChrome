@@ -1,0 +1,1 @@
+alter table resource_pool_trigger alter column rp_id drop not null;

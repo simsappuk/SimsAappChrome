@@ -1,0 +1,159 @@
+&nbsp;
+<div class="page-content-wrap">
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Reset Existing Listing</strong></h3>
+                        <ul class="panel-controls">
+                            <li><a href="#!/reset/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Item ID</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.ebayItemId" ng-enter="getListingDetails(reset)" class="form-control">
+                                </div> <span class="help-block" style="color:#717273;">Press Enter button after entering Item ID to update details</span>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Listing Type</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <select ng-model="reset.listingType" class="form-control select" style="width:182px;">
+                                        <option value="Standard">Standard</option>
+                                        <option value="UniqueVariation">Unique Variation</option>
+                                        <option value="MultiVariation">Multi Variation</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Dual Mode</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group">
+                                    <label class="container">
+                                        <input type="checkbox" style="width:16px;height:16px;" ng-model="reset.dualMode" class="form-control" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Move to awaiting dispatch</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <label class="container">
+                                    <input type="checkbox" style="width: 16px;height: 16px;" ng-model="reset.moveToAwaitingDispatch" class="form-control" />
+                                    <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Reset Quantity</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="number" min="1" max={{reset.existedQuantity}} style="width:145px;border-radius:0px;" ng-model="reset.quantity" class="form-control">
+                                </div> <span class="help-block" style="font-weight:400;color:#717273;">Quantity after which Listing to be revised, Maximum Quantity = <text ng-if="reset.existedQuantity==undefined" >0 </text><text ng-if="reset.existedQuantity!=undefined" >{{reset.existedQuantity}}</text></span>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Reset Price</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.ebayPrice" class="form-control" />
+                                </div><span class="help-block" style="color:#717273;">Price to be set for the above quantity</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="reset.listingType=='UniqueVariation'||reset.listingType=='MultiVariation'">
+                            <label class="col-md-3 col-xs-12 control-label">Variation Name</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.firstVariationName" class="form-control" />
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Variation Value</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.firstVariationValue" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="reset.listingType=='UniqueVariation'||reset.listingType=='MultiVariation'">
+                            <label class="col-md-3 col-xs-12 control-label">Variant SKU</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:500px;border-radius:0px;" ng-model="reset.variantSku" ng-enter="getSkuQuantity(reset)" class="form-control">
+                                </div> <span class="help-block" style="color:#717273;">Press enter after entering SKU</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="reset.listingType=='MultiVariation'">
+                            <label class="col-md-3 col-xs-12 control-label">Variation Name</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.secondVariationName" class="form-control" />
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Variation Value</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.secondVariationValue" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="reset.dualMode">
+                            <label class="col-md-3 col-xs-12 control-label">Next Reset Quantity</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="number" min="0" max={{reset.existedQuantity-reset.quantity}} style="width:145px;border-radius:0px;" ng-model="reset.nextResetQuantity" class="form-control">
+                                </div><span class="help-block" style="font-weight:400;color:#717273;">Quantity after which 1st reset is done, Maximum Quantity = <text ng-if="reset.existedQuantity==undefined" >0 </text><text ng-if="reset.existedQuantity!=undefined" >{{reset.existedQuantity-reset.quantity}}</text></span>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Next Reset Price</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.nextResetPrice" class="form-control" ng-disabled="reset.ebayPrice==null"/>
+                                </div><span class="help-block" style="color:#717273;">Enter price to be revised after first reset is done</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Existing Quantity</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="number" min="0" style="width:145px;border-radius:0px;" ng-model="reset.existedQuantity" ng-enter="reviseListing(reset,params.appId)" class="form-control">
+                                </div> <span class="help-block" style="color:#717273;">Press enter to revise existing quantity </span>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Final Price</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:145px;border-radius:0px;" ng-model="reset.afterPrice" class="form-control">
+                                </div> <span class="help-block" style="color:#717273;">Price after every reset Quantity is sold</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">adRate%</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group"> <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:500px;border-radius:0px;" ng-model="reset.bidPercentage" ng-disabled="reset.campaignId==null||reset.adId==null" ng-enter="updateAdRate(reset)" class="form-control" />
+                                </div><span class="help-block" style="font-weight:400;color:#717273;">Press enter to update adRate, Get oAuth token from here <a href="https://developer.ebay.com/DevZone/build-test/test-tool?index=0&api=buy-marketing&call=merchandised_product__GET&variation=json&env=production" target="_blank" >link</a> and save it in accounts tab, Value must be like 6.1,6.2,6.3 but not 6.34</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <button ng-click="save()" ng-if="reset.dualMode==null|| !reset.dualMode" popover-placement="left-bottom" uib-popover="Processing Item Revise..." ng-disabled="!(reset.existedQuantity>=reset.quantity && reset.quantity!=null && reset.ebayItemId!=null && reset.afterPrice!=null && reset.ebayPrice!=null)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                        <button ng-click="save()" ng-if="reset.dualMode==true" popover-placement="left-bottom" uib-popover="Processing Item Revise..." ng-disabled="!(reset.existedQuantity>=reset.quantity && reset.quantity!=null && reset.nextResetPrice!=null && reset.nextResetQuantity!=null && reset.ebayItemId!=null && reset.afterPrice!=null && reset.ebayPrice!=null)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

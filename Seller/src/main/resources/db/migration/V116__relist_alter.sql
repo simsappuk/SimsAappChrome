@@ -1,0 +1,2 @@
+ALTER TABLE relist DROP COLUMN buy_it_now_price;
+ALTER TABLE relist ADD COLUMN item_exist CHARACTER VARYING(255);

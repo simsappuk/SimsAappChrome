@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="modal-content" style="font-size:13px;"><div class="modal-header ng-scope">
+    <h3 class="modal-title" id="modal-title">ADD Stock</h3>
+</div>
+    <div class="modal-body ng-scope" id="modal-body" style="height:180px;">
+        <div class="form-group">
+            <label class="col-md-1 col-xs-12 control-label" style="width:132px;margin-top:6px;">Item Condition</label>
+            <div class="col-md-1 col-xs-12">
+                <div class="input-group" style="width: 74px;margin-left: -16px;">
+                    <select ng-model="stock.itemCondition" class="form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
+                        <option value="New">New</option>
+                        <option value="Used">Used</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <label class="col-md-2s col-xs-12 control-label" style="width: 124px;margin-top:6px;margin-left: 9px;margin-right: -12px;" ng-hide="stock.itemCondition==null">Item Quantity</label>
+            <div class="col-md-1 col-xs-12" ng-hide="stock.itemCondition==null">
+                <div class="input-group">
+                    <input type="number" min="1" ng-model="stock.quantity" class="form-control ng-valid ng-valid-min ng-touched ng-not-empty ng-dirty ng-valid-number" style="width: 60px;margin-left: -11px;">
+                </div>
+            </div>
+
+            <label class="col-md-1 col-xs-12 control-label" style="width:120px;margin-top:6px;margin-left: 5px;" ng-hide="stock.itemCondition==null || stock.quantity==null">EAN Number</label>
+            <div class="col-md-3 col-xs-12" ng-hide="stock.itemCondition==null || stock.quantity==null">
+                <div class="input-group">
+
+                    <input type="text" pattern="[a-zA-Z0-9-]+" ng-change="updateStockQuantity(stock)" ng-model="stock.ean" style="border-radius:0px;width:304px;margin-left: -15px;" class="form-control ng-pristine ng-valid ng-empty ng-touched">
+                </div>
+                <span class="help-block" style="margin-left: -13px;">Scan or Paste Barcode Number</span>
+            </div>
+        </div>
+        <h3 ng-model="stock.description" style="color: #52af9a;margin-left:180px;margin-top:99px;">{{stock.description}}</h3>
+    </div>
+    <div class="modal-footer ng-scope">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div></div>
+</body>
+</html>

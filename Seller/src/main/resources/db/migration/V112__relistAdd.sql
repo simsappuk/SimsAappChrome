@@ -1,0 +1,1 @@
+ALTER TABLE relist ADD COLUMN buy_it_now_price CHARACTER VARYING(255);

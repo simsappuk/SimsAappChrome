@@ -1,0 +1,1 @@
+UPDATE spreadsheet SET name='Untitled' WHERE id='0';

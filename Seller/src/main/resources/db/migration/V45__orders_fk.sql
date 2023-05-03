@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD FOREIGN KEY (spreadsheet_id) REFERENCES spreadsheet(id);

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="modal-content"><div class="modal-header ng-scope">
+    <h3 class="modal-title" id="modal-title">Folders</h3>
+</div>
+    <div class="modal-body ng-scope" id="modal-body">
+        <ul id="new" style="list-style-type: none;">
+            <li ng-repeat="x in folder" style="display: inline;">
+                <a class='ng-modal-overlay' href="" ng-click="getChildFolders(x)"><img src="https://img.icons8.com/color/50/000000/folder-invoices.png" ></a>
+                <input type="text" ng-model="x.name" style="border-style: none; width:17%" ng-blur="saveFolders(x)"/>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer ng-scope">
+        <button type="button" class="btn btn-default" ng-click="addFolder()">Create Folder</button>
+        <button type="button" class="btn btn-default" ng-click="getName(0)">Back</button>
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div></div>
+</body>
+</html>

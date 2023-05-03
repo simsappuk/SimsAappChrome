@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DAO/DAO.iml" filepath="$PROJECT_DIR$/.idea/modules/DAO/DAO.iml" group="DAO" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DAO/DAO_main.iml" filepath="$PROJECT_DIR$/.idea/modules/DAO/DAO_main.iml" group="DAO" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DAO/DAO_test.iml" filepath="$PROJECT_DIR$/.idea/modules/DAO/DAO_test.iml" group="DAO" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Inventory-Management-System.iml" filepath="$PROJECT_DIR$/.idea/modules/Inventory-Management-System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Webapp/Webapp.iml" filepath="$PROJECT_DIR$/.idea/modules/Webapp/Webapp.iml" group="Webapp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Webapp/Webapp_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Webapp/Webapp_main.iml" group="Webapp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Webapp/Webapp_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Webapp/Webapp_test.iml" group="Webapp" />
+    </modules>
+  </component>
+</project>

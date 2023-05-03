@@ -1,0 +1,65 @@
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a href="#!/reset/form/{{params.appId}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Add Listing</a>
+        <a href="#!/reset/history/{{params.appId}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">History</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reset Information</h3>
+                    <ul class="panel-controls">
+                        <li ng-if="data.upload"><a uib-tooltip="Uploading Data from EBay" class="panel-collapse btn-info disabled"><span class="btn-info fa fa-refresh fa-spin"></span></a>
+                        </li>
+                        <li ng-if="!data.upload"><a ng-if="!page.loading" href="#!/reset/{{params.appId}}" class="panel-refresh"><span class="fa fa-refresh"></span></a><a ng-if="page.loading" class="panel-refresh btn-info disabled"><span class="fa fa-refresh fa-spin"></span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th style="text-align: center;">Title</th>
+                            <th style="text-align: center;">Reset Price</th>
+                            <th style="text-align: center;">Quantity</th>
+                            <th style="text-align: center;">Quantity Sold</th>
+                            <th style="text-align: center;">Next Price</th>
+                            <th style="text-align: center;">Listing Type</th>
+                            <th style="text-align: right;">Updated</th>
+                            <th style="text-align: center;">Last Revised Date</th>
+                        </tr>
+                        <tr ng-repeat="x in reset|orderBy:'lastEffectiveDate':true">
+                            <td style="text-align: left"><a href="https://www.ebay.co.uk/itm/{{x.ebayItemId}}" tooltip-placement="top-right" uib-tooltip="URL" target="_blank">{{x.ebayItemId}}</a>
+                                <i ng-if="x.dualMode==true" class="fa fa-info-circle ng-scope" uib-tooltip="Dual Reset Mode is ON" style="font-size: 14px;color: yellowgreen;"></i>
+                            </td>
+                            <td title="{{x.title}}" data-toggle="tooltip" data-placement="right"  style="text-align: center;max-width: 110px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{x.title}}</td>
+                            <td ng-if="x.dualMode==null || x.dualMode==false || x.updated==false" style="text-align: center">{{x.ebayPrice}}</td>
+                            <td ng-if="x.dualMode!=null && x.dualMode==true && x.updated==true" style="text-align: center">{{x.nextResetPrice}}</td>
+                            <td ng-if="x.dualMode!=null && x.dualMode==true" style="text-align: center"><a href="#!/reset-edit/{{params.appId}}/{{x.id}}">{{x.nextResetQuantity}}</a></td>
+                            <td ng-if="x.dualMode==null || x.dualMode==false" style="text-align: center"><a href="#!/reset-edit/{{params.appId}}/{{x.id}}">{{x.quantity}}</a></td>
+                            <td style="text-align: center">{{x.soldFromReset}}</td>
+                            <td ng-if="x.dualMode==null || x.dualMode==false || x.updated==true"    style="text-align: center">{{x.afterPrice}}</td>
+                            <td ng-if="x.dualMode!=null && x.dualMode==true && x.updated==false" style="text-align: center">{{x.nextResetPrice}}</td>
+                            <td style="text-align: center">{{x.listingType}}<text ng-if="x.variantSku!=null"style="text-align: center">, {{x.variantSku}}</text></td>
+                            <td>
+                                <i ng-if="x.updated==true && (x.dualMode==null || (x.dualMode!=null && x.dualMode==true && x.nextResetUpdated==true)) " class="fa fa-check-circle" tooltip-placement="top-left" style="font-size: 14px;margin-left: 30px;color:green;text-align:center;"></i>
+                                <i ng-if="x.updated!=true" class="fa fa-times-circle" style="font-size: 14px;color:lightgray;margin-left: 30px;text-align:center;"></i>
+                                <i ng-if="x.updated==true && (x.dualMode!=null && x.dualMode==true && x.nextResetUpdated!=true)"class="fa fa-times-circle" style="font-size: 14px;color:lightgray;margin-left: 30px;text-align:center;"></i>
+
+                            </td>
+                            <td style="text-align: center">{{x.lastEffectiveDate|date:'medium'}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" ng-model="page.currentPage" ng-change=""></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

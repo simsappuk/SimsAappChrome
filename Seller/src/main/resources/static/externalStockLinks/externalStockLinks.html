@@ -1,0 +1,58 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a href="#!/externalStockLinksForm/{{params.appId}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">External Stock</a>
+        <a ng-click="deleteContent(check)" class="btn btn-info pull-right" style="border-color: antiquewhite;">Delete Item</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><large contenteditable>External Stock Details</large></h3>
+                    <ul class="panel-controls">
+                        <li   style="float:right;" ><a href="#!/stock/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        <a ng-click="refreshContent()" class="btn btn-info" style="border-color: antiquewhite;">Refresh Content</a>
+                    </ul>
+                </div>
+                <div class="panel-body" style="position:unset;padding:none;">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width:450px;">Item Title</th>
+                            <th style="text-align: center;">Link ID</th>
+                            <th style="text-align: center;">Price</th>
+                            <th style="text-align: center;">In-Stock</th>
+                            <th style="text-align: center;">Last Revised Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in links|orderBy:'lastEffectiveDate'">
+                            <td>
+                                <label class="container">
+                                    <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <text>{{x.title}}</text>
+                            </td>
+                            <td style="text-align: center;" ng-if="x.cexId==null && x.link.includes('musicmagpie')"><a href="{{x.link}}" target="_blank">MUSIC MAGPIE</a></td>
+                            <td style="text-align: center;" ng-if="x.cexId==null && x.link.includes('ebay.co.uk')"><a href="{{x.link}}" target="_blank">EBAY</a></td>
+                            <td style="text-align: center;" ng-if="x.link==null"><a href="https://uk.webuy.com/product-detail/?id={{x.cexId}}" target="_blank">CEX</a></td>
+                            <td style="text-align: center;">{{x.price}}</td>
+                            <td style="text-align: center;">
+                                <i ng-if="x.outOfStock==false" class="fa fa-check-circle" tooltip-placement="top-left" style="font-size: 14px;text-align:center;color:green;"></i>
+                                <i ng-if="x.outOfStock==true"class="fa fa-times-circle" style="font-size: 14px;text-align: center;color:lightgray;"></i>
+                            </td>
+                            <td style="text-align: center;">{{x.lastEffectiveDate|date:'medium'}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination  items-per-page="200" max-size="10"  total-items="page.totalElements" ng-model="page.currentPage"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

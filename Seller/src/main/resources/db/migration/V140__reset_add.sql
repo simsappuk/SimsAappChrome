@@ -1,0 +1,1 @@
+ALTER TABLE reset ADD COLUMN listing_history boolean;

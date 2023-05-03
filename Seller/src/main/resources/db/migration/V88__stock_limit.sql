@@ -1,0 +1,1 @@
+ALTER TABLE stock ADD COLUMN stock_limit bigint;

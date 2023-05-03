@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN check_dropship_order BOOLEAN;

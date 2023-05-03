@@ -1,0 +1,189 @@
+<ul class="breadcrumb">
+</ul>
+<!-- END BREADCRUMB -->
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <form class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>New</strong>Orders</h3>
+                        <ul class="panel-controls">
+                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Order Reference Number</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.orderReferenceNumber" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter order Reference Number</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Name</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.name" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Name</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">statusId</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.statusId" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Status Id</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Quantity</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.quantity" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Quantity</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Total</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.total" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Total</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Select Channel Type</label>
+                                    <div class="col-md-9" ng-init="loadChannel()">
+                                        <select ng-model="orders.channelId" class="form-control select">
+                                            <option ng-repeat="ch in channels"  value="{{ch.id}}">{{ch.name}}</option>
+                                        </select>
+                                        <span class="help-block">Select channel name</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Status</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.status" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Status</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Description</label>
+                                    <div class="col-md-9 col-xs-12">
+                                        <textarea class="form-control"  ng-model="orders.description" rows="5"></textarea>
+                                        <span class="help-block">Enter Description</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Order Date</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="text" ng-model="orders.orderDate" class="form-control"/>
+                                        </div>
+
+                                        <span class="help-block">Enter Date</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Notes</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.notes" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Notes</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Category</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.category" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Category</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Condition</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.condition" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter condition</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Price</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.price" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter price</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">received date</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text"  ng-model="orders.receivedDate" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Enter Received Date</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <button class="btn btn-default">Clear Form</button>
+                        <button ng-click="save(orders)" class="btn btn-primary pull-right">Submit</button>
+                        &nbsp;&nbsp;&nbsp;<button ng-click="delete(orders)" class="btn m-r-md btn-danger pull-right">Delete </button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,199 @@
+<a id="authorize_button" class="btn btn-info pull-right" style="display: none;">Authorize</a>
+<a id="signout_button" class="btn btn-info pull-right" style="display: none;">Sign Out</a>
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>ADD Third Party Stock</strong></h3>
+                        <ul class="panel-controls">
+                            <a href="#!/stock/{{params}}/thirdPartyStock/Data" class="btn btn-info" style="border-color: antiquewhite;float:left;">Stock Added</a>
+                            <a href="#!/stock/{{params}}/listing/thirdPartyStock/eBay" class="btn btn-info" style="border-color: antiquewhite;float:left;">Listed Items</a>
+<!--
+                            <a ng-click="showLogPopup()" class="btn btn-info" style="border-color: antiquewhite;float:left;">Model Names</a>
+-->
+                            <li><a href="#!/stock/{{params}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-md-1 col-xs-12 control-label" style="width: 114px;margin-top: 6px;">Stock Source</label>
+                            <div class="col-md-1 col-xs-12"><br><br>
+                                <div class="input-group">
+                                    <select ng-change="getSelectedData(stock.stockCode)" ng-model="stock.stockCode" class="form-control ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty" style="margin-left: -115px;width: 130px;">
+                                        <option value="Facebook">Facebook</option>
+                                        <option value="supplier">Supplier</option>
+                                        <option value="Game">Game</option>
+                                        <option value="Cex">CEX</option>
+                                        <option value="MusicMagpie">MusicMagpie</option>
+                                        <option value="Misc">Misc</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div style="text-align:center;margin-right: 140px;margin-left: 140px;font-size: 15px;text-align: center;" ng-hide="stock.orderRef!=null"><text style="color:red;">{{stock.orderRefId}}</text> {{stock.entireTitle}}</div>
+                        <br>
+                        <table class="table datatable" ng-show="stock.stockCode!=null && stock.title!=null">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th style="text-align: center;">Category</th>
+                                <th style="text-align: center;">Sub Category</th>
+                                <th style="text-align: center;">New QTY</th>
+                                <th style="text-align: center;">New Price</th>
+                                <th>Condition</th>
+                                <th style="text-align: center;">EAN</th>
+                                <th style="text-align: center;">Item Details</th>
+                                <th style="text-align: center;">SKU</th>
+                                <th style="">Exis.Price</th>
+                                <th style="">Exis.Quan</th>
+                                <th style="text-align: center;">List</th>
+                            </tr>
+                            <tr ng-repeat="x in consoleData track by $index" >
+                                <td>
+                                    <a ng-click="removeAddedItem(x)"><i class="fa fa-trash-o" style="font-size:14px;margin-left:-18px;"></i></a>
+                                    <input type="text" title="{{x.title}}" data-toggle="tooltip" data-placement="top" ng-show="x.title==null" style="font-size:13px;" ng-model="x.modelName" ng-change="saveChanges(x)" contenteditable>
+                                    <input type="text" title="{{x.title}}" data-toggle="tooltip" data-placement="top" ng-show="x.title!=null" style="font-size:13px;" ng-model="x.title" ng-change="saveChanges(x)" contenteditable>
+                                </td>
+                                <td style="font-size:13px;text-align:center;">
+                                    <select ng-model="x.itemCategory" ng-change="saveChanges(x)" style="width: 95px;border-radius: 0px;">
+                                        <option value="console">Console</option>
+                                        <option value="games">Games</option>
+                                        <option value="accessories">Accessories</option>
+                                        <option value="Misc">Mics</option>
+                                    </select>
+                                </td>
+                                <td style="text-align:center;">
+                                    <select ng-model="x.itemSubCategory" ng-change="saveChanges(x)" style="width: 82px;border-radius: 0px;">
+                                        <option value="Sony PlayStation 4">PS4</option>
+                                        <option value="Sony PlayStation 3">PS3</option>
+                                        <option value="Sony PlayStation Vita">PS Vita</option>
+                                        <option value="Microsoft Xbox One">Xbox One</option>
+                                        <option value="Microsoft Xbox 360">Xbox 360</option>
+                                        <option value="Microsoft Xbox">Xbox</option>
+                                        <option value="Nintendo Wii">Wii</option>
+                                        <option value="Nintendo Wii U">Wii U</option>
+                                        <option value="Nintendo Switch">Switch</option>
+                                        <option value="Nintendo DS">DS</option>
+                                        <option value="Nintendo 3DS">3DS</option>
+                                    </select>
+                                </td>
+                                <td style="font-size:13px;text-align:center;">
+                                    <input type="text" ng-model="x.newQty" style="width:50px;" ng-change="saveChanges(x)" contenteditable >
+                                </td>
+                                <td style="font-size:13px;text-align:center;">
+                                    <input type="text" ng-model="x.newPrice" style="width:50px;" ng-change="saveChanges(x)" contenteditable >
+                                </td>
+                                <td>
+                                    <select type="text" style="text-align: center;" ng-model="x.itemCondition"  ng-change="saveChanges(x)">
+                                        <option>New</option>
+                                        <option>Used</option>
+                                    </select>
+                                </td>
+                                <td >
+                                    <input type="text" style="width:125px;" ng-model="x.ean[0]">
+                                </td>
+                                <td >
+                                    <select style="width:150px;">
+                                        <option ng-repeat="a in x.itemDetails" ng-if="x.itemDetails.length>1">{{a.itemId}}--{{a.price}}--{{a.quantity}}</option>
+                                        <option ng-if="x.itemDetails.length==0">{{x.itemId[0]}}--{{x.buyItNowPrice}}--{{x.quantityAvailable}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" ng-change="getStock(x)" ng-model="x.sku[0]" style="float: right;width:100px;">
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="x.quantityAvailable" style="width:50px;" disabled>
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="x.buyItNowPrice" style="width:50px;" disabled>
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-click="showRevisePopup(x)" style="width: 20px;height: 24px;margin-left: 3px;">
+                                </td>
+                            </tr>
+                            </thead>
+                        </table>
+                        <text style="font-size: 13px;" ng-show="stock.stockCode!=null && stock.title!=null"></text>
+                        <a ng-click="saveToStock(x.OrderNo)" ng-show="stock.stockCode!=null && stock.entireTitle!=null" class="btn btn-info" style="border-color: antiquewhite;float:right;margin-bottom:70px;">Submit</a>
+                        <a ng-click="addMoreConsoleItems()" ng-show="stock.stockCode!=null && stock.entireTitle!=null" class="btn btn-info" style="border-color: antiquewhite;float:right;margin-bottom:70px;">Add More</a>
+                        <table class="table datatable" ng-show="(stock.stockCode!=null && stock.entireTitle==null)">
+                            <thead>
+                            <tr>
+
+                                <th style="width:40%;">Item Title</th>
+                                <th style="text-align: center;width:170px;">PayPal Email</th>
+                                <th style="text-align: center;">Price</th>
+                                <th style="text-align: center;width:170px;">Tracking ID</th>
+                                <th style="text-align: center;width:120px;">Date</th>
+                                <th style="text-align: center;width:13%;">Order ID</th>
+                                <!--
+                                              <th style="width:190px;">Created Date</th>
+                                -->
+                            </tr>
+                            <tr  ng-repeat="x in orderInfo track by $index" ><!--ng-show="stock.stockCode!='Facebook'"-->
+                                <td>
+                                    <label class="container">
+                                        <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="pushId(check,x)">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <text>{{x.title}}</text>&nbsp;
+                                </td>
+                                <td style="text-align: center">
+                                    {{x.email}}
+                                </td>
+                                <td style="text-align: center;">
+                                    {{x.totalAmount}}
+                                </td>
+                                <td style="text-align: center;">
+                                    {{x.Tracking}}
+                                </td>
+                                <td style="text-align: center;">
+                                    {{x.createdDate}}
+                                </td>
+                                <td>
+                                    {{x.extendedOrderId}}
+                                </td>
+                            </tr>
+                            <tr ng-show="stock.stockCode=='Facebook'" ng-repeat="x in facebook|orderBy:'-OrderNo'" >
+                                <td>
+                                    <text>{{x.Item}}</text>
+                                </td>
+                                <td style="text-align: center">
+                                    {{x.Paypalemail}}
+                                </td>
+                                <td style="text-align: center;">
+                                    {{x.Amount}}
+                                </td>
+                                <td style="text-align: center;">
+                                    {{x.Tracking}}
+                                </td>
+                                <td style="text-align: center;">
+                                    {{x.Date}}
+                                </td>
+                                <td style="text-align:center;">
+                                    <a href="#!/stock-edit/thirdParty/{{params}}/{{x.OrderNo}}/Facebook" ng-if="x.added=='true'" style="font-weight:bold;color:green;" target="_blank">{{x.OrderNo}}</a>
+                                    <a ng-click="pushId(x)" ng-if="x.added!='true'" style="font-weight:bold;">{{x.OrderNo}}</a>
+                                </td>
+                            </tr>
+                            <style>
+                        .myInput{border-style:none;}
+                        .myInput:hover{ border-style:solid; border:1px solid green;}
+                        .myInput:focus{ border-style:solid; border:1px solid red;}
+                        #select option{
+                          width:1400px;
+                          }
+</style>
+
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

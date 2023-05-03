@@ -1,0 +1,1 @@
+ALTER TABLE activity_log ADD COLUMN record_number CHARACTER VARYING(255);

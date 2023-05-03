@@ -1,0 +1,21 @@
+<a id="authorize_button" class="btn btn-info pull-right" style="display: none;">Authorize</a>
+<a id="signout_button" class="btn btn-info pull-right" style="display: none;">Sign Out</a>
+<link rel="stylesheet" href="https://myliang.github.io/x-spreadsheet/xspreadsheet.css">
+<a ng-click="showPopup()" class="btn btn-info pull-right" style="border-color: antiquewhite;">Open</a>
+<a href="#!log/addSpreadsheet/{{params.id}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">New Spreadsheet</a>
+<div id="x-spreadsheet-demo">
+</div>
+<style>
+#x-spreadsheet-demo >.x-spreadsheet>.x-spreadsheet-sheet{
+width:1064px!important;
+}
+#x-spreadsheet-demo >.x-spreadsheet>.x-spreadsheet-sheet>.x-spreadsheet-scrollbar.horizontal{
+width:0px!important;
+}
+#x-spreadsheet-demo >.x-spreadsheet{
+font-family:'Open Sans', sans-serif!important;
+}
+#x-spreadsheet-demo>.x-spreadsheet textarea {
+  font:unset!important;
+}
+</style>

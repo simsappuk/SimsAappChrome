@@ -1,0 +1,1 @@
+ALTER TABLE accounts add column inactive BOOLEAN;

@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN p_reference_number CHARACTER VARYING(255);

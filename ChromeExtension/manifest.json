@@ -1,0 +1,23 @@
+{
+  "name": "Ebay",
+  "description": "it works on ebay.com",
+  "version": "0.1.0",
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "css": ["style.css","jquery-ui.css"],
+      "js": ["jquery.js","script.js","jquery-ui.js"]
+    }
+  ],
+  "manifest_version": 2,
+  "icons":{
+  	"16": "16.png",
+    "48": "48.png",
+    "128": "128.png"
+  },"background": {
+    "scripts": ["script.js"],
+    "persistent": false
+  },
+  
+  "permissions": ["<all_urls>"]
+}

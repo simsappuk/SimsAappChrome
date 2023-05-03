@@ -1,0 +1,1 @@
+alter table docker_server add column natting_ip boolean;

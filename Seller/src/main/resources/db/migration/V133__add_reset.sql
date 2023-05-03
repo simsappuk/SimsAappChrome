@@ -1,0 +1,1 @@
+ALTER TABLE reset ADD COLUMN total_quantity_sold bigint;

@@ -1,0 +1,35 @@
+&nbsp;<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap" xmlns:tooltip-position="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><large contenteditable> Invoices &nbsp;&nbsp;</large></h3>
+                    <input type="date" ng-model="date" style="border:inset;margin-top: 5px; line-height: 23px;" ng-enter="getInvoiceOrdersData(date)">
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width: 10%;">Title</th>
+                            <th style="width: 10%;text-align:center;">Extended Order ID</th>
+                        </tr>
+                        <tr  ng-repeat="x in invoicesData" >
+                            <td>{{x.title}}</td>
+                            <td style="text-align:center;"><a ng-click="popupPdf(x.id)">{{x.extendedOrderId}}</a></td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadAwaiting(params.appId,value)"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

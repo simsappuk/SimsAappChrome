@@ -1,0 +1,72 @@
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a ng-click="setOrderToAwaitingDispatch(check)" class="btn btn-info pull-right" style="border-color: antiquewhite;">Mark as Awaiting Dispatch</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><large contenteditable> Paid and Dispatched ({{page.totalElements}})</large></h3>
+                     <ul class="panel-controls">
+                         &nbsp;
+                         <label>
+                         <input type="search" tooltip-placement="bottom-left" uib-tooltip="Order ID or Title" class="form-control"  placeholder="Search..." ng-enter="searchDispatched()" ng-model="searchText" style="border-radius:13px;">
+                         </label>
+                         <li ng-if="data.upload"><a uib-tooltip="Uploading Data from EBay" class="panel-collapse btn-info disabled"><span class="btn-info fa fa-refresh fa-spin"></span></a></li>
+                         <li ng-if="!data.upload"><a ng-if="!page.loading" href="#!/orders/{{params.appId}}/paidAndDispatched" class="panel-refresh"><span class="fa fa-refresh"></span></a><a ng-if="page.loading"  class="panel-refresh btn-info disabled"><span class="fa fa-refresh fa-spin"></span></a></li>
+                         &nbsp;Sort By:
+                         <select ng-model="value" ng-change="loadPaidAndDispatchedOrders(params.appId,value)" style="
+     margin-top: 5px;">
+                             <option value="paid_orderRef_desc">Latest Record</option>
+                             <option value="paid_orderRef_asc">Oldest Record</option>
+                         </select>
+                         <li><a href="#!/orders/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                     </ul>
+                </div>
+                <div class="panel-body" style="position:unset;padding:none;">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width: 9%;">Record ID</th>
+                            <th style="width: 12%;">Ext. Order ID</th>
+                            <th style=" width:21%">Item Title</th>
+                            <th style="text-align: center;">Qty</th>
+                            <th style="width: 12%;">Buyer Name</th>
+                            <th style="text-align: center;width: 7%;">Sold For</th>
+                            <th style="text-align: center;width: 10%;">Total Amount</th>
+                            <th style="text-align: center;width: 12%;">Shipping Service</th>
+                            <th style="text-align: center;width: 11%;">Shipped Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in EbayListing" ng-click="getStock(x.id)">
+                            <td>
+                                <i ng-if="x.checkDropshipOrder && x.orderDropshipStatus==null" class="fa fa-exclamation-circle" tooltip-placement="top-left" uib-tooltip="Dropship Listing Yet to Dropship" style="font-size: 14px;color: #f4ae30;"></i>
+                                <i ng-if="x.orderDropshipStatus" class="fa fa-dropbox" uib-tooltip="Order Dropshipped" tooltip-placement="top-left" style="font-size: 14px;color: yellowgreen;"></i>
+                                <i ng-if="x.statusId=='Hide'" class="fa fa-exclamation-triangle" tooltip-placement="top-left" uib-tooltip="Return Address Removed" style="font-size: 14px;color: red;"></i>
+                                <a href="#!/awaitingDispatch/orderContent/{{x.accountId}}/{{x.orderRef}}">{{x.orderRef}}
+                                    <i ng-if="x.orderStatus=='AwaitingPayment'" class="fa fa-info-circle" uib-tooltip="Awaiting Payment" style="font-size: 14px;color: yellowgreen;"></i>
+                                    <i ng-if="x.transactionArrayLength!='1'" class="fa fa-info-circle" uib-tooltip="Bundle Purchase"style="font-size: 14px;color: yellowgreen;"></i>
+                                </a>
+                            </td>
+                            <td>{{x.extendedOrderId}}</td>
+                            <td><label class="container"><input type="checkbox" checked="checked" ng-model="check" ng-change="selected(check,x.id)" style="width: 26px;vertical-align: bottom;height:17px;"><span class="checkmark"></span></label>{{x.title}}</td>
+                            <td style="text-align: center">{{x.quantityPurchased}}</td>
+                            <td style="text-transform:capitalize;">{{x.buyerName}}</td>
+                            <td style="text-align: center"><i ng-if="x.subTotalCurrencyId=='GBP'" class="fa fa-gbp"></i><i ng-if="x.subTotalCurrencyId=='EUR'" class="fa fa-eur"></i>&nbsp;{{x.subTotal}}</td>
+                            <td style="text-align: center"><i ng-if="x.totalAmountCurrencyId=='GBP'" class="fa fa-gbp"></i><i ng-if="x.totalAmountCurrencyId=='EUR'" class="fa fa-eur"></i>&nbsp;{{x.totalAmount}}</td>
+                            <td><i ng-if="x.subTotal!=x.totalAmount && x.transactionArrayLength>='1' && x.orderStatus!='AwaitingPayment'" class="fa fa-check-circle" uib-tooltip="{{x.shippingServiceSelected}}" tooltip-placement="top-left" style="font-size: 14px; color:green;margin-left: 37px;"></i><i ng-if="x.subTotal==x.totalAmount && x.orderStatus!='AwaitingPayment'"class="fa fa-times-circle" style="font-size: 14px;color:lightgray;margin-left: 37px;"></i></td>
+                            <td style="text-align: center">{{x.shippedDate | date:'mediumDate'}}</td>
+
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination  items-per-page="200" max-size="10"  total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadPaidAndDispatchedOrders(params.appId,value)"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

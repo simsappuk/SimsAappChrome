@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN order_dropship_status CHARACTER VARYING(255);

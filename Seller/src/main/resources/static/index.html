@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Stock Management System</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+
+    <link rel="stylesheet" href="/handsontable/handsontable.full.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+
+</head>
+
+    <body>
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+
+            <!-- START PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <!-- START X-NAVIGATION -->
+                <ul class="x-navigation">
+                    <li class="xn-logo">
+                        <a href="index.html">SIMS</a>
+                        <a href="#" class="x-navigation-control"></a>
+                    </li>
+                    <li class="xn-profile">
+                        <div class="profile">
+                            <div class="profile-image">
+                                <!--<img src="https://i.ibb.co/p4pVmC9/logo.png">
+-->                                <img src="https://i.ibb.co/CstKtJs/Inventory-Management-01.png" alt="John Doe"/>
+                            </div>
+                            <div class="profile-data">
+<!--
+                                <div class="profile-data-title-name">Inventory Manager</div>
+-->
+                                <!--<div class="profile-data-title">Inventory Manager</div>-->
+                            </div>
+                            <div class="profile-controls">
+                                <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
+                                <a href="pages-messages.html" class="profile-control-right"><span class="fa fa-envelope"></span></a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="{{linkCss=='dashboard'?'active':''}}">
+                        <a href="#!/dashboard"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                    </li>
+                    <li class="xn-openable">
+                        <a class="collapsible"><span class="fa fa-list"></span> <span class="xn-text">Active Listings</span></a>
+                        <ul ng-repeat="x in tableVal" ng-if="x.accountType=='eBay'">
+                            <li class="xn-title" ng-if="x.accountType=='eBay'" ><b style="font-weight:600;">{{x.accountType}}'s {{x.accountName}}</b></li>
+                            <li><a href="#!/ActiveListing/{{x.id}}"><span class="fa fa-heart"></span> Active Listings</a></li>
+                             <li><a href="#!/dropship/{{x.id}}"><span class="fa fa-dropbox"></span>Dropship Listings</a></li>
+                            <li><a href="#!/reset/{{x.id}}"><span class="fa fa-undo"></span>Reset Listings</a></li>
+                            <li><a href="#!/compete/{{x.id}}"><span class="fa fa-rebel"></span>Compete Listings</a></li>
+                            <li><a href="#!/reListing/{{x.id}}"><span class="fa fa-repeat"></span>End-ReList Listings</a></li>
+                        </ul>
+                    </li>
+                    <li class="xn-openable">
+                        <a class="collapsible"><span class="fa fa-list"></span> <span class="xn-text">Vinted</span></a>
+                        <ul ng-repeat="x in tableVal" ng-if="x.accountType=='vinted'">
+                            <li class="xn-title" ng-if="x.accountType=='vinted'" ><b style="font-weight:600;">{{x.accountType}}'s {{x.accountName}}</b></li>
+                            <li><a href="#!/vinted/{{x.accountName}}"><span class="fa fa-heart"></span> Active Listings</a></li>
+                            <li><a href="#!/vintedSold/{{x.accountName}}"><span class="fa fa-repeat"></span>Sold Listings</a></li>
+                            <li><a href="#!/vintedDispatch/{{x.accountName}}"><span class="fa fa-rebel"></span>Dispatched</a></li>
+                            <li><a href="#!/vintedStock/{{x.accountName}}"><span class="fa fa-shopping-cart"></span>Stock</a></li>
+                        </ul>
+                    </li>
+                    <li class="xn-openable">
+                        <a class="collapsible"><span class=" fa fa-th"></span> <span class="xn-text">Orders</span></a>
+                        <ul ng-repeat="x in tableVal">
+                            <li class="xn-title"><b style="font-weight:600;">{{x.accountType}}'s {{x.accountName}}</b></li>
+                            <li ng-if="x.accountType=='eBay'"><a href="#!/orders/{{x.id}}"><span class="fa fa-list-ul"></span>All Orders</a></li>
+                            <li ng-if="x.accountType=='Amazon'"><a href="#!/orders/{{x.accountType}}/{{x.id}}"><span class="fa fa-list-ul"></span>Orders</a></li>
+                            <li ng-if="x.accountType=='eBay'"><a href="#!/orders/{{x.id}}/awaitingPayment"><span class="fa fa-credit-card"></span>Awaiting Payment</a></li>
+                            <li ng-if="x.accountType=='eBay'"><a href="#!/orders/{{x.id}}/awaitingDispatch"><span class="fa fa-shopping-cart"></span>Awaiting Dispatch</a></li>
+                            <li ng-if="x.accountType=='eBay'"><a href="#!/orders/{{x.id}}/paidAndDispatched"><span class="fa fa-truck"></span>Paid and Dispatched</a></li>
+                            <li ng-if="x.accountType=='eBay'"><a href="#!/orders/{{x.id}}/dropshipped"><span class="fa fa-external-link"></span>Dropshipped</a></li>
+                            <li ng-if="x.accountType=='eBay'"><a href="#!/orders/{{x.id}}/dropshipResetListingOrders"><span class="fa fa-mail-forward"></span>Sold On Reset</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="xn-openable">
+                        <a class="collapsible"><span class=" fa fa-th-list"></span> <span class="xn-text">Stock</span></a>
+                        <ul ng-repeat="x in tableVal" ng-if="x.accountType=='eBay'">
+                            <li class="xn-title"><b style="font-weight:600;">{{x.accountType}}'s {{x.accountName}}</b></li>
+                            <li><a href="#!/stock/{{x.id}}"><span class=" fa fa-database"></span> <span class="xn-text">Existing Stock</span></a></li>
+                            <li><a href="#!/limitedStock/{{x.id}}"><span class="fa fa-outdent"></span>Limited Stock</a></li>
+                            <li><a ng-if="x.updateIndicator==false||x.updateIndicator==null" href="#!/externalStockLinks/{{x.id}}"><span class="fa fa-external-link"></span>External Stock Links</a>
+                                <a ng-if="x.updateIndicator==true" style="background-image:linear-gradient(to left,green,black)" href="#!/externalStockLinks/{{x.id}}"><span class="fa fa-external-link"></span>External Stock Links</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="{{linkCss=='upload'?'active':''}} xn-openable">
+                        <a class="collapsible"><span class="fa fa-print"></span> <span class="xn-text">Postage Labels</span></a>
+                        <ul ng-repeat="x in tableVal" ng-if="x.accountType=='eBay'">
+                            <li>
+                                <a href="#!/upload/{{x.id}}">
+                                    <span class="fa fa-user"></span>
+                                    <span class="xn-text">{{x.accountName}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <a href="#!/replacements"><span class="fa fa-edit"></span><span class="xn-text">Replacements</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="{{linkCss=='purchaseOrders'?'active':''}} xn-openable">
+                        <a class="collapsible"><span class="fa fa-file-text"></span> <span class="xn-text">Purchase Orders</span></a>
+                        <ul ng-repeat="x in tableVal" ng-if="x.accountType=='eBay'" >
+                        <li><a href="#!/orders/{{x.spreadSheetId}}/1/20/{{x.id}}"><span class="fa fa-file-text-o"></span><span class="xn-text">{{x.accountName}}</span></a>
+                        </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="{{linkCss=='log'?'active':''}} xn-openable">
+                        <a class="collapsible"><span class="fa fa-file-text"></span> <span class="xn-text">Activity Log</span></a>
+                        <ul>
+                            <li><a href="#!/log/1pXwy9Z0y89cVRFb031lH-EV7bxICiciUEoTiUp35Xdo"><span class="fa fa-hdd-o"></span> <span class="xn-text">PoundMonkey</span></a></li>
+                            <li><a href="#!/log/13AT1a8DZgTBvuneAODp1wN-EojFqu0igIa2XtGqfXxs"><span class="fa fa-hdd-o"></span> <span class="xn-text">Excelstuff</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="xn-openable">
+                        <a class="collapsible"><span class="fa fa-cogs"></span> <span class="xn-text">Settings</span></a>
+                        <ul >
+                            <li ><a href="#!/scheduler"><span class="fa fa-clock-o"></span>Scheduler</a></li>
+                            <li class="xn-openable"><a><span class="fa fa-user"></span>Users</a>
+                            <ul ng-repeat="x in tableVal">
+                                <li><a href="#!/users/{{x.id}}">{{x.accountName}}</a></li>
+                            </ul></li>
+                            <!--
+                            <li ><a href="#!/usersgroup/{{x.id}}"><span class="fa fa-users"></span>Groups</a></li>
+-->
+                            <li ><a href="#!/category"><span class="fa fa-plus-circle"></span>Item Category</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="{{linkCss=='accounts'?'active':''}}"><a href="#!/accounts"><span class="fa fa-briefcase"></span><span class="xn-text">Online Accounts</span></a></li>
+
+
+
+                </ul>
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                    <!-- SEARCH -->
+                    <!--<li class="xn-search">-->
+                        <!--<form role="form">-->
+                            <!--<input type="text" name="search" placeholder="Search..."/>-->
+                        <!--</form>-->
+                    <!--</li>-->
+                    <a id="authorize_button" class="btn btn-info" style="margin-top:10px;display:none;">Authorize</a>
+                    <a id="signout_button" class="btn btn-info" style="margin-top:10px;display:none;">Sign Out</a>
+
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >File<span class="caret"></span></a>
+                        <ul class="dropdown-menu1 multi-level1">
+                            <li class="dropdown-submenu1"><a class="dropdown-toggle" data-toggle="dropdown" style="background-color:white;color:initial;padding: 8px;border-bottom-color: Black;" href="">New</a>
+                                <ul class="dropdown-menu1 multi-level1">
+                                    <li><a style="margin:4px;background-color:white;color:black;margin-top:1.5px;padding:8px;border-bottom-color:Black;" ng-click="showFoldersPopup()"href="">New Folder</a></li>
+                                    <li><a style="background-color: white;color:black;margin-top: -4px;margin-left: 4px;padding: 8px;" ng-click="createSheet()" href="">Create Sheet</a></li>
+                                </ul>
+                            </li>
+                    <li><a style="background-color:white;color:initial;padding:8px;border-bottom-color:Black;" href="" ng-click="showPopup()">Open</a></li>
+                    <li><a style="background-color:white;color:initial;padding: 8px;" href="#">Save</a></li>
+                        </ul>
+                    </li>
+                    <a ng-click="showCalculator()" class="btn btn-info " style="margin-top:11px;background:#1d2127;border-color:darkcyan;">Profit Calculator</a>
+                    <!-- END SEARCH -->
+                    <!-- SIGN OUT -->
+                    <li class="xn-icon-button pull-right">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
+                    </li>
+                    <!-- END SIGN OUT -->
+                    <!-- MESSAGES -->
+                    <li class="xn-icon-button pull-right hidden">
+                        <a href="#"><span class="fa fa-comments"></span></a>
+                        <div class="informer informer-danger">4</div>
+                        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><span class="fa fa-comments"></span> Messages</h3>
+                                <div class="pull-right">
+                                    <span class="label label-danger">4 new</span>
+                                </div>
+                            </div>
+                            <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+                                <a href="#" class="list-group-item">
+                                    <div class="list-group-status status-online"></div>
+                                    <img src="assets/images/users/user2.jpg" class="pull-left" alt="John Doe"/>
+                                    <span class="contacts-title">John Doe</span>
+                                    <p>Praesent placerat tellus id augue condimentum</p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <div class="list-group-status status-away"></div>
+                                    <img src="assets/images/users/user.jpg" class="pull-left" alt="Dmitry Ivaniuk"/>
+                                    <span class="contacts-title">Dmitry Ivaniuk</span>
+                                    <p>Donec risus sapien, sagittis et magna quis</p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <div class="list-group-status status-away"></div>
+                                    <img src="assets/images/users/user3.jpg" class="pull-left" alt="Nadia Ali"/>
+                                    <span class="contacts-title">Nadia Ali</span>
+                                    <p>Mauris vel eros ut nunc rhoncus cursus sed</p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <div class="list-group-status status-offline"></div>
+                                    <img src="assets/images/users/user6.jpg" class="pull-left" alt="Darth Vader"/>
+                                    <span class="contacts-title">Darth Vader</span>
+                                    <p>I want my money back!</p>
+                                </a>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <a href="pages-messages.html">Show all messages</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- END MESSAGES -->
+                    <!-- TASKS -->
+                    <li class="xn-icon-button pull-right hidden">
+                        <a href="#"><span class="fa fa-tasks"></span></a>
+                        <div class="informer informer-warning">3</div>
+                        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><span class="fa fa-tasks"></span> Tasks</h3>
+                                <div class="pull-right">
+                                    <span class="label label-warning">3 active</span>
+                                </div>
+                            </div>
+                            <div class="panel-body list-group scroll" style="height: 200px;">
+                                <a class="list-group-item" href="#">
+                                    <strong>Phasellus augue arcu, elementum</strong>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">50%</div>
+                                    </div>
+                                    <small class="text-muted">John Doe, 25 Sep 2014 / 50%</small>
+                                </a>
+                                <a class="list-group-item" href="#">
+                                    <strong>Aenean ac cursus</strong>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">80%</div>
+                                    </div>
+                                    <small class="text-muted">Dmitry Ivaniuk, 24 Sep 2014 / 80%</small>
+                                </a>
+                                <a class="list-group-item" href="#">
+                                    <strong>Lorem ipsum dolor</strong>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%;">95%</div>
+                                    </div>
+                                    <small class="text-muted">John Doe, 23 Sep 2014 / 95%</small>
+                                </a>
+                                <a class="list-group-item" href="#">
+                                    <strong>Cras suscipit ac quam at tincidunt.</strong>
+                                    <div class="progress progress-small">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
+                                    </div>
+                                    <small class="text-muted">John Doe, 21 Sep 2014 /</small><small class="text-success"> Done</small>
+                                </a>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <a href="pages-tasks.html">Show all tasks</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- END TASKS -->
+                </ul>
+
+                <div ng-view></div>
+                <!-- PAGE CONTENT WRAPPER -->
+
+                <!-- END PAGE CONTENT WRAPPER -->
+            </div>
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+        <!-- danger with sound -->
+        <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="message-box-sound-2">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-times"></span> DANGER!</div>
+                    <div class="mb-content">
+                        <p>{{errorMsg}}</p>
+                    </div>
+                    <div class="mb-footer">
+                        <button class="btn btn-default btn-lg pull-right mb-control-close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end danger with sound -->
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                    <div class="mb-content">
+                        <p>Are you sure you want to log out?</p>
+                        <p>Press No if you want to continue work. Press Yes to logout current user.</p>
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <a href="login" class="btn btn-success btn-lg">Yes</a>
+                            <button class="btn btn-default btn-lg mb-control-close">No</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MESSAGE BOX-->
+
+        <!-- START PRELOADS -->
+        <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
+        <!-- END PRELOADS -->
+
+    <!-- START SCRIPTS -->
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular/angular-cookies.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="/handsontable/handsontable.full.js"></script>
+        <script src="/handsontable/ngHandsontable.js?1=2"></script>
+        <script src="app.js"></script>
+        <script src="view1/view1.js"></script>
+        <script src="dropship/dropship.js"></script>
+        <script src="compete/compete.js"></script>
+        <script src="view2/view2.js"></script>
+        <script src="activityLog/log.js"></script>
+        <script src="orders/handsonOrdersList.js"></script>
+        <script src="orders/orders.js"></script>
+        <script src="itemCategory/itemCategory.js"></script>
+        <script src="channel/channel.js"></script>
+        <script src="awd/awd.js"></script>
+        <script src="relist/relist.js"></script>
+        <script src="reset/reset.js"></script>
+        <script src="externalStockLinks/externalStockLinks.js"></script>
+        <script src="upload/upload.js"></script>
+        <script src="unavailable/unavailable.js"></script>
+        <script src="sales/sales.js"></script>
+        <script src="user/user.js"></script>
+        <script src="scheduler/scheduler.js"></script>
+        <script src="usergroup/view1.js"></script>
+        <script src="listing/controller.js"></script>
+        <script src="vinted/vinted.js"></script>
+        <script src="accounts/accounts.js"></script>
+        <script async defer src="https://apis.google.com/js/api.js"></script>
+        <script type="text/javascript" src="https://myliang.github.io/x-spreadsheet/xspreadsheet.js"></script>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var openable=document.getElementsByClassName("xn-openable");
+            var i;
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var result = [],
+            node = this.parentNode.firstChild;
+            while ( node ) {
+            if ( node !== this && node.nodeType === Node.ELEMENT_NODE )
+            result.push( node );
+            node = node.nextElementSibling || node.nextSibling;
+            }
+            for(j=0;j<result.length;j++){
+            if (result[j].style.display === "block") {
+            result[j].style.display = "none";
+            }
+            else{
+            result[j].style.display = "block";
+            }
+            }
+            });
+            }
+        </script>
+        <script type="text/javascript">
+// Client ID and API key from the Developer Console
+//    var CLIENT_ID = '<YOUR_CLIENT_ID>';
+//    var API_KEY = '<YOUR_API_KEY>';
+// Client ID and API key from the Developer Console
+var CLIENT_ID = '507610940611-gks170sqbaaq1hjnfv8q2oi76tlpnjog.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyAuusn453H-ldA_mfJsdugKgb8YkoBxT1A';
+var facebook=[]; var cex=[]; var status="";
+
+// Array of API discovery doc URLs for APIs used by the quickstart
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest", "https://sheets.googleapis.com/$discovery/rest?version=v4"];
+
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/spreadsheets.readonly';
+
+var authorizeButton = document.getElementById('authorize_button');
+var signoutButton = document.getElementById('signout_button');
+
+/**
+ *  On load, called to load the auth2 library and API client library.
+ */
+function handleClientLoad() {
+    this.gapi.load('client:auth2', initClient);
+}
+
+/**
+ *  Initializes the API client library and sets up sign-in state
+ *  listeners.
+ */
+function initClient() {
+    gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES
+    }).then(function() {
+        // Listen for sign-in state changes.
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+        // Handle the initial sign-in state.
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        authorizeButton.onclick = handleAuthClick;
+        signoutButton.onclick = handleSignoutClick;
+    }, function(error) {
+        appendPre(JSON.stringify(error, null, 2));
+    });
+}
+
+var sheetObject = document.getElementById('x-spreadsheet-demo');
+
+/**
+ *  Called when the signed in status changes, to update the UI
+ *  appropriately. After a sign-in, the API is called.
+ */
+function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+        authorizeButton.style.display = 'none';
+        signoutButton.style.display = 'inline-table';
+        if (sheetObject != null)
+            sheetObject.style.display = 'inline-table';
+        listMajors();
+    } else {
+        authorizeButton.style.display = 'inline-table';
+        signoutButton.style.display = 'none';
+        if (sheetObject != null)
+            sheetObject.style.display = 'none';
+    }
+}
+
+/**
+ *  Sign in the user upon button click.
+ */
+function handleAuthClick(event) {
+    gapi.auth2.getAuthInstance().signIn();
+}
+
+/**
+ *  Sign out the user upon button click.
+ */
+function handleSignoutClick(event) {
+    gapi.auth2.getAuthInstance().signOut();
+}
+function callController(){
+ document.location.href ="https://simsapp.co.uk/#!/stock-log/"+window.location.href.split("/")[5]+"/Facebook/Data";
+}
+
+/**
+ * Append a pre element to the body containing the given message
+ * as its text node. Used to display the results of the API call.
+ *
+ * @param {string} message Text to be placed in pre element.
+ */
+function appendPre(message) {
+    //    var pre = document.getElementById('content');
+    //     var textContent = document.createTextNode(message + '\n');
+    //   pre.appendChild(textContent);
+}
+
+/**
+ * Print the names and majors of students in a sample spreadsheet:
+ * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+ */
+
+function generateSheetData(obj, params) {
+    /*alert(obj.result.sheets.length)*/
+    var sheetList = obj.result.sheets;
+    var entireData = {};
+    var count = 0;
+    var number = 0;
+    for (i = 0; i < sheetList.length; i++) {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: params.spreadsheetId,
+            range: sheetList[i].properties.title,
+        }).then(function(response) {
+            var sheetName = response.result.range.substring(0, response.result.range.indexOf('!')).replaceAll("\'", "");
+            for (var j = 0; j < sheetList.length; j++) {
+                if (sheetList[j].properties.title == sheetName) {
+                    number = j;
+                    break;
+                }
+            }
+            var sheetNumber = "sheet" + number;
+            var name = "Name";
+            var header=response.result.values[0];
+            entireData[sheetNumber] = response.result.values.reverse();
+            if (entireData[sheetNumber] != undefined && sheetName != undefined)
+                entireData[sheetNumber][name] = sheetName;
+            console.log(entireData);
+            if(sheetName=='Facebook Orders'){
+                facebook=entireData[sheetNumber];
+                if(window.location.href.includes('stock-log'))
+                callController();
+            }
+            else if(sheetName=='CEX'){
+              cex=entireData[sheetNumber];
+              if(window.location.href.includes('stock-log'))
+                callCexController();
+            }
+            count++;
+            if (count == sheetList.length){
+                $.ajax({
+                       url: 'https://simsapp.co.uk/api/orders/setTitles/notSentItem?site=' + 'log',
+                       type: "POST",
+                       contentType: 'application/json',
+                       data: JSON.stringify(entireData.sheet2),
+                       dataType: 'json',
+                       success: function (returnVal){
+                       entireData.sheet2=returnVal;
+                       entireData.sheet2[name]="Notsent Item";
+                       load(entireData, sheetList)
+                       },
+                       error:function(textStatus,errorThrown){
+                            noty({text: 'Errror while replaing titles', layout: 'topRight', type: 'error',killer : true,timeout:3000});
+                            load(entireData,sheetList)
+                       }
+                });
+            }
+            //   var range = response.result;
+            //   if (range.values.length > 0) {
+            // //    appendPre('Name, Major:');
+            //     for (i = 0; i < range.values.length; i++) {
+            //       var row = range.values[i];
+            //       // Print columns A and E, which correspond to indices 0 and 4.
+            //   //    appendPre(row[0] + ', ' + row[4]);
+            //     }
+            //   } else {
+            //     appendPre('No data found.');
+            //   }
+        }, function(response) {
+            appendPre('Error: ' + response.result.error.message);
+        });
+    }
+}
+
+
+function listMajors() {
+    var idLoc = window.location.href.substring(window.location.href.lastIndexOf('/') + 1, window.location.href.length);
+    var params = {
+        // The spreadsheet to request.
+        spreadsheetId: idLoc, // TODO: Update placeholder value.
+
+        // The ranges to retrieve from the spreadsheet.
+        ranges: [], // TODO: Update placeholder value.
+
+        // True if grid data should be returned.
+        // This parameter is ignored if a field mask was set in the request.
+        includeGridData: false, // TODO: Update placeholder value.
+    };
+
+
+
+    var request = gapi.client.sheets.spreadsheets.get(params);
+    request.then(function(response) {
+        // TODO: Change code below to process the `response` object:
+        console.log(response.result);
+        // load(response);
+        generateSheetData(response, params);
+    }, function(reason) {
+        console.error('error: ' + reason.result.error.message);
+    });
+
+}
+
+function getCellData(obj) {
+    var tobj = {
+        "cells": {}
+    };
+    for (var i = 0; i < obj.length; i++)
+        tobj.cells[i] = {
+            "text": obj[i]
+        };
+    return tobj;
+}
+
+
+
+function load(obj, sheetList) {
+    var data = [];
+    var sheetData = {};
+    for (var j = 0; j < sheetList.length; j++) {
+        var sheetNumber = "sheet" + j;
+        var temp = obj[sheetNumber];
+        var jobj = "";
+        var count = 0;
+        var obj1 = {
+            "mem": {
+                len: 10
+            }
+        };
+        if (temp != undefined) {
+            for (var i = 0; i < temp.length; i++)
+                obj1.mem[i] = getCellData(temp[i])
+
+            obj1.mem.len = Object.keys(obj1.mem).length + 20;
+            sheetData.rows = obj1.mem;
+            sheetData.name = obj[sheetNumber].Name;
+            data.push(sheetData);
+            sheetData = {};
+        }
+    }
+    var xs = x_spreadsheet('#x-spreadsheet-demo', {})
+        .loadData(data).change((cdata) => {
+            console.log(cdata);
+            console.log(xs.validate());
+        });
+    listFiles();
+}
+
+function listFiles() {
+    gapi.client.drive.files.list({
+        'pageSize': 100,
+        'fields': "nextPageToken, files(id, name)"
+    }).then(function(response) {
+
+        var files = response.result.files;
+        var fileText = [];
+        if (files && files.length > 0) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                fileText[i] = (file.name + ' (' + file.id + ')');
+            }
+        }
+        $.ajax({
+            url: 'https://simsapp.co.uk/api/orders/get/postJsonData?site=' + 'log',
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(files),
+            dataType: 'json'
+        });
+    });
+}
+	</script>
+
+        <script src="components/version/version.js"></script>
+        <script src="components/version/version-directive.js"></script>
+        <script src="components/version/interpolate-filter.js"></script>
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="js/ui-bootstrap-tpls-1.3.3.js"></script>
+
+        <!-- END PLUGINS -->
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+
+        <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
+        <!-- START THIS PAGE PLUGINS-->
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+        <script type="text/javascript" src="js/plugins/noty/jquery.noty.js"></script>
+        <script type="text/javascript" src="js/plugins/noty/layouts/topRight.js"></script>
+        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
+        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
+        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
+        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
+
+        <script type="text/javascript" src="js/plugins/moment.min.js"></script>
+        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+        <script type="text/javascript">
+                function notyConfirm(){
+                    noty({
+                        text: 'Do you want to continue?',
+                        layout: 'topRight',
+                        buttons: [
+                                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                                    $noty.close();
+                                    noty({text: 'You clicked "Ok" button', layout: 'topRight', type: 'success'});
+                                }
+                                },
+                                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                                    $noty.close();
+                                    noty({text: 'You clicked "Cancel" button', layout: 'topRight', type: 'error'});
+                                    }
+                                }
+                            ]
+                    })
+                }
+            </script>
+        <!-- END THIS PAGE PLUGINS-->
+        <script type="text/javascript" src="js/settings.js"></script>
+        <script type="text/javascript" src="js/plugins.js"></script>
+        <script type="text/javascript" src="js/actions.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
+        <script type="text/javascript" src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+        <!-- START TEMPLATE -->
+
+        <!-- END TEMPLATE -->
+    <!-- END SCRIPTS -->
+    </body>
+</html>
+<!-- <li class="{{linkCss=='orders'?'active':''}}">
+                        <a href="#!/orders"> <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/v_collection_png/48x48/shadow/purchase_order_cart.png" title="Purchase Order Cart Icon 48x48" alt="Purchase Order Cart Icon 48x48" width="30" height="30" style="margin: 0 5px 0 0;"> <span class="xn-text">Purchase Orders</span></a>
+
+</li>-->
+
+<!-- <li class="{{linkCss=='channel'?'active':''}}">
+     <a href="#!/channel"><span class=" fa fa-database"></span> <span class="xn-text">Channel</span></a>
+ </li>-->
+<!-- <li class="{{linkCss=='users'?'active':''}}">
+     <a href="#!/users"><span class=" fa fa-user"></span> <span class="xn-text">Users</span></a>
+ </li>
+ <li class="{{linkCss=='groups'?'active':''}}">
+     <a href="#!/usersgroup"><span class=" fa fa-users"></span> <span class="xn-text">Groups</span></a>
+ </li>-->
+<!--li class="{{linkCss=='activeListing'?'active':''}}">
+    <a href="#!/Activelisting"><span class=" fa fa-database"></span> <span class="xn-text">Active Listing</span></a>
+</li-->
+<!--<li class="{{linkCss=='accounts'?'active':''}}">
+    <a href="#!/accounts"><span class=" fa fa-briefcase"></span> <span class="xn-text">Online Accounts</span></a>
+</li>-->

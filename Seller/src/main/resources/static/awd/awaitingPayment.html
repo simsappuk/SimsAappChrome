@@ -1,0 +1,57 @@
+&nbsp;
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><large contenteditable> Awaiting Payment ({{page.totalElements}})</h3>
+                    <ul class="panel-controls">
+                        <li ng-if="!data.upload"><a ng-if="!page.loading" href="#!/orders/{{params.appId}}/awaitingPayment" class="panel-refresh"><span class="fa fa-refresh"></span></a><a ng-if="page.loading"  class="panel-refresh btn-info disabled"><span class="fa fa-refresh fa-spin"></span></a></li>
+                        &nbsp;Sort By:
+                        <select ng-model="value" ng-change="loadAwaitingPaymentOrders(params.appId,value)" style="
+    margin-top: 5px;">
+                            <option value="payment_orderRef_desc">Latest Record</option>
+                            <option value="payment_orderRef_asc">Oldest Record</option>
+                        </select>
+                        <li><a href="#!/orders/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width:9%;">Record ID</th>
+                            <th style=" width: 12%;">Ext. Order ID</th>
+                            <th style="width:23%">Item Title</th>
+                            <th style="text-align: center;width: 11%;">Qty Purchased</th>
+                            <th style="width: 11%;">Buyer Name</th>
+                            <th style="text-align: center;width: 13%;">Total Amount</th>
+                            <th style="text-align: center;">CheckOut Status</th>
+                        </tr>
+                        <tr  ng-repeat="x in EbayListing" ng-click="getStock(x.id)">
+                            <td style="text-align: left">{{x.orderRef}}</td>
+                            <td>{{x.extendedOrderId}}</td>
+                            <td ng-init="ttest=x.name.split(',');feSelect();" style="text-align:left"><img src="{{x.imageUrl}}"/><!--<a ng-click="showDataInPopup(x)" href="">-->{{x.title}}</td>
+                            <td style="text-align: center">{{x.quantityPurchased}}</td>
+                            <td style="text-transform:capitalize;">{{x.buyerName}}</td>
+                            <td style="text-align: center"><i ng-if="x.totalAmountCurrencyId=='GBP'" class="fa fa-gbp"></i><i ng-if="x.totalAmountCurrencyId=='EUR'" class="fa fa-eur"></i>&nbsp;{{x.totalAmount}}</td>
+                            <td style="text-align: center">{{x.status}}</td>
+
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination  items-per-page="200" max-size="10"  total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadAwaitingPaymentOrders(params.appId,value)"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

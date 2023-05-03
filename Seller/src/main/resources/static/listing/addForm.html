@@ -1,0 +1,250 @@
+&nbsp;
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>ADD</strong> Listing to Ebay</h3>
+                        <ul class="panel-controls">
+                            <li><a href="#!/ActiveListing/{{params.id}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Title*</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.title" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Item Category*</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type ng-model="EbayListing.primaryCategoryID" class="form-control">
+                                    </input>
+                                </div>
+                                <span class="help-block">Enter Category ID</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Custom Label</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.sku" class="form-control"/>
+                                </div>
+                                <span class="help-block">Enter SKU</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="col-md-3 col-xs-12 control-label">EAN</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.ean" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <label class="col-md-3 col-xs-12 control-label">Condition*</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <select ng-model="EbayListing.conditionID" class="form-control">
+                                        <option value="1000">New</option>
+                                        <option value="3000">Like New (Used)</option>
+                                        <option value="4000">Very Good</option>
+                                        <option value="5000">Good</option>
+                                        <option value="6000">Acceptable</option>
+                                    </select>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Image URL</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.imageUrl" class="form-control">
+                                </div>
+                                <span class="help-block">Upload One Image URL Only <a href="https://imgbb.com/" target="_blank">Get URL From Here</a></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Description*</label>
+                            <div class="col-md-7 col-xs-12">
+                                <textarea  ng-model="EbayListing.description" class="form-control" rows="9"></textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Platform</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.platform"  class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <label class="col-md-3 col-xs-12 control-label">Genre</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.platform"  class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Brand</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.brand" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <label class="col-md-3 col-xs-12 control-label">MPN</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.mpn" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                        </div>
+
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-md-3 col-xs-12 control-label">Shipping Profile ID</label>-->
+                            <!--<div class="col-md-7 col-xs-12">-->
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+                                    <!--<input type="text" ng-model="EbayListing.shippingProfileId" value="Does Not Apply" class="form-control">-->
+                                <!--</div>-->
+                                <!--<span class="help-block"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                      <!--  <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Shipping Profile Name</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.shippingProfileName" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        &lt;!&ndash;<div class="form-group">&ndash;&gt;
+                            &lt;!&ndash;<label class="col-md-3 col-xs-12 control-label">Return Profile ID</label>&ndash;&gt;
+                            &lt;!&ndash;<div class="col-md-7 col-xs-12">&ndash;&gt;
+                                &lt;!&ndash;<div class="input-group">&ndash;&gt;
+                                    &lt;!&ndash;<span class="input-group-addon"><span class="fa fa-pencil"></span></span>&ndash;&gt;
+                                    &lt;!&ndash;<input type="text" ng-model="EbayListing.returnProfileId" value="Does Not Apply" class="form-control">&ndash;&gt;
+                                &lt;!&ndash;</div>&ndash;&gt;
+                                &lt;!&ndash;<span class="help-block"></span>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                        &lt;!&ndash;</div>&ndash;&gt;
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Return Profile Name</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.returnProfileName" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        &lt;!&ndash;<div class="form-group">&ndash;&gt;
+                            &lt;!&ndash;<label class="col-md-3 col-xs-12 control-label">Payment Profile ID</label>&ndash;&gt;
+                            &lt;!&ndash;<div class="col-md-7 col-xs-12">&ndash;&gt;
+                                &lt;!&ndash;<div class="input-group">&ndash;&gt;
+                                    &lt;!&ndash;<span class="input-group-addon"><span class="fa fa-pencil"></span></span>&ndash;&gt;
+                                    &lt;!&ndash;<input type="text" ng-model="EbayListing.paymentProfileId" value="Does Not Apply" class="form-control">&ndash;&gt;
+                                &lt;!&ndash;</div>&ndash;&gt;
+                                &lt;!&ndash;<span class="help-block"></span>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                        &lt;!&ndash;</div>&ndash;&gt;
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Payment Profile Name</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="EbayListing.paymentProfileName" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>-->
+
+                        <!--<h3>Selling Details</h3>-->
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Price*</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input  ng-model="EbayListing.buyItNowPriceValue" type="number" class="form-control"/>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <label class="col-md-3 col-xs-12 control-label">Quantity*</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input  ng-model="EbayListing.quantityAvailable" type="number" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="panel-footer">
+                        <button ng-click="postListing(EbayListing,params.id)" ng-disabled="!(EbayListing.title && EbayListing.quantityAvailable  && EbayListing.primaryCategoryID && EbayListing.conditionID && EbayListing.description && EbayListing.buyItNowPriceValue)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

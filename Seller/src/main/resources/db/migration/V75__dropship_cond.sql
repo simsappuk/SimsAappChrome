@@ -1,0 +1,1 @@
+ALTER TABLE dropship ADD COLUMN condition character varying(255);

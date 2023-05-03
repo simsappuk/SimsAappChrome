@@ -1,0 +1,1 @@
+delete from orders where order_type='EODB';

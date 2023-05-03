@@ -1,0 +1,151 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+  <div class="row" style="font-size:13px;">
+    <div class="col-md-12">
+
+      <!-- START DEFAULT DATATABLE -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Vinted Stock &nbsp;({{page.totalElements}})</h3>
+          <ul class="panel-controls">&nbsp;
+            <label>
+              <input type="search" uib-tooltip="Search With SKU or Title" class="form-control" ng-enter="search()" placeholder="Search..." style="border-radius:0px;" ng-model="searchText">
+            </label>&nbsp;
+            <!--Listings to Stock:
+            <select ng-model="accountName" ng-change="getListings(accountName)">
+              <option value="PoundMonkey"ng-disabled="false">PoundMonkey</option>
+              <option value="Default">Default</option>
+            </select>-->
+            &nbsp;&nbsp;
+            Minimum Limit:
+            <select ng-model="value" ng-change="setMinLimit(check,value)">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+            &nbsp;&nbsp;
+            Sort By:
+            <select ng-model="value" ng-change="sortBy(value)">
+              <option value="quantityAvailable_desc">Quantity More</option>
+              <option value="quantityAvailable_asc">Quantity Less</option>
+              <option value="skuNumber_desc">Latest SKU</option>
+              <option value="skuNumber_asc">Oldest SKU</option>
+            </select>
+            <a href="#!/vintedStock/{{params.id}}/new" class="btn btn-info pull-right"  style="border-color: antiquewhite;">New Stock</a>
+            <!--a href="#!/vintedSell/{{params}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Sell Now</a-->
+
+            &nbsp;&nbsp;
+            <!--
+                        <a ng-hide="stock.getData==null" href="#!/stock-log/{{params}}/{{stock.getData}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Submit</a>
+            -->
+            <li ng-if="data.upload">
+              <a uib-tooltip="Uploading Data from EBay" class="panel-collapse btn-info disabled">
+                <span class="btn-info fa fa-refresh fa-spin"></span>
+              </a
+              ></li>
+            <li ng-if="!data.upload">
+              <a uib-tooltip="Load Stock"ng-click="load()" class="panel-refresh">
+                <span class="fa fa-refresh"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <table class="table datatable">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th style="text-align: center;width:80px;">Quantity</th>
+              <th style="text-align: center;width:100px;">SKU</th>
+              <th style="text-align: center;width:117px;">Category</th>
+              <th style="text-align: center;width:117px;">Sub-Category</th>
+              <th style="text-align: center;width:95px;">Condition</th>
+              <th style="text-align: center;width:108px;">EAN</th>
+              <th style="text-align: center;width:75px;">Avg Price</th>
+              <th style="text-align: center;width:104px;">Modified Date</th>
+              <!--
+                            <th style="width:190px;">Created Date</th>
+              -->
+            </tr>
+            <tr  ng-repeat="x in tableVal" >
+              <td>
+                <label class="container">
+                  <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
+                  <span class="checkmark"></span>
+                </label>
+                <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" src="{{x.imageUrl}}" style="width:46px;height:60px;"><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:46px;height:60px;"></a>
+                <a href="#!/stock-edit/{{x.accountId}}/{{x.id}}">&nbsp;&nbsp;<text>{{x.title}}</text></a>&nbsp;
+                <a href="#!/stock-history/{{x.id}}">
+                  <i uib-tooltip="{{x.title}} History" tooltip-placement="right" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>
+                </a>
+              </td>
+              <td>
+                <input type="number" min="0" ng-model="x.quantityAvailable" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" style="WIDTH:98%;text-align:center;"class="myInput">
+                <i ng-if="x.linkAwaitingDispatch==true" class="fa fa-check-circle" style="font-size: 14px;margin-left: 30px;color:green;text-align:center;"></i>
+                <i ng-if="x.linkAwaitingDispatch!=true" class="fa fa-times-circle" style="font-size: 14px;color:lightgray; margin-left: 30px;text-align:center;"></i>
+              </td>
+              <td style="text-align: center">
+                <input type="text" style="Width:115%;"ng-model="x.sku" ng-model-options="{updateOn: 'blur'}" ng-change="saveSku(x)" class="myInput">
+              </td>
+              <td style="text-align: center;">
+                <select ng-model="x.itemCategory" ng-change="save(x)" style="width: 100%;text-align:center;background-color:white;" class="myInput">
+                  <option value="console">Console</option>
+                  <option value="games">Games</option>
+                  <option value="accessories">Accessories</option>
+                  <option value="Misc">Mics</option>
+                </select>
+              </td>
+
+              <td style="text-align: center;">
+                <select ng-model="x.itemSubCategory" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" style="width: 100%;text-align:center;background-color:white;" class="myInput">
+                  <option value="Sony PlayStation 4">PS4</option>
+                  <option value="Sony PlayStation 3">PS3</option>
+                  <option value="Sony PlayStation Vita">PS Vita</option>
+                  <option value="Microsoft Xbox One">Xbox One</option>
+                  <option value="Microsoft Xbox 360">Xbox 360</option>
+                  <option value="Microsoft Xbox">Xbox</option>
+                  <option value="Nintendo Wii">Wii</option>
+                  <option value="Nintendo Wii U">Wii U</option>
+                  <option value="Nintendo Switch">Switch</option>
+                  <option value="Nintendo DS">DS</option>
+                  <option value="Nintendo 3DS">3DS</option>
+                </select>
+              </td>
+
+              <td style="text-align: center;">
+                <select type="text" style="text-align: center;width:84%;text-align:center;background-color:white;" ng-model="x.itemCondition" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" class="myInput">
+                  <option>New</option>
+                  <option>Used</option>
+                </select>
+              </td>
+              <td style="text-align: center;">
+                <input type="text" style="Width:104%;text-align:center;"ng-model="x.ean" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" class="myInput">
+              </td>
+              <td style="text-align: center;">{{x.avgPrice}}</td>
+              <td>{{x.modifiedDate|date}}</td>
+
+              <!--
+                            <td>{{x.createdDate | date}}</td>
+              -->
+            </tr>
+            <style>
+            .myInput{border-style:none;}
+            .myInput:hover{ border-style:solid; border:1px solid green;}
+            .myInput:focus{ border-style:solid; border:1px solid red;}
+</style>
+
+            </thead>
+          </table>
+        </div>
+      </div>
+      <!-- END DEFAULT DATATABLE -->
+      <div>
+        <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" boundary-links="true" ng-model="page.currentPage" ng-change="sortBy(value)"></ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- PAGE CONTENT WRAPPER -->

@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN buyer_checkout_message CHARACTER VARYING(255);

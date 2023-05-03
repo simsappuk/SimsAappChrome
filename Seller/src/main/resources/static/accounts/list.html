@@ -1,0 +1,50 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a href="#!/accounts-new" class="btn btn-info pull-right">Add Account Details</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Account</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th>Account Name</th>
+                            <th>Account Type</th>
+                            <th>Inactive Status</th>
+                            <th>url</th>
+                            <th>Created Date</th>
+                            <th>AuthnAuth Token</th>
+                            <th>OAuth Token</th>
+                        </tr>
+                        <tr  ng-repeat="x in tableVal">
+                            <td> <img src="{{x.imageUrl}}"/><a href="#!/accounts-edit/{{x.id}}">&nbsp;&nbsp;{{x.accountName}}</a></td>
+
+
+                            <td><a href="#!/accounts-edit/{{x.id}}">{{x.accountType}}</a></td>
+
+                            <td>{{x.inactive}}</td>
+                            <td>{{x.url}}&nbsp;<i ng-if="x.currency=='GBP'" class="fa fa-gbp"></i></td><br/>
+                            <td>{{x.createdDate | date}}</td>
+                            <td>{{x.apiToken}}</td>
+                            <td>{{x.oauthApiToken}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination total-items="page.totalElements" ng-model="page.currentPage" ng-change="load()"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- PAGE CONTENT WRAPPER -->

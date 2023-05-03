@@ -1,0 +1,213 @@
+&nbsp;<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+                <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>New</strong> Stock</h3>
+                        <ul class="panel-controls">
+                            <a href="#!/stock-automatic/{{params}}" class="btn btn-info pull-left" style="border-color: antiquewhite;">Automatic</a>
+                            <li><a href="#!/stock/{{params}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Title</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="stock.title" class="form-control"/>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Item Condition</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <select type="text" ng-model="stock.itemCondition" class="form-control" style="width:180px;">
+                                        <option>New</option>
+                                        <option>Used</option>
+                                    </select>
+                                </div>
+                                <span class="help-block">Enter Item Condition</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Image URL</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="stock.imageUrl" class="form-control"/>
+                                </div>
+                                <span class="help-block">Upload One Image URL </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Item Category</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <select ng-model="stock.itemCategory" class="form-control" style="width:180px;">
+                                        <option value="console">Console</option>
+                                        <option value="games">Games</option>
+                                        <option value="accessories">Accessories</option>
+                                        <option value="Misc">Mics</option>
+                                    </select>
+                                </div>
+                                <span class="help-block">Select Item Category</span>
+                            </div>
+                            <label class="col-md-1 col-xs-12 control-label" style="width:127px;">Sub Category</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group">
+                                    <select ng-model="stock.itemSubCategory" class="form-control" style="width: 114px;">
+                                        <option value="Sony PlayStation 4">PS4</option>
+                                        <option value="Sony PlayStation 3">PS3</option>
+                                        <option value="Sony PlayStation Vita">PS Vita</option>
+                                        <option value="Microsoft Xbox One">Xbox One</option>
+                                        <option value="Microsoft Xbox 360">Xbox 360</option>
+                                        <option value="Microsoft Xbox">Xbox</option>
+                                        <option value="Nintendo Wii">Wii</option>
+                                        <option value="Nintendo Wii U">Wii U</option>
+                                        <option value="Nintendo Switch">Switch</option>
+                                        <option value="Nintendo DS">DS</option>
+                                        <option value="Nintendo 3DS">3DS</option>
+                                    </select>
+                                </div>
+                                <span class="help-block">Select Sub Category</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">SKU</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="sku" name="stockSku" class="form-control"/>
+                                </div>
+                                    <span class="help-block" >Enter SKU code
+                                       <button ng-show="editSKU" ng-click="replaceSku(sku)" class="btn btn-info" style="float:right;border-radius:7px;margin-bottom:5px;">Click to edit Sku</button>
+                                       <button ng-show="!editSKU" ng-click="AddSku(sku)" class="btn btn-primary" style="float:right;border-radius:7px;margin-bottom:5px;">Click to add SKU</button>
+                                    </span>
+                                <select  style="width:-webkit-fill-available;border:1px solid!important;" size="4"><option ng-repeat="a in stock.sku track by $index" ng-click="pushSku(a)" >{{a}}</option></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Item ID</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="itemId" class="form-control"/>
+                                </div>
+                                <span class="help-block" >Enter Item ID
+                                       <button ng-show="editItemId" ng-click="replaceItemId(itemId)" class="btn btn-info" style="float:right;border-radius:7px;margin-bottom:5px;">Click to edit ItemID</button>
+                                       <button ng-show="!editItemId" ng-click="AddItemId(itemId)" class="btn btn-primary" style="float:right;border-radius:7px;margin-bottom:5px;">Click to add Item ID</button>
+                                    </span>
+                                <select  style="width:-webkit-fill-available;border:1px solid!important;" size="6" ng-if="stock.itemDetails.length!=0"><option ng-repeat="a in stock.itemDetails track by $index">{{a.itemId}}</option></select>
+                                <select  style="width:-webkit-fill-available;border:1px solid!important;" size="6" ng-if="stock.itemId!=null && stock.itemDetails.length==0"><option ng-repeat="a in stock.itemId track by $index" ng-click="pushItemId(a)" >{{a}}</option></select>
+                            </div>
+                            <div class="col-md-1 col-xs-12">
+                                <select  style="width:-webkit-fill-available;border:1px solid!important;margin-top:69px;" size="6"><option ng-repeat="a in stock.itemDetails track by $index" ng-click="pushItemId(a)" disabled >{{a.price}}</option></select>
+                                <span class="help-block">Item ID Quantities</span>
+                            </div>
+                            <div class="col-md-1 col-xs-12">
+                                <select  style="width:-webkit-fill-available;border:1px solid!important;margin-top:69px;" size="6"><option ng-repeat="a in stock.itemDetails track by $index" ng-click="pushItemId(a)" disabled >{{a.quantity}}</option></select>
+                                <span class="help-block"    >Item ID Prices</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">EAN</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="ean" class="form-control"/>
+                                </div>
+                                <span class="help-block" >Enter EAN code
+                                       <button ng-show="editEan" ng-click="replaceEan(ean)" class="btn btn-info" style="float:right;border-radius:7px;margin-bottom:5px;">Click to edit EAN</button>
+                                       <button ng-show="!editEan" ng-click="AddEan(ean)" class="btn btn-primary" style="float:right;border-radius:7px;margin-bottom:5px;">Click to add EAN</button>
+                                    </span>
+                                <select  style="width:-webkit-fill-available;border:1px solid!important;" size="4"><option ng-repeat="a in stock.ean track by $index" ng-click="pushEan(a)" >{{a}}</option></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">URL</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="stock.imageUrl" class="form-control"/>
+                                </div>
+                                <span class="help-block">Enter URL</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Description</label>
+                            <div class="col-md-6 col-xs-12">
+                                <textarea  ng-model="stock.description" class="form-control" rows="5"></textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">HS Tariff Code</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="stock.tariffCode" class="form-control"/>
+                                </div>
+                                <span class="help-block">Enter code</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Stock Available</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                        <input  ng-model="stock.quantityAvailable" type="number" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input  ng-model="stock.buyItNowPrice" type="number" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Average Purchase Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input  ng-model="stock.avgPrice" type="number" class="form-control" readonly/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <a href="#!/stock-history/{{stock.id}}" class="btn btn-default pull-right m-r-xs"> History</a>
+                       <button ng-disabled="stock.sku.length==0" ng-click="save(stock)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

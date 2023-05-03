@@ -1,0 +1,56 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12" style="font-size:13px;">
+        <a href="#!/dropship/form/{{params.appId}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Add Dropship Item</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dropship Information</h3>
+                    <ul class="panel-controls">
+                        <!--<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>-->
+                        <li ng-if="data.upload"><a uib-tooltip="Uploading Data from EBay" class="panel-collapse btn-info disabled"><span class="btn-info fa fa-refresh fa-spin"></span></a></li>
+                        <li ng-if="!data.upload"><a ng-if="!page.loading" href="#!/dropship/{{params.appId}}" class="panel-refresh"><span class="fa fa-refresh"></span></a><a ng-if="page.loading"  class="panel-refresh btn-info disabled"><span class="fa fa-refresh fa-spin"></span></a></li>
+                        <!--<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>-->
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width:10%">Link ID</th>
+                            <!--<th style="width:7%;text-align: center">Profit%</th>-->
+                            <th style="text-align: center;width:9%">Buying Price</th>
+                            <th style="text-align: center;width:7%">Condition</th>
+                            <th style="text-align: center;width:10%">Item Id</th>
+                            <th style="text-align: center;width:12%">Ebay Selling Price</th>
+                            <th style="text-align: center;width:12%">Out Of Stock Price</th>
+                            <th style="text-align: center;width:14%">Last Revised Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in dropship">
+                            <td  ng-show="x.source!='ebay'"  style="text-align: left"><a href="{{x.link}}" tooltip-placement="top-right" uib-tooltip="Dropship URL" target="_blank">{{x.link}}</a></td>
+                            <td  ng-show="x.source=='ebay'" style="text-align: left"><a href="https://www.ebay.co.uk/itm/{{x.link}}" tooltip-placement="top-right" uib-tooltip="Dropship URL" target="_blank">https://www.ebay.co.uk/itm/{{x.link}}</a></td>
+                            <!--<td  style="text-align:center">{{x.profitPercent}}</td>-->
+                            <td style="text-align: center">{{x.sellerPrice}}</td>
+                            <td style="text-align: center">{{x.condition}}</td>
+                            <td ng-if='x.pause==false' style="text-align: center"><a href="#!/dropship-edit/{{params.appId}}/{{x.id}}">{{x.itemId}}</a></td>
+                            <td ng-if='x.pause==true' style="text-align: center"><a href="#!/dropship-edit/{{params.appId}}/{{x.id}}" style="color:crimson;">{{x.itemId}}</a></td>
+                            <td style="text-align: center">{{x.ebayPrice}}</td>
+                            <td style="text-align: center">{{x.outOfStockPrice}}</td>
+                            <td style="text-align: center">{{x.lastEffectiveDate|date:'medium'}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination  items-per-page="200" max-size="10"  total-items="page.totalElements" ng-model="page.currentPage" ng-change=""></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

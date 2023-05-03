@@ -1,0 +1,1 @@
+ALTER TABLE reset ADD COLUMN variations_types bytea;

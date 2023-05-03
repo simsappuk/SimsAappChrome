@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="modal-content"><div class="modal-header ng-scope">
+    <h3 class="modal-title" id="modal-title">Update Details</h3>
+</div>
+    <div class="modal-body ng-scope" id="modal-body" style="height:100px;">
+        <label class="col-md-1 col-xs-12 control-label" style="width:118px;margin-top:6px;">Search by</label>
+        <div class="col-md-1 col-xs-12">
+            <div class="input-group" style="width: 101px;margin-left: -53px;">
+                <select ng-model="label.condition" class="form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
+                    <option value="label">Order ID</option>
+                    <option value="date">Date</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="col-md-1 col-xs-12" ng-hide="label.condition==null||label.condition=='label'">
+            <div class="input-group">
+                <input type="date"  ng-model="label.selection" ng-enter="printedOnDate(label)" class="form-control ng-valid ng-valid-min ng-touched ng-not-empty ng-dirty ng-valid-number" style="width: 150px;margin-left: -11px;">
+            </div>
+        </div>
+        
+        <div class="col-md-1 col-xs-12" ng-hide="label.condition==null||label.condition=='date'">
+            <div class="input-group">
+                <input type="text"  ng-model="label.selection" ng-enter="printedRecord(label)" class="form-control ng-valid ng-valid-min ng-touched ng-not-empty ng-dirty ng-valid-number" style="width: 130px;">
+            </div>
+        </div>
+
+
+    </div>
+
+    <small style="font-size: inherit;font-weight: 600;margin-left: 28px;">Printed Labels</small>
+    <div class="form-group" ng-repeat="x in printedData">
+        <small style="font-size:14px;margin-left:200px;" ng-hide="x.selected=='Pick'">{{x.initialRecordNumber}}-{{x.finalRecordNumber}}</small>
+        <button ng-click="openOrderData(x)" ng-show="!x.showOrderData" style="font-size:14px;border-radius:100px;"><i class="fa fa-plus"></i></button>
+        <button ng-click="closeOrderData(x)" ng-show="x.showOrderData" style="font-size:14px;border-radius:100px;"><i class="fa fa-minus"></i></button>
+        <br  ng-show="x.showOrderData"><small ng-show="x.showOrderData" style="font-size:14px;margin-left:200px;" ng-repeat="a in x.range track by $index">{{a}}<br></small>
+    </div>
+    <small style="font-size: inherit;font-weight: 600;margin-left: 28px;">Picked List</small>
+    <div class="form-group" ng-repeat="x in printedData">
+        <small style="font-size:14px;margin-left:200px;" ng-hide="x.selected=='Print'">{{x.initialRecordNumber}}-{{x.finalRecordNumber}}</small>
+    </div>
+    <div class="modal-footer ng-scope">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

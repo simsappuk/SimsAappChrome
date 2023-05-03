@@ -1,0 +1,137 @@
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Our Compete Details</strong></h3>
+                        <ul class="panel-controls">
+                            <li><a href="#!/compete/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Insert Competitor's ItemID</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:467px;border-radius:0px;" ng-model="competeItemId"  class="form-control"/>
+                                </div>
+                                <span class="help-block">
+                                <button ng-show="editId" ng-click="replaceId(competeItemId)" class="btn btn-info" style="float:right;margin-bottom:5px;">Click to edit ID</button>
+                                       <button ng-show="!editId" ng-click="addId(competeItemId)" class="btn btn-primary" style="float:right;margin-bottom:5px;">Click to add ID</button>
+                                    </span>
+                                <select  style="width:-webkit-fill-available;border:1px solid!important;" size="9"><option ng-repeat="a in compete.competeItemId track by $index" ng-click="pushId(a)" >{{a}}</option></select>
+                                <span class="help-block">Click submit to get price
+                                <button  ng-click="ebayValue(compete)" ng-disabled="compete.competeItemId.length==0" class="btn btn-info" style="float:right;">Submit</button>
+                                    </span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Buying Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" style="width: 502px;color:black;" ng-model="compete.sellerPrice"  class="form-control" readonly/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Listing Type</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group">
+                                    <select ng-model="compete.listingType" class="form-control select" style="width:153px;">
+                                        <option value="Standard">Standard</option>
+                                        <option value="UniqueVariation">Unique Variation</option>
+                                        <option value="MultiVariation">Multi Variation</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Minimum Value</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-disabled="compete.sellerPrice==null" style="width:111px;border-radius:0px;" ng-model="compete.subtractValue" ng-enter="calculate(compete)" class="form-control"/>
+                                </div>
+                                <span class="help-block">Default -0.05£</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="col-md-3 col-xs-12 control-label">Insert Our ItemID</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" style="width: 502px;" ng-disabled="!compete.competeItemId || compete.competeItemId==''" ng-model="compete.ebayItemId"  class="form-control"/>
+                                </div>
+                                <span class="help-block">Update Item ID Selling Price</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="compete.listingType=='UniqueVariation'||compete.listingType=='MultiVariation'">
+                            <label class="col-md-3 col-xs-12 control-label">Variation Name</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:153px;border-radius:0px;" ng-model="compete.firstVariationName" class="form-control"/>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Variation Value</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:113px;border-radius:0px;" ng-model="compete.firstVariationValue" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="compete.listingType=='UniqueVariation'||compete.listingType=='MultiVariation'">
+                            <label class="col-md-3 col-xs-12 control-label">Variant SKU</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" style="width:502px;" ng-model="compete.variantSku" class="form-control" style="color: black;">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="compete.listingType=='MultiVariation'">
+                            <label class="col-md-3 col-xs-12 control-label">Variation Name</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:153px;border-radius:0px;" ng-model="compete.secondVariationName" class="form-control"/>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Variation Value</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:113px;border-radius:0px;" ng-model="compete.secondVariationValue" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Selling Price</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" style="width:502px;color: black;" ng-model="compete.ebayPrice" class="form-control"  readonly/>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <button ng-click="save()" popover-placement="left" uib-popover="Processing Item Revise..." ng-disabled="!(compete.ebayItemId && compete.ebayPrice && compete.competeItemId.length && compete.listingType)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

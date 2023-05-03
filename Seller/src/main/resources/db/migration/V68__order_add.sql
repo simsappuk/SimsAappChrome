@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN transaction_array_length bigint;

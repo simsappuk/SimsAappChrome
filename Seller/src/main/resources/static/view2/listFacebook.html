@@ -1,0 +1,99 @@
+&nbsp;<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>List/Listed to eBay </strong></h3>
+                    <ul class="panel-controls">
+                        <button type="button" class="btn btn-default" ng-click="redirect()">Main UI</button>
+                        <a href="/#!/stock/{{params}}/thirdPartyStock/Data" class="btn btn-info pull-right" style="border-color: antiquewhite;">Stock Added</a>
+                    </ul>
+                </div> <div class="panel-body">
+                <table class="table datatable">
+                    <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Sub Category</th>
+                        <th>Item ID</th>
+                        <th style="text-align:center;">EAN</th>
+                        <th style="text-align:center;">Order Num</th>
+                        <th style="text-align:center;">Quantity</th>
+                        <th style="text-align:center;">SKU</th>
+                        <th style="text-align:center;">Price</th>
+                        <th>Image URL</th>
+                        <th style="text-align:center;">Created Date</th>
+                    </tr>
+                    <tr  ng-repeat="x in consoleData" >
+                        <td style="width:90px;">
+                            <!--<label class="container">
+                                <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
+                                <span class="checkmark"></span>
+                            </label>-->
+                            <a ng-click="removeFromListIt(x)"><i class="fa fa-trash-o" style="font-size:14px;margin-left:-18px;"></i></a>
+                            <text class="ng-binding" >{{x.stockCode}}
+                                <i ng-if="x.listingType=='YetToList'" class="fa fa-times-circle ng-scope" tooltip-placement="top-left" uib-tooltip="Yet to List" style="font-size: 14px;color:red;"></i>
+                                <i ng-if="x.listingType=='Listed'" class="fa fa-check-circle ng-scope" tooltip-placement="top-left" style="font-size: 14px;color:green;"></i>
+                                <i ng-if="x.listingType=='Full_Details_Not_Listed'" class="fa fa fa-warning ng-scope" uib-tooltip="Missing Details" tooltip-placement="top-left" style="font-size: 14px;color:yellowgreen;"></i>
+                            </text>
+                        </td>
+                        <td title="{{x.title}}" ng-if="x.itemId[0]!=null && x.itemId[0]!=''" data-toggle="tooltip" data-placement="right"  style="max-width: 110px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{x.title}}</td>
+                        <td  ng-if="x.itemId[0]==null||x.itemId[0]==''">
+                            <input type="text" style="width:100px;" ng-model="x.title"  title="{{x.title}}" data-toggle="tooltip" data-placement="right" ng-model-options="{updateOn: 'blur'}" ng-change="updateListDetails(x)" class="myInput">
+                        </td>
+                        <td>
+                            <text class="ng-binding">{{x.itemCategory}}</text>
+                        </td>
+                        <td>
+                            <text class="ng-binding">{{x.itemSubCategory}}</text>
+                        </td>
+                        <td>
+                            <a ng-if="x.itemId[0]!=null && x.itemId[0]!=''" href="https://www.ebay.co.uk/itm/{{x.itemId[0]}}" target="_blank" class="ng-binding">{{x.itemId[0]}}</a>
+                            <input type="text" ng-if="x.itemId[0]==null||x.itemId[0]==''" style="width:100px;" ng-model="x.itemId[0]" ng-change="reviseItem(x)">
+                        </td>
+                        <td style="text-align:center;" ng-if="x.itemId[0]!=null && x.itemId[0]!=''">{{x.ean[0]}}</td>
+                        <td ng-if="x.itemId[0]==null||x.itemId[0]==''"  style="text-align:center;">
+                            <input type="text" style="width:100px;" ng-model="x.ean" ng-model-options="{updateOn: 'blur'}" ng-change="updateListDetails(x)" class="myInput">
+                        </td>
+                        <td style="text-align:center;">
+                            <text>{{x.orderRefId}}</text>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="number" ng-if="x.itemId[0]!=null && x.itemId[0]!=''" style="width:60px;text-align:center;" ng-model="x.quantityAvailable" class="myInput" disabled>
+                            <input type="number" ng-if="x.itemId[0]==null||x.itemId[0]==''" style="width:60px;text-align:center;" ng-model="x.quantityAvailable" class="myInput">
+                        </td>
+                        <td style="text-align:center;">{{x.sku[0]}}</td>
+                        <td style="text-align:center;">
+                            <input type="number" ng-if="x.itemId[0]!=null && x.itemId[0]!=''" style="width:64px;text-align:center;" ng-model="x.buyItNowPrice" class="myInput" disabled>
+                            <input type="number" ng-if="x.itemId[0]==null||x.itemId[0]==''" style="width:64px;text-align:center;" ng-model="x.buyItNowPrice" ng-model-options="{updateOn: 'blur'}" ng-change="updateListDetails(x)" class="myInput">
+                        </td>
+                        <td title="{{x.imageUrl}}" ng-if="x.itemId[0]!=null && x.itemId[0]!=''" data-toggle="tooltip" data-placement="left"  style="text-align: center;max-width: 110px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{x.imageUrl}}</td>
+                        <td ng-if="x.itemId[0]==null||x.itemId[0]==''">
+                            <input type="text" title="{{x.imageUrl}}" data-toggle="tooltip" data-placement="left" style="width:64px;text-align:center;" ng-model="x.imageUrl" ng-model-options="{updateOn: 'blur'}" ng-change="updateListDetails(x)" class="myInput">
+                        </td>
+                        <td style="text-align:center;">{{x.createdDate|date}}</td>
+                    </tr>
+
+                    </thead>
+                </table>
+            </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" boundary-links="true" ng-model="page.currentPage" ng-change="sortBy(value)"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+            .myInput{border-style:none;}
+            .myInput:hover{ border-style:solid; border:1px solid green;}
+            .myInput:focus{ border-style:solid; border:1px solid red;}
+</style>
+<!-- PAGE CONTENT WRAPPER -->

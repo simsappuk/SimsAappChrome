@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="modal-content" style="font-size:13px;"><div class="modal-header ng-scope">
+    <h3 class="modal-title" id="modal-title">List It Stock</h3>
+</div>
+    <div class="modal-body ng-scope" id="modal-body" style="height:180px;">
+        <div class="form-group" >
+            <label class="col-md-1 col-xs-12 control-label" style="width:132px;margin-top:6px;">Revise Quantity</label>
+            <div class="col-md-1 col-xs-12">
+                <div class="input-group" style="width: 74px;margin-left: -16px;">
+                    <input type="number" min="1" ng-model="reviseContent.quantityAvailable" class="form-control ng-valid ng-valid-min ng-touched ng-not-empty ng-dirty ng-valid-number" style="width: 60px;margin-left: -11px;">
+                </div>
+            </div>
+
+
+            <label class="col-md-2s col-xs-12 control-label" style="width: 110px;margin-top:6px;margin-left: 9px;margin-right: -12px;">Revise Price</label>
+            <div class="col-md-1 col-xs-12" style="width:120px;">
+                <div class="input-group">
+                    <input type="number" min="1" ng-model="reviseContent.buyItNowPrice" class="form-control" style="margin-left: -11px;">
+                </div>
+                <span class="help-block" style="margin-left: -13px;">Enter price per Quantity</span>
+            </div>
+
+            <label class="col-md-2s col-xs-12 control-label" style="width: 124px;margin-top:6px;margin-right:-38px;">Image URL</label>
+            <div class="col-md-1 col-xs-12" style="width:max-content;">
+                <div class="input-group">
+                    <input type="text" ng-model="reviseContent.imageUrl" class="form-control" style="margin-left: -11px;">
+                </div>
+                <span class="help-block" style="margin-left: -13px;">Enter image URL</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer ng-scope">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+        <button type="button" class="btn btn-info" ng-if="reviseContent.quantityAvailable!=null && reviseContent.buyItNowPrice!=null" ng-click="saveThirdPartyItemToRevise(reviseContent)">Submit</button>
+
+    </div></div>
+</body>
+</html>

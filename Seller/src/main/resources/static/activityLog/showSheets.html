@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="modal-content"><div class="modal-header ng-scope">
+    <h3 class="modal-title" id="modal-title">Gdrive Sheets</h3>
+</div>
+    <div class="modal-body ng-scope" id="modal-body">
+        <ul id="new" style="list-style-type: none;">
+            <li ng-repeat="x in spreadsheet" style="display: inline;">
+                <a class='ng-modal-overlay' href="#!log/{{x.spreadsheetId}}"><img src="https://i.ibb.co/N76sqws/spreadsheet-2127832-640.png" alt="spreadsheet-2127832-640" border="0" style="width:6.2%"></a>
+                <input type="text" ng-model="x.title" style="border-style: none; width:17%" ng-blur="saveSheets(x)"/>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer ng-scope">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div></div>
+</body>
+</html>

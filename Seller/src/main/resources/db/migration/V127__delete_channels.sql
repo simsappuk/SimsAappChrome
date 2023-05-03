@@ -1,0 +1,1 @@
+DELETE FROM channel WHERE id IN ('5','6','8','9','10','11','12','13');

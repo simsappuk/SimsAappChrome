@@ -1,0 +1,1 @@
+ALTER TABLE active_listings ADD COLUMN sku_number bigint;

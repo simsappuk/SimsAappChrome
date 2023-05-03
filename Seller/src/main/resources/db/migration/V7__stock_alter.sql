@@ -1,0 +1,13 @@
+ALTER TABLE stock ADD COLUMN  buy_it_now_price character varying(255);
+ALTER TABLE stock ADD COLUMN  currency character varying(255);
+ALTER TABLE stock ADD COLUMN  item_id character varying(255);
+ALTER TABLE stock ADD COLUMN  listing_duration character varying(255);
+ALTER TABLE stock ADD COLUMN  listing_type character varying(255);
+ALTER TABLE stock ADD COLUMN  online_quantity NUMERIC(4);
+ALTER TABLE stock ADD COLUMN  title character varying(255);
+ALTER TABLE stock ADD COLUMN  sku character varying(255);
+ALTER TABLE stock ADD COLUMN  quantity_available  NUMERIC(4);
+ALTER TABLE stock ADD COLUMN  image_url character varying(255);
+ALTER TABLE stock ADD COLUMN  shipping_profile_name character varying(255);
+ALTER TABLE stock ADD COLUMN  return_profile_name character varying(255);
+ALTER TABLE stock ADD COLUMN  payment_profile_name character varying(255);

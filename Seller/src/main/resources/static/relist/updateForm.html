@@ -1,0 +1,112 @@
+&nbsp;<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <form name="myForm" class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Update End & Relist</strong> Listing in Ebay</h3>
+                        <ul class="panel-controls">
+                            <li><a href="#!/reListing/{{params.appId}}" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Item ID*</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:500px;border-radius:0px;" ng-model="relist.itemId" class="form-control">
+                                </div>
+                                <span class="help-block">Enter Item ID of Item Want to be End and ReList</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Item Title</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil" style="height:30px"></span></span>
+                                    <textarea  style="width:500px;border-radius: 0px;" maxlength = "200" class="form-control" ng-model="relist.title" rows="2"></textarea>
+                                </div>
+                                <span class="help-block">Enter title of the item</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Previous Item ID's</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <textarea  style="width:500px;color:black;" maxlength = "200" class="form-control" ng-model="relist.itemIdList" rows="5" readonly></textarea>
+                                </div>
+                                <span class="help-block">Enter title of the item</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">SKU</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:500px;border-radius:0px;" ng-model="relist.sku" class="form-control">
+                                </div>
+                                <span class="help-block">Enter SKU of the Item</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Total Quantity*</label>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="number" min="0" style="width:145px;border-radius:0px;" ng-model="relist.remainingQuantity" class="form-control"/>
+                                </div>
+                                <span class="help-block">Enter quantity Available</span>
+                            </div>
+                            <label class="col-md-2 col-xs-12 control-label">Relist Quantity*</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="number" min="1" style="width:145px;border-radius:0px;" ng-model="relist.reListQuantity" class="form-control">
+                                </div>
+                                <span class="help-block">Quantity you want to reList</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Amount</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="number" min="0" style="width:500px;border-radius:0px;" ng-model="relist.price" class="form-control"/>
+                                </div>
+                                <span class="help-block">Enter Amount if you want to Revise it too</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">SKU</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius: 0px;"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" style="width:500px;border-radius:0px;" ng-model="relist.sku" class="form-control">
+                                </div>
+                                <span class="help-block">Enter SKU of the Item</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <button ng-click="update(relist)" popover-placement="left-bottom" uib-popover="Processing Item..." ng-disabled="!(relist.itemId && relist.reListQuantity && relist.remainingQuantity)" class="btn btn-primary pull-right m-r-xs">Update</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+

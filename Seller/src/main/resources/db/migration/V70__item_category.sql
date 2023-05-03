@@ -1,0 +1,1 @@
+ALTER TABLE item_category ALTER COLUMN id TYPE character varying(255);

@@ -1,0 +1,1 @@
+ALTER TABLE stock ADD COLUMN sku_number bigint;

@@ -1,0 +1,1 @@
+ALTER TABLE stock ADD COLUMN item_sub_category CHARACTER VARYING(255);

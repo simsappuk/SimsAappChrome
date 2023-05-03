@@ -1,0 +1,110 @@
+&nbsp;
+<div class="page-content-wrap">
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Picking List</h3>&nbsp;&nbsp;
+
+                    <ul class="panel-controls">
+                        Enter Range:
+                        <Label>
+                            <input type="number" class="form-control"  ng-model="initialRecordNumber" min="0" ng-change="addition(initialRecordNumber)" style="width: 143px;margin-top:1px;border-radius:0px;">
+                        </Label>&nbsp;To
+
+                        <Label>
+                            <input type="number" class="form-control"  ng-model="finalRecordNumber"  style="width: 143px;margin-top:1px;border-radius:0px;">
+                        </Label>&nbsp;
+
+                        <a ng-click="labelPrint()" class="btn btn-info pull-right" style="border-color: antiquewhite;">Print List</a>
+                        <select ng-model="value" style="margin-right:4px;">
+                            <option value="PCL">Picking List</option>
+                            <option value="POL">Postage Labels</option>
+                        </select>
+                        <a href="#!/upload/{{params.id}}/{{initialRecordNumber}}/{{finalRecordNumber}}"ng-hide="value=='PCL'" ng-disabled="finalRecordNumber==null||initialRecordNumber==null||value==null" class="btn btn-info pull-right" style="border-color: antiquewhite;">Submit</a>
+                        <a href="#!/upload/list/{{params.id}}/{{initialRecordNumber}}/{{finalRecordNumber}}" ng-hide="value=='POL'||value==null" ng-disabled="finalRecordNumber==null||initialRecordNumber==null" class="btn btn-info pull-right" style="border-color: antiquewhite;">Submit</a>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="page-content-wrap">
+                        <div id="printDiv" class="row">
+                            <b style="float:right; font-weight:600;">FROM {{params.record1}} TO {{params.record2}}</b>
+                            </br>
+                            <div class="col-md-3" ng-repeat="x in labelList|orderBy:'orderRef'">
+                                <div class="panel panel-default" style="font-size:15px;width:277px;color:black;">
+                                    <div class="panel-body">
+                                        <small ng-if="x.pOrderRef!=null" style="font-weight:600;">{{x.pOrderRef}}</small>
+                                        <small ng-if="x.pOrderRef==null" style="font-weight:600;">{{x.orderRef}} </small>
+                                        <small>({{x.extendedOrderId}})</small>
+                                        <a href="#!/awaitingDispatch/orderContent/{{x.accountId}}/{{x.orderRef}}" ng-if="x.pickingType=='show' && x.pOrderRef==null && x.transactionArrayLength!=1" style="font-size:13px;text-transform:capitalize;">{{x.title}}</a>
+                                        <a ng-if="x.pOrderRef==null && x.transactionArrayLength==1" href="#!/awaitingDispatch/orderContent/{{x.accountId}}/{{x.orderRef}}" style="font-size:13px;text-transform:capitalize;" target="_blank" contenteditable="false">{{x.title}}</a>
+                                        </br>
+                                        <b ng-if="x.shippingServiceCost!=0.0" style="font-weight:600;font-size:11px;">{{x.shippingServiceSelected}},£{{x.shippingServiceCost}}
+                                            </br>
+                                        </b>
+                                        <b ng-if="x.itemId==(112925285212||362950137020) && x.quantityPurchased>=3 && x.shippingServiceCost==0.0" style="font-weight:600;font-size:11px;">Yankee >= 3 Quantity
+                                            </br>
+                                        </b>
+                                        <div ng-repeat="y in bundle">
+                                            <small ng-if="x.extendedOrderId==y.extendedOrderId && x.itemId==y.itemId && y.orderVariationName!=null && x.transactionArrayLength!=1 && (y.orderSpecifics.length==1 || y.orderSpecifics==null)">
+                                                <small style="font-size:12px;">{{y.orderVariationName}}:</small>
+                                                <b style="font-size:12px;font-weight:500;"> {{y.orderVariationValue}},Qty-{{y.quantity}}<b ng-if="y.category!=null" style="font-size:12px;font-weight:500;">,{{y.category}}</b></b>
+                                                </b>
+                                            </small>
+                                            <small ng-if="x.transactionArrayLength!=1 && x.extendedOrderId==y.extendedOrderId && x.itemId==y.itemId && y.orderVariationName==null">
+                                                <small ng-if="y.orderVariationName==null "style="font-size:13px;text-transform:capitalize;"><b style="font-weight:600;">Title:</b>{{y.title}},<b style="font-weight:600;">Item Qty</b>-{{y.quantity}}</br></small>
+                                                <small ng-if="x.extendedOrderId==y.extendedOrderId && y.orderVariationName!=null && x.transactionArrayLength!=1 && (y.orderSpecifics.length==1 || y.orderSpecifics==null)">
+                                                    <small style="font-size:12px;">{{y.orderVariationName}}:</small>
+                                                    <b style="font-size:12px;font-weight:500;"> {{y.orderVariationValue}},Qty-{{y.quantity}}<b ng-if="y.category!=null" style="font-size:12px;font-weight:500;">,{{y.category}}</b></b>
+                                                    </b>
+                                                </small>
+                                            </small>
+                                            <small ng-if="x.transactionArrayLength!=1 && x.extendedOrderId==y.extendedOrderId && x.itemId==y.itemId && x.sellerUserId=='excelstuff' && x.pickingType!='show'">
+                                                <small style="font-size:13px;text-transform:capitalize;"><b style="font-weight:600;">Title:</b>{{y.title}},<b style="font-weight:600;">Item Qty</b>-{{y.quantity}},<b style="font-weight:600;">{{y.orderSpecifics[0].name}}</b>:{{y.orderSpecifics[0].value[0]}}<small style="font-size:13px;text-transform:capitalize;" ng-if="y.orderSpecifics[0].name!=y.orderSpecifics[1].name">,<b style="font-weight:600;">{{y.orderSpecifics[1].name}}</b>:{{y.orderSpecifics[1].value[0]}}</small></br></small>
+                                            </small>
+                                            <small ng-if="x.transactionArrayLength!=1 && x.extendedOrderId==y.extendedOrderId && x.itemId!=y.itemId">
+                                                <small ng-if="x.sellerUserId=='excelstuff' && x.pickingList!='show'"style="font-size:13px;text-transform:capitalize;"><b style="font-weight:600;">Title:</b>{{y.title}},<b style="font-weight:600;">Item Qty</b>-{{y.quantity}},<b style="font-weight:600;">{{y.orderSpecifics[0].name}}</b>:{{y.orderSpecifics[0].value[0]}}<small style="font-size:13px;text-transform:capitalize;" ng-if="y.orderSpecifics[0].name!=y.orderSpecifics[1].name">,<b style="font-weight:600;">{{y.orderSpecifics[1].name}}</b>:{{y.orderSpecifics[1].value[0]}}</small></small>
+                                                <small ng-if="y.orderVariationName==null && (x.sellerUserId!='excelstuff'|| x.pickingList!='show')"style="font-size:13px;text-transform:capitalize;"><b style="font-weight:600;">Title:</b>{{y.title}},<b style="font-weight:600;">Item Qty</b>-{{y.quantity}}</small>
+                                                <small ng-if="x.extendedOrderId==y.extendedOrderId && y.orderVariationName!=null && x.transactionArrayLength!=1 && (y.orderSpecifics.length==1 || y.orderSpecifics==null)">
+                                                    <small ng-if="x.sellerUserId!='excelstuff' && x.pickingList!='show'"style="font-size:12px;">{{y.orderVariationName}}:</small>
+                                                    <b ng-if="x.sellerUserId!='excelstuff' && x.pickingList!='show'" style="font-size:12px;font-weight:500;"> {{y.orderVariationValue}},Qty-{{y.quantity}}<b ng-if="y.category!=null" style="font-size:12px;font-weight:500;">,{{y.category}}</b></b>
+                                                    </b>
+                                                </small>
+                                            </small>
+                                        </div>
+                                        <div ng-repeat="z in variants">
+                                            <small ng-if="x.transactionArrayLength!=1 && x.orderRef==z.orderRef && x.pickingType=='show' && x.itemId!='363378205968' && x.itemId!='362992957721' && x.itemId!='363338093142'">{{z.name}}:{{z.value[0]}}</small>
+                                            <small style="float:left;" ng-if="x.transactionArrayLength!=1 && x.orderRef==z.orderRef && x.pickingType=='show' && z.name=='Size' && (x.itemId=='363378205968' || x.itemId=='362992957721' || x.itemId=='363338093142')">({{z.value}},
+                                            </small>
+                                            <small  style="float:left;" ng-if="x.transactionArrayLength!=1 && x.orderRef==z.orderRef && x.pickingType=='show' && (z.name=='Roll Qty' || z.name=='Qty' || z.name=='Variation Qty') && (x.itemId=='363378205968' || x.itemId=='362992957721' || x.itemId=='363338093142')">{{z.value}})-</small>
+                                            <small  ng-if="x.transactionArrayLength!=1 && x.orderRef==z.orderRef && x.pickingType=='show' && z.name=='totalLineQuantity' && (x.itemId=='363378205968' || x.itemId!='362992957721' || x.itemId=='363338093142')">{{z.value}}</br></small>
+                                        </div>
+                                        <small ng-if="x.transactionArrayLength==1 && x.itemId!='362992957721||363338093142||363378205968'" style="font-weight:600;">Total Qty: {{x.quantityPurchased}}
+                                            </br>
+                                        </small>
+                                        <small ng-if="x.transactionArrayLength==1 && x.itemId=='362992957721||363338093142||363378205968'" style="font-weight:600;">Total Roll-Qty: {{x.quantityPurchased}}, {{x.totalAmount}}</br>
+                                        </small>
+                                        <b ng-if="x.transactionArrayLength!=1 && x.pOrderRef==null && x.itemId!='362992957721||363338093142||363378205968'"  style="font-weight:600;font-size:12PX;">Total Qty: {{x.quantityPurchased}}, £{{x.totalAmount}}, Bundle Listing
+                                            </br>
+                                        </b>
+                                        <b ng-if="x.transactionArrayLength!=1 && x.pOrderRef==null && x.itemId=='362992957721||363338093142||363378205968'"  style="font-weight:600;font-size:12PX;">Total Roll-Qty: {{x.quantityPurchased}}, Bundle Listing
+                                            </br>
+                                        </b>
+                                        <b ng-if="x.totalAmount>19.97 && x.shippingServiceCost==0.0 && x.itemId!=(112925285212||362950137020)" style="font-weight:600;font-size:12PX; ">Signed For</b>
+                                        <small ng-if="x.sku!=null" style="font-size:12px;">SKU:{{x.sku}}
+                                            </br>
+                                        </small>
+                                        <small style="text-transform:capitalize;">{{x.buyerName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- PAGE CONTENT WRAPPER -->

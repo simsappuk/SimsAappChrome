@@ -1,0 +1,70 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+        <a href="#!/relist/add/{{params.appId}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Add Item</a>
+        <a class="btn btn-info pull-right" ng-click="deleteItem(check)" style="border-color: antiquewhite;">Delete Re-List</a>
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Re-Listing Information</h3>
+                    <ul class="panel-controls">
+                        &nbsp;<label>
+                        <input type="search" tooltip-placement="bottom-left" uib-tooltip="Item ID or Title" class="form-control"  placeholder="Search..." ng-enter="search()" ng-model="searchText" style="border-radius:13px;">
+                    </label>
+                        <li ng-if="data.upload"><a uib-tooltip="Uploading Data from EBay" class="panel-collapse btn-info disabled"><span class="btn-info fa fa-refresh fa-spin"></span></a></li>
+                        <li ng-if="!data.upload"><a ng-if="!page.loading" href="#!/reListing/{{params.appId}}" class="panel-refresh"><span class="fa fa-refresh"></span></a><a ng-if="page.loading"  class="panel-refresh btn-info disabled"><span class="fa fa-refresh fa-spin"></span></a></li>
+                        <!--<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>-->
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width:30%;">Item Title</th>
+                            <th style="text-align: center;width:10%">Current ItemID</th>
+                            <th style="text-align: center;width:10%">Remaining QTY</th>
+                            <th style="text-align: center;width:10%">Listed QTY</th>
+                            <th style="text-align: center;width:10%">SKU</th>
+                            <th style="text-align: center;width:15%">Last Revised Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in relist">
+                            <td>
+                                <label class="container">
+                                    <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <a href="#!/reviseListing/{{x.accountId}}/{{x.newItemId}}" tooltip-placement="top-right" uib-tooltip="Revise Item" style="color:black;">{{x.title}}
+                                </a>
+                            </td>
+                            <td style="text-align: center"><a href="https://www.ebay.co.uk/itm/{{x.newItemId}}" tooltip-placement="bottom-right" uib-tooltip="Current Item URL" target="_blank">{{x.newItemId}}</a></td>
+                            <td style="text-align: center">
+                                <input type="number" min="0" ng-model="x.remainingQuantity" ng-model-options="{updateOn: 'blur'}" ng-change="update(x)" style="WIDTH:98%;text-align:center;" class="myInput">
+                            </td>
+                            <td>
+                                <input type="number" min="1" ng-model="x.reListQuantity" ng-model-options="{updateOn: 'blur'}" ng-change="update(x)" style="WIDTH:98%;text-align:center;" class="myInput">
+                            </td>
+                            <td style="text-align: center" ng-if="x.sku!=null"><a href="#!/relist/update/{{x.accountId}}/{{x.id}}">{{x.sku}}</a></td>
+                            <td style="text-align: center" ng-if="x.sku==null"><a style="color:black;" href="https://bulksell.ebay.co.uk/ws/eBayISAPI.dll?SingleList&sellingMode=ReviseItem&lineId={{x.newItemId}}" target="_blank">ADD SKU</a></td>
+                            <td style="text-align: center">{{x.lastEffectiveDate|date:'medium'}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination  items-per-page="200" max-size="10"  total-items="page.totalElements" ng-model="page.currentPage" ng-change=""></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+            .myInput{border-style:none;}
+            .myInput:hover{ border-style:solid; border:1px solid green;}
+            .myInput:focus{ border-style:solid; border:1px solid red;}
+</style>
+<!-- PAGE CONTENT WRAPPER -->

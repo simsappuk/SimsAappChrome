@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN vat_ioss_number CHARACTER VARYING(255);

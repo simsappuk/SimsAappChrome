@@ -1,0 +1,79 @@
+&nbsp;<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Stock Details </strong></h3>
+                    <ul class="panel-controls">
+                        <button type="button" class="btn btn-default" ng-click="redirect()">Main UI</button>
+                        <a href="/#!/stock/{{params}}/listing/thirdPartyStock/eBay" class="btn btn-info pull-right" style="border-color: antiquewhite;">List Facebook</a>
+                    </ul>
+                </div> <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th style="text-align:center;">Sub Category</th>
+                            <th style="text-align:center;">EAN</th>
+                            <th style="text-align:center;">Order Num</th>
+                            <th style="text-align:center;">Quantity</th>
+                            <th style="text-align:center;">SKU</th>
+                            <th style="text-align:center;">Price</th>
+                            <th style="text-align:center;">Created Date</th>
+                        </tr>
+                        <tr  ng-repeat="x in consoleData" >
+                            <td>
+                                <a ng-click="removeFromCompleteStockAddedList(x)"><i class="fa fa-trash-o" style="font-size:14px;margin-left:-18px;"></i></a>
+                                <text class="ng-binding" style="">{{x.stockCode}}</text>
+                            </td>
+                            <td>
+                                <input type="text" style="width:100px;text-align:center;" ng-model="x.title" class="myInput">
+                            </td>
+                            <td>
+                                <text class="ng-binding">{{x.itemCategory}}</text>
+                            </td>
+                            <td style="text-align:center;">
+                                <text class="ng-binding">{{x.itemSubCategory}}</text>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="text"  style="width:100px;" ng-model="x.ean" class="myInput">
+                            </td>
+                            <td style="text-align:center;">
+                                <a class="ng-binding" href="#!/stock-edit/thirdParty/{{x.accountId}}/{{x.orderRefId}}/{{x.stockCode}}">{{x.orderRefId}}</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="number" style="width:60px;text-align:center;" ng-model="x.quantityAvailable" class="myInput">
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="text" style="width:100px;text-align:center;" ng-model="x.sku[0]" class="myInput">
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="number" style="width:64px;text-align:center;" ng-model="x.buyItNowPrice" class="myInput">
+                            </td>
+                            <td style="text-align:center;">{{x.createdDate|date}}</td>
+                        </tr>
+
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" boundary-links="true" ng-model="page.currentPage" ng-change="sortBy(value)"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+            .myInput{border-style:none;}
+            .myInput:hover{ border-style:solid; border:1px solid green;}
+            .myInput:focus{ border-style:solid; border:1px solid red;}
+</style>
+<!-- PAGE CONTENT WRAPPER -->

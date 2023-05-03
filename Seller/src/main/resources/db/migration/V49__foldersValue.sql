@@ -1,0 +1,1 @@
+INSERT INTO folders(id) VALUES(0);

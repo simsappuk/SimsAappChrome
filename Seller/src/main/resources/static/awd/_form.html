@@ -1,0 +1,195 @@
+<ul class="breadcrumb" xmlns="http://www.w3.org/1999/html">
+</ul>
+<!-- END BREADCRUMB -->
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <form class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Edit</strong>Awaiting Dispatch</h3>
+                        <ul class="panel-controls">
+                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+
+                            <div class="col-md-3" align="right">
+                                <img width="200" src="{{EbayListing.imageUrl}}" class="center-block" style="margin-top: 70px">
+
+                            </div>
+
+
+
+                            <div class="col-md-9">
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Item Name</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+
+                                            <span class="form-inline">{{EbayListing.title}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Order Id</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+
+                                            <span class="form-control">{{getOrder}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Item Id</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+
+                                            <span class="form-control">{{EbayListing.itemId}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Stock Code</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+
+                                            <span class="form-control">{{EbayListing.sku}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Stock Available</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+
+                                            <span class="form-control">{{EbayListing.quantity}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Item Price</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="form-control"><i ng-if="EbayListing.startPriceCurrencyID=='GBP'" class="fa fa-gbp"></i><i ng-if="EbayListing.startPriceCurrencyID=='EUR'" class="fa fa-eur"></i>&nbsp;{{EbayListing.startPriceValue}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Condition</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="form-control">{{EbayListing.conditionDisplayName}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">EAN</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="form-control">{{EbayListing.ean}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Item Category</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="form-control">{{EbayListing.primaryCategoryName}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Returns Accepted WithIn</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="form-control">{{EbayListing.returns}}</span>
+                                        </div>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="gallery" id="links" style="margin-top: 67px;" >
+
+                                <a  ng-repeat="x in EbayListing.variantItemDetails" class="gallery-item" target="_blank" href="{{x.url}}" title="{{x.name}}" data-gallery>
+                                    <div class="image" style="width": 200px; >
+                                        <img src="{{x.url}}" alt="{{x.name}}" height="300px"/>
+                                        <!--ul class="gallery-item-controls">
+                                            <li><label class="check"><input type="checkbox" class="icheckbox"/></label></li>
+                                            <li><span class="gallery-item-remove"><i class="fa fa-times"></i></span></li>
+                                        </ul-->
+                                    </div>
+                                    <div class="meta">
+                                        <strong>{{x.name}}</strong>
+                                        <span><strong><i ng-if="x.currency=='GBP'" class="fa fa-gbp"></i><i ng-if="x.currency=='EUR'" class="fa fa-eur"></i>&nbsp;{{x.price}}</strong></span>
+                                        <strong>EAN: {{x.ean}}</strong>
+                                        <span><Strong>Genre: {{x.itemType}}</Strong></span>
+                                        <td>{{x.sku}}</td>
+
+
+                                    </div>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--table class="table">
+                        <thead>
+                        <tr>
+
+                            <th>Item Variant Name</th>
+                            <th>Item Price</th>
+                        </tr>
+                        <tr  ng-repeat="x in EbayListing.variantItemDetails">
+                            <td><img height="100px" src="{{x.url}}"/>{{x.name}}</td>
+                            <td>{{x.price}}</td>
+                        </tr>
+                        </thead>
+                    </table-->
+
+                    <div class="panel-footer">
+                        <button class="btn btn-default">Clear Form</button>
+                        <button ng-click="save(orders)" class="btn btn-primary pull-right">Submit</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .input-group .form-control{
+        float: none;
+    }
+</style>

@@ -1,0 +1,1 @@
+ALTER TABLE vendors add COLUMN channel_id character varying(255);

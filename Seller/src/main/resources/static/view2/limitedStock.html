@@ -1,0 +1,78 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Limited Stock</h3>
+                    <ul class="panel-controls">&nbsp;
+                       Stock Limits:
+                        <select ng-model="value" ng-change="StockInLimits(value)">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="width:950px;">Name</th>
+                            <th style="width:100px;">Quantity</th>
+                            <th style="text-align: center;width:193px;">SKU</th>
+                            <th style="text-align: center;width:100px;">Category</th>
+                            <th style="text-align: center;width:100px;">Condition</th>
+                            <th style="text-align: center;width:125px;">Min Limit</th>
+                            <th style="text-align: center;width:195px;">Average Price</th>
+                            <!--
+                                          <th style="width:190px;">Created Date</th>
+                            -->
+                        </tr>
+                        <tr  ng-repeat="x in tableVal|orderBy:'stockLimit'" >
+                            <td>
+                                <img src="{{x.imageUrl}}" style="width: 46px;height: 64px;"/>
+                                <text>&nbsp;&nbsp;{{x.title}}</text>&nbsp;
+                                <a href="#!/stock-history/{{x.id}}"><i uib-tooltip="{{x.title}} History" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>
+                            </a>
+                            </td>
+                            <td>
+                                <input type="number" min="0" ng-model="x.quantityAvailable" ng-model-options="{updateOn: 'blur'}" ng-change="saveLimitedStock(x)" style="WIDTH: 93%;"class="myInput">
+                            </td>
+                            <td style="text-align: center">
+                               {{x.sku[0]}}
+                            </td>
+                            <td style="text-align: center;">
+                                {{x.itemCategory}}
+                            </td>
+                            <td style="text-align: center;">
+                            {{x.itemCondition}}
+                            </td>
+                            <td style="text-align: center;">
+                                {{x.stockLimit}}
+                            </td>
+                            <td style="text-align: center;">{{x.avgPrice}}</td>
+                        </tr>
+                        <style>
+                        .myInput{border-style:none;}
+                        .myInput:hover{ border-style:solid; border:1px solid green;}
+                        .myInput:focus{ border-style:solid; border:1px solid red;}
+</style>
+
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" boundary-links="false" ng-model="page.currentPage" ng-change="limitedStock()"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- PAGE CONTENT WRAPPER -->
