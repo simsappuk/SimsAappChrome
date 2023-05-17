@@ -1,9 +1,11 @@
 package com.ebay.load.seller.rest;
 
+import com.ebay.load.seller.dto.EbayListing;
 import com.ebay.load.seller.model.Vinted;
 import com.ebay.load.seller.repository.AccountsRepository;
 import com.ebay.load.seller.repository.VintedRepository;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
+import com.ebay.soap.eBLBaseComponents.ItemType;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,34 +83,22 @@ public class VintedListingController {
 
     }
 
-//    @RequestMapping(value="/vintedSaveStock", method = RequestMethod.POST)
-//    public String saveStock(@PathVariable(name="id") String id){
-//        System.out.println("working...");
-//        return id;
+//    @GetMapping("/vintedCategorySearch/{id}")
+//    public String getStudents1(@PathVariable(name="id") String id,@RequestParam(name = "query") String term){
+//        RestTemplate restTemplate = new RestTemplate();
+//        String pp= vintedRepository.findApiToken(id);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set("Authorization","Token "+pp );
+//        HttpEntity<String> entity = new HttpEntity<String>(headers);
+//        String url  = "https://cat.zipsale.co.uk/api/v1/categories/categories_full_readable_path_data/?term="+term+"&limitChoices=10&marketplace_slug=vinted";
+//        org.springframework.http.ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+//        return responseEntity.getBody();
 //    }
-
-    @RequestMapping(value = "/vintedSaveStock/{accountId}",method = RequestMethod.POST)
-    public String postStockListing(@PathVariable("accountId") String accountId){
-        return accountId;
+    @GetMapping("http://135.181.192.92:5000/categories")
+    public String getStudents1(String term){
+        return term;
     }
 
-//    @RequestMapping(value="/vintedSaveStock", method = RequestMethod.GET)
-//    public String getSaveStock(@PathVariable(name="id") String id){
-//        System.out.println("working...");
-//        return id;
-//    }
-
-    @GetMapping("/vintedCategorySearch/{id}")
-    public String getStudents1(@PathVariable(name="id") String id,@RequestParam(name = "query") String term){
-        RestTemplate restTemplate = new RestTemplate();
-        String pp= vintedRepository.findApiToken(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization","Token "+pp );
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        String url  = "https://cat.zipsale.co.uk/api/v1/categories/categories_full_readable_path_data/?term="+term+"&limitChoices=10&marketplace_slug=vinted";
-        org.springframework.http.ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        return responseEntity.getBody();
-    }
 
     @RequestMapping(value = "/{id}/list/vinted", method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> loadCurrent(@PathVariable("id") String id,

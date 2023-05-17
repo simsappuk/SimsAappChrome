@@ -37,7 +37,7 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
     List<Vinted> findAllSoldListing(String accountName);
 
     @Query(
-            value = "SELECT api_token FROM accounts where account_type='vinted' and account_name=?1",
+            value = "SELECT api_token FROM accounts where account_type='vinted' and accounts_id=?1",
             nativeQuery = true
     )
     String findApiToken(String Id);
