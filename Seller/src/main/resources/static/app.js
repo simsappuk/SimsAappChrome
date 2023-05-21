@@ -44,6 +44,7 @@ run(
                         else if(next.indexOf("#!/upload")>-1) $rootScope.linkCss="upload";
                         else if(next.indexOf("#!/log")>-1) $rootScope.linkCss="log";
                         else if(next.indexOf("#!/vinted")>-1) $rootScope.linkCss="vinted";
+                        else if(next.indexOf("#!/vintedData")>-1) $rootScope.linkCss="vintedData";
 
     });
      $rootScope.loadAccounts=function(){
@@ -80,6 +81,29 @@ $rootScope.errorMsg+=obj[i].messageText+"\n";
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
   $routeProvider.otherwise({redirectTo: '/dashboard'});
+$(document).ready(function(){
+        $(function(){
+        $('#ideal_form').submit(function(e){
+                e.preventDefault();
+                var form = $(this);
+                var post_url = form.attr('action');
+                var post_data = form.serialize();
+                $('#loader3', form).html('<img src="../../images/ajax-loader.gif" />       Please wait...');
+                $.ajax({
+                    type: 'POST',
+                    url: post_url,
+                    data: post_data,
+                    success: function(msg) {
+                        $(form).fadeOut(800, function(){
+                            form.html(msg).fadeIn().delay(2000);
+
+                        });
+                    }
+                });
+            });
+        });
+         });
+
 
 
 }]);

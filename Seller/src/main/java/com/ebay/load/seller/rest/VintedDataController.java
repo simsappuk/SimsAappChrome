@@ -23,6 +23,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -39,17 +40,13 @@ public class VintedDataController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public  @ResponseBody  VintedData vintedNewData(@RequestBody VintedData vintedData) {
-        VintedData vintedData1=vintedDataService.save(vintedData);
+    public  VintedData vintedNewData(@RequestBody VintedData vintedData, @PathVariable("id") String account_name) {
+        VintedData vintedData1= vintedDataService.save(vintedData,account_name);
         return vintedData1;
-
     }
-
-     @RequestMapping(value = "", method = RequestMethod.GET)
-     public  ResponseEntity<List<VintedData>> loadCurrentRequest(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-                                                               @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize,
-                                                               @RequestParam(value = "filter", defaultValue = "*", required = false) String q) {
-        return vintedDataService.findAllByAccountId(SessionUserInfo.getLoggedInUser().getUser().getId(),new PageRequest(page.intValue(), pageSize.intValue(),new Sort("createdDate")));
-
-        }
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public  VintedData vintedDataList(@RequestBody VintedData vintedData) {
+        VintedData vintedData1= vintedDataService.save(vintedData,vintedData.accountId);
+        return vintedData1;
+    }
 }

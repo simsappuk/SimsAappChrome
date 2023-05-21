@@ -6,10 +6,13 @@ import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 @Service
 public interface vintedDataServiceIn {
-    public VintedData save(VintedData vintedData);
+    public static VintedData save(VintedData vintedData) {
+        return null;
+    }
 
     ResponseEntity<String> delete(String accountId, String action);
 

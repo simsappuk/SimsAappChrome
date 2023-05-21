@@ -61,6 +61,7 @@ public class StockController {
         return stockService.getAddedSourceData(accountId,orderRefId,source);
     }
 
+
     @RequestMapping(value = "viewStockAdded/Modal", method = RequestMethod.GET)
     public ResponseEntity<Stock> individualStock(@RequestParam("accountId") String accountId,
                                                  @RequestParam("orderId") String orderId) {
@@ -207,6 +208,8 @@ public class StockController {
 
         return stockService.updateThirdPartyStock(stock,accountId,position);
     }
+
+
 
     @RequestMapping(value = "entireData/delete/{id}",method= RequestMethod.GET)
     ResponseEntity<List<Stock>> deleteEntireData(@PathVariable(value="id") String accountId){
