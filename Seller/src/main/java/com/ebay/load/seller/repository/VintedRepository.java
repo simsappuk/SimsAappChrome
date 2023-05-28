@@ -1,15 +1,13 @@
 package com.ebay.load.seller.repository;
-import com.ebay.load.seller.model.ActiveListings;
 import com.ebay.load.seller.model.Vinted;
 
-import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface VintedRepository extends JpaRepository<Vinted,String> {
@@ -50,4 +48,9 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
           value = " SELECT * FROM vinted  WHERE item_Closing_Action = 'Dispatched' and account_id in( select accounts_id from accounts where account_name =?1  and  inactive = 'false' ) and  TO_DATE(created_at,'DD/MM/YYYY') BETWEEN ?2 AND ?3"  ,
             nativeQuery = true)
     List<Vinted>  findAllDispatchListing(String Id, Date start, Date end);
+    @Query(
+            value = "select * from vinted where account_id=?1 and id=?2",
+            nativeQuery = true
+    )
+    Optional<Vinted> findById(String accountId);
 }

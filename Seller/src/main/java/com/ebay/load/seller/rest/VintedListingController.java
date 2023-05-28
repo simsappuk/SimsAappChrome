@@ -1,19 +1,14 @@
 package com.ebay.load.seller.rest;
 
-import com.ebay.load.seller.dto.EbayListing;
+import com.ebay.load.seller.model.Stock;
 import com.ebay.load.seller.model.Vinted;
 import com.ebay.load.seller.repository.AccountsRepository;
 import com.ebay.load.seller.repository.VintedRepository;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
-import com.ebay.soap.eBLBaseComponents.ItemType;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Date;
@@ -83,22 +78,34 @@ public class VintedListingController {
 
     }
 
-//    @GetMapping("/vintedCategorySearch/{id}")
-//    public String getStudents1(@PathVariable(name="id") String id,@RequestParam(name = "query") String term){
-//        RestTemplate restTemplate = new RestTemplate();
-//        String pp= vintedRepository.findApiToken(id);
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set("Authorization","Token "+pp );
-//        HttpEntity<String> entity = new HttpEntity<String>(headers);
-//        String url  = "https://cat.zipsale.co.uk/api/v1/categories/categories_full_readable_path_data/?term="+term+"&limitChoices=10&marketplace_slug=vinted";
-//        org.springframework.http.ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-//        return responseEntity.getBody();
-//    }
-    @GetMapping("http://135.181.192.92:5000/categories")
-    public String getStudents1(String term){
-        return term;
+    @RequestMapping(value = "/post/{accountId}",method = RequestMethod.POST)
+    public ResponseEntity postVintedListing(@PathVariable("accountId") String accountId, @RequestBody Vinted vinted){
+//        Optional<Vinted> s = vintedRepository.findById(accountId);
+        if (vinted.getItemId() == null) {
+            Vinted s1 = vintedRepository.save(vinted);
+            return new ResponseEntity < Vinted > ().withResults(s1);
+        } else if (vinted.getItemId() != null) {
+            Vinted s1 = updateVinted(vinted);
+            vintedRepository.save(s1);
+        }
+        return new ResponseEntity < Vinted > ().withResults(vinted);
     }
 
+    public Vinted updateVinted(Vinted s) {
+        //s.setModifiedBy(SessionUserInfo.getLoggedInUser().getUser().getId());
+        s.setModifiedDate(new Date());
+        Optional<Vinted> s2 = vintedRepository.findById(s.getId());
+        vintedRepository.save(s);
+        return s;
+    }
+//        Vinted response = vintedRepository.save(vinted);
+//        JSONObject k= new JSONObject(response);
+//        return k;
+    @RequestMapping(value = "/post/{accountId}",method = RequestMethod.GET)
+    public ResponseEntity<Vinted> postVintedListing1(@PathVariable("accountId") String accountId){
+        return new ResponseEntity<Vinted>(new Vinted());
+        
+    }
 
     @RequestMapping(value = "/{id}/list/vinted", method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> loadCurrent(@PathVariable("id") String id,
@@ -140,7 +147,7 @@ public class VintedListingController {
                                                      @RequestParam("startDate") Date startDate,
                                                      @RequestParam("endDate") Date endDate,
                                                  @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize) {
-System.out.println(startDate);
+        System.out.println(startDate);
         return new ResponseEntity<List<Vinted>>().withResults(vintedRepository.findAllDispatchListing(id,startDate, endDate));
     }
 }

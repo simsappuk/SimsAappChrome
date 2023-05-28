@@ -15,6 +15,20 @@
                     </div>
                     <div class="panel-body">
 
+                        <div class="form-group" >
+                            <label class="col-md-3 col-xs-12 control-label">Category</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <select class="form-control" ng-model="StockListing.category" ng-change="onCategoryChange(this)" name="StockListing.category">
+                                        <option value=""> Select Category</option>
+                                        <option ng-repeat="x in tableVal" value="{{x.id}}">{{x.title}}</option>
+                                    </select>
+                                </div>
+                                <span class="help-block">Select Category</span>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Title*</label>
                             <div class="col-md-7 col-xs-12">
@@ -25,233 +39,192 @@
                                 <span class="help-block"></span>
                             </div>
                         </div>
-<!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Category</label>-->
-<!--                            <div class="col-md-6 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--&lt;!&ndash;                                    <input class="form-control"  type="search" ng-model="StockListing.category" ng-change="changeSelected()" name="StockListing.categoryF">&ndash;&gt;-->
-<!--                                    <select class="form-control" ng-model="StockListing.category" ng-select="onSelected()">-->
-<!--                                        <option class="form-control" ng-repeat="x in stockList" value="{{x.vinted_category_id}}">{{x.full_readable_path}}</option>-->
-<!--                                    </select>-->
 
-<!--                                </div>-->
-<!--                                <span class="help-block">Select Category</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <div class="form-group" >
-                            <label class="col-md-3 col-xs-12 control-label">Category*</label>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Custom Label</label>
                             <div class="col-md-7 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-
-                                    <select name="category" ng-click="StockListing()" ng-model="StockListing.category" class="form-control">
-                                        <option ng-repeat="option in StockListing" value="{{option.category}}">{{option.category}}</option>
-<!--                                        <option value="">&#45;&#45;Select Category&#45;&#45;</option>-->
-<!--                                        <option value="1000">New</option>-->
-<!--                                        <option value="3000">Like New (Used)</option>-->
-<!--                                        <option value="4000">Very Good</option>-->
-<!--                                        <option value="5000">Good</option>-->
-<!--                                        <option value="6000">Acceptable</option>-->
-                                    </select>
+                                    <input type="text" ng-model="StockListing.sku" class="form-control"/>
                                 </div>
-                            <span class="help-block"></span>
+                                <span class="help-block">Enter SKU</span>
+                            </div>
                         </div>
 
+
+
+                        <div class="form-group">
+
+                            <label class="col-md-3 col-xs-12 control-label">EAN</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="StockListing.ean" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <label class="col-md-3 col-xs-12 control-label">Condition</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <select ng-model="StockListing.conditionID" class="form-control">
+                                        <option value=""> Select Condition</option>
+                                        <option value="1000">New</option>
+                                        <option value="3000">Like New (Used)</option>
+                                        <option value="4000">Very Good</option>
+                                        <option value="5000">Good</option>
+                                        <option value="6000">Acceptable</option>
+                                    </select>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Image URL</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="StockListing.imageUrl" class="form-control">
+                                </div>
+                                <span class="help-block">Upload One Image URL Only <a href="https://imgbb.com/" target="_blank">Get URL From Here</a></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Description*</label>
+                            <div class="col-md-7 col-xs-12">
+                                <textarea  ng-model="StockListing.description" class="form-control" rows="9"></textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Platform</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="StockListing.platform"  class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <label class="col-md-3 col-xs-12 control-label">Genre</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="StockListing.platform"  class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Brand</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="StockListing.brand" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <label class="col-md-3 col-xs-12 control-label">MPN</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="StockListing.mpn" value="Does Not Apply" class="form-control">
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
 <!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Item Category*</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type ng-model="StockListing.primaryCategoryID" class="form-control">-->
-<!--                                    </input>-->
-<!--                                </div>-->
-<!--                                <span class="help-block">Enter Category ID</span>-->
-<!--                            </div>-->
+<!--                        <label class="col-md-3 col-xs-12 control-label">Shipping Profile ID</label>-->
+<!--                        <div class="col-md-7 col-xs-12">-->
+<!--                        <div class="input-group">-->
+<!--                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                        <input type="text" ng-model="StockListing.shippingProfileId" value="Does Not Apply" class="form-control">-->
 <!--                        </div>-->
-
-<!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Custom Label</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-model="StockListing.sku" class="form-control"/>-->
-<!--                                </div>-->
-<!--                                <span class="help-block">Enter SKU</span>-->
-<!--                            </div>-->
+<!--                        <span class="help-block"></span>-->
 <!--                        </div>-->
-
-
-<!--                        <div class="form-group">-->
-
-<!--                            <label class="col-md-3 col-xs-12 control-label">EAN</label>-->
-<!--                            <div class="col-md-3 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-model="StockListing.ean" class="form-control">-->
-<!--                                </div>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
-
-<!--                            <div class="col-md-4 col-xs-12">-->
-<!--                                <label class="col-md-3 col-xs-12 control-label">Condition*</label>-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <select ng-model="StockListing.conditionID" class="form-control">-->
-<!--                                        <option value="1000">New</option>-->
-<!--                                        <option value="3000">Like New (Used)</option>-->
-<!--                                        <option value="4000">Very Good</option>-->
-<!--                                        <option value="5000">Good</option>-->
-<!--                                        <option value="6000">Acceptable</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Image URL</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-model="StockListing.imageUrl" class="form-control">-->
-<!--                                </div>-->
-<!--                                <span class="help-block">Upload One Image URL Only <a href="https://imgbb.com/" target="_blank">Get URL From Here</a></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-
-<!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Description*</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <textarea  ng-model="StockListing.description" class="form-control" rows="9"></textarea>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-
-<!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Platform</label>-->
-<!--                            <div class="col-md-3 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-model="StockListing.platform"  class="form-control">-->
-<!--                                </div>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
-
-<!--                            <div class="col-md-4 col-xs-12">-->
-<!--                                <label class="col-md-3 col-xs-12 control-label">Genre</label>-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-model="StockListing.platform"  class="form-control">-->
-<!--                                </div>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-
-<!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Brand</label>-->
-<!--                            <div class="col-md-3 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-model="StockListing.brand" value="Does Not Apply" class="form-control">-->
-<!--                                </div>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
-
-<!--                            <div class="col-md-4 col-xs-12">-->
-<!--                                <label class="col-md-3 col-xs-12 control-label">MPN</label>-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-model="StockListing.mpn" value="Does Not Apply" class="form-control">-->
-<!--                                </div>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
 <!--                        </div>-->
 
 
-                        <!--<div class="form-group">-->
-                        <!--<label class="col-md-3 col-xs-12 control-label">Shipping Profile ID</label>-->
-                        <!--<div class="col-md-7 col-xs-12">-->
-                        <!--<div class="input-group">-->
-                        <!--<span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-                        <!--<input type="text" ng-model="StockListing.shippingProfileId" value="Does Not Apply" class="form-control">-->
-                        <!--</div>-->
-                        <!--<span class="help-block"></span>-->
-                        <!--</div>-->
-                        <!--</div>-->
-
-
-                        <!--  <div class="form-group">
-                              <label class="col-md-3 col-xs-12 control-label">Shipping Profile Name</label>
-                              <div class="col-md-7 col-xs-12">
-                                  <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="text" ng-model="StockListing.shippingProfileName" value="Does Not Apply" class="form-control">
-                                  </div>
-                                  <span class="help-block"></span>
-                              </div>
-                          </div>
-
-
-                          &lt;!&ndash;<div class="form-group">&ndash;&gt;
-                              &lt;!&ndash;<label class="col-md-3 col-xs-12 control-label">Return Profile ID</label>&ndash;&gt;
-                              &lt;!&ndash;<div class="col-md-7 col-xs-12">&ndash;&gt;
-                                  &lt;!&ndash;<div class="input-group">&ndash;&gt;
-                                      &lt;!&ndash;<span class="input-group-addon"><span class="fa fa-pencil"></span></span>&ndash;&gt;
-                                      &lt;!&ndash;<input type="text" ng-model="StockListing.returnProfileId" value="Does Not Apply" class="form-control">&ndash;&gt;
-                                  &lt;!&ndash;</div>&ndash;&gt;
-                                  &lt;!&ndash;<span class="help-block"></span>&ndash;&gt;
-                              &lt;!&ndash;</div>&ndash;&gt;
-                          &lt;!&ndash;</div>&ndash;&gt;
-
-
-                          <div class="form-group">
-                              <label class="col-md-3 col-xs-12 control-label">Return Profile Name</label>
-                              <div class="col-md-7 col-xs-12">
-                                  <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="text" ng-model="StockListing.returnProfileName" value="Does Not Apply" class="form-control">
-                                  </div>
-                                  <span class="help-block"></span>
-                              </div>
-                          </div>
-
-                          &lt;!&ndash;<div class="form-group">&ndash;&gt;
-                              &lt;!&ndash;<label class="col-md-3 col-xs-12 control-label">Payment Profile ID</label>&ndash;&gt;
-                              &lt;!&ndash;<div class="col-md-7 col-xs-12">&ndash;&gt;
-                                  &lt;!&ndash;<div class="input-group">&ndash;&gt;
-                                      &lt;!&ndash;<span class="input-group-addon"><span class="fa fa-pencil"></span></span>&ndash;&gt;
-                                      &lt;!&ndash;<input type="text" ng-model="StockListing.paymentProfileId" value="Does Not Apply" class="form-control">&ndash;&gt;
-                                  &lt;!&ndash;</div>&ndash;&gt;
-                                  &lt;!&ndash;<span class="help-block"></span>&ndash;&gt;
-                              &lt;!&ndash;</div>&ndash;&gt;
-                          &lt;!&ndash;</div>&ndash;&gt;
-
-                          <div class="form-group">
-                              <label class="col-md-3 col-xs-12 control-label">Payment Profile Name</label>
-                              <div class="col-md-7 col-xs-12">
-                                  <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="text" ng-model="StockListing.paymentProfileName" value="Does Not Apply" class="form-control">
-                                  </div>
-                                  <span class="help-block"></span>
-                              </div>
-                          </div>-->
-
-                        <!--<h3>Selling Details</h3>-->
-
-
 <!--                        <div class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Price*</label>-->
-<!--                            <div class="col-md-3 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input  ng-model="StockListing.buyItNowPriceValue" type="number" class="form-control"/>-->
-<!--                                </div>-->
-<!--                                <span class="help-block"></span>-->
-<!--                            </div>-->
+<!--                              <label class="col-md-3 col-xs-12 control-label">Shipping Profile Name</label>-->
+<!--                              <div class="col-md-7 col-xs-12">-->
+<!--                                  <div class="input-group">-->
+<!--                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                      <input type="text" ng-model="StockListing.shippingProfileName" value="Does Not Apply" class="form-control">-->
+<!--                                  </div>-->
+<!--                                  <span class="help-block"></span>-->
+<!--                              </div>-->
+<!--                          </div>-->
+
+
+<!--                          <div class="form-group">-->
+<!--                              <label class="col-md-3 col-xs-12 control-label">Return Profile ID</label>-->
+<!--                              <div class="col-md-7 col-xs-12">-->
+<!--                                  <div class="input-group">-->
+<!--                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                      <input type="text" ng-model="StockListing.returnProfileId" value="Does Not Apply" class="form-control">-->
+<!--                                  </div>-->
+<!--                                  <span class="help-block"></span>-->
+<!--                              </div>-->
+<!--                          </div>-->
+
+
+<!--                          <div class="form-group">-->
+<!--                              <label class="col-md-3 col-xs-12 control-label">Return Profile Name</label>-->
+<!--                              <div class="col-md-7 col-xs-12">-->
+<!--                                  <div class="input-group">-->
+<!--                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                      <input type="text" ng-model="StockListing.returnProfileName" value="Does Not Apply" class="form-control">-->
+<!--                                  </div>-->
+<!--                                  <span class="help-block"></span>-->
+<!--                              </div>-->
+<!--                          </div>-->
+
+<!--                          <div class="form-group">-->
+<!--                              <label class="col-md-3 col-xs-12 control-label">Payment Profile ID</label>-->
+<!--                              <div class="col-md-7 col-xs-12">-->
+<!--                                  <div class="input-group">-->
+<!--                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                      <input type="text" ng-model="StockListing.paymentProfileId" value="Does Not Apply" class="form-control">-->
+<!--                                  </div>-->
+<!--                                  <span class="help-block"></span>-->
+<!--                              </div>-->
+<!--                          </div>-->
+
+<!--                          <div class="form-group">-->
+<!--                              <label class="col-md-3 col-xs-12 control-label">Payment Profile Name</label>-->
+<!--                              <div class="col-md-7 col-xs-12">-->
+<!--                                  <div class="input-group">-->
+<!--                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                      <input type="text" ng-model="StockListing.paymentProfileName" value="Does Not Apply" class="form-control">-->
+<!--                                  </div>-->
+<!--                                  <span class="help-block"></span>-->
+<!--                              </div>-->
+<!--                          </div>-->
+
+<!--                        &lt;!&ndash;<h3>Selling Details</h3>&ndash;&gt;-->
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Price*</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input  ng-model="StockListing.buyItNowPriceValue" type="number" class="form-control"/>
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
 
 <!--                            <div class="col-md-4 col-xs-12">-->
 <!--                                <label class="col-md-3 col-xs-12 control-label">Quantity*</label>-->
@@ -260,12 +233,13 @@
 <!--                                    <input  ng-model="StockListing.quantityAvailable" type="number" class="form-control"/>-->
 <!--                                </div>-->
 <!--                            </div>-->
-                        </div>
+<!--                        </div>-->
 
 
                     </div>
                     <div class="panel-footer">
-                        <button ng-click="postListing(StockListing,params.id)" ng-disabled="!(StockListing.title && StockListing.buyItNowPriceValue)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                        <button ng-click="postListing(StockListing,params.id)" ng-disabled="!(StockListing.title)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+                    </div>
                     </div>
                 </div>
             </form>

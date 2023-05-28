@@ -14,6 +14,12 @@
 
     <link rel="stylesheet" href="/handsontable/handsontable.full.css">
     <link rel="stylesheet" href="app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.19.8/select.js"></script>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.19.8/select.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
     <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
 
@@ -59,6 +65,14 @@
                             <li class="xn-title" ng-if="x.accountType=='eBay'" ><b style="font-weight:600;">{{x.accountType}}'s {{x.accountName}}</b></li>
                             <li><a href="#!/ActiveListing/{{x.id}}"><span class="fa fa-heart"></span> Active Listings</a></li>
                              <li><a href="#!/dropship/{{x.id}}"><span class="fa fa-dropbox"></span>Dropship Listings</a></li>
+                            <li><a href="#!/reset/{{x.id}}"><span class="fa fa-undo"></span>Reset Listings</a></li>
+                            <li><a href="#!/compete/{{x.id}}"><span class="fa fa-rebel"></span>Compete Listings</a></li>
+                            <li><a href="#!/reListing/{{x.id}}"><span class="fa fa-repeat"></span>End-ReList Listings</a></li>
+                        </ul>
+                        <ul ng-repeat="x in tableVal" ng-if="x.accountType=='vinted'">
+                            <li class="xn-title" ng-if="x.accountType=='vinted'" ><b style="font-weight:600;">{{x.accountType}}'s {{x.accountName}}</b></li>
+                            <li><a href="#!/ActiveListing/{{x.id}}"><span class="fa fa-heart"></span> Active Listings</a></li>
+                            <li><a href="#!/dropship/{{x.id}}"><span class="fa fa-dropbox"></span>Dropship Listings</a></li>
                             <li><a href="#!/reset/{{x.id}}"><span class="fa fa-undo"></span>Reset Listings</a></li>
                             <li><a href="#!/compete/{{x.id}}"><span class="fa fa-rebel"></span>Compete Listings</a></li>
                             <li><a href="#!/reListing/{{x.id}}"><span class="fa fa-repeat"></span>End-ReList Listings</a></li>

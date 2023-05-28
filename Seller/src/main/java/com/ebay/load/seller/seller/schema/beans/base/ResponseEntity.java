@@ -29,6 +29,9 @@ public class ResponseEntity<T> extends AbstractErrorResponse {
         this.results = results;
     }
 
+    public ResponseEntity(String accountId, T vinted) {
+    }
+
     public T getResults() {
         return results;
     }

@@ -29,10 +29,20 @@ public class VintedData {
 
     @Column(name = "account_id")
     public String accountId;
+
     @Column(name = "action")
     public String action;
-    @Column(name = "text")
-    public String text;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Lob
+    public String description;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -61,13 +71,7 @@ public class VintedData {
         this.action = action;
     }
 
-    public String getText() {
-        return text;
-    }
 
-    public void setText(String text) {
-        this.text = text;
-    }
 
     public Date getCreatedAt() {
         return createdAt;

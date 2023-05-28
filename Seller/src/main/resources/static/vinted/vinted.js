@@ -32,19 +32,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             templateUrl: 'vinted/new.html',
             controller: 'vintedNewCtrl'
         });
-        $routeProvider.when('/vintedData/:id', {
-                            templateUrl: 'vinted/vintedData.html',
-                            controller: 'vintedDataCtrl'
-                        });
-        $routeProvider.when('/vintedData/:id/new', {
-                    templateUrl: 'vinted/vintedNewData.html',
-                    controller: 'vintedNewDataCtrl'
-                });
-        $routeProvider.when('/vintedData/vintedDataSave/:id', {
-                            templateUrl: 'vinted/vintedData.html',
-                            controller: 'vintedDataCtrl',
-                            params: {page: { value: '1', squash: true }, pageSize: { value: '15', squash: true }, totalElements: { value: '0', squash: true }, filter: { value: 'MY', squash: true }, q: { value: '', squash: true } }
-                        });
+
         $routeProvider.when('/vintedSaveStock/:id', {
                     templateUrl: 'vinted/stock.html',
                     controller: 'vintedListCtrl',
@@ -175,57 +163,8 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         }
 
     }])
-    .controller('vintedDataCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
-            $scope.params = $routeParams;
-            $scope.stockList = [];
-            //alert("running...");
-            $http.get('/vintedData/'+$scope.params.id,).
-                          then(function(response) {
-                              $scope.vintedData = response.data.results;
-                              $scope.tableVal = response.data.results;
-                                $scope.page.totalElements=response.data.totalElements;
-                                $scope.page = {totalElements: 0, currentPage: 1,pageSize: 20,loading: false,date: '',date1: ''};
-                                })
 
-
-        }])
-    .controller('vintedNewDataCtrl', ['$scope','$http','$routeParams','$rootScope','$uibModal','$controller',function($scope,$http,$routeParams,$controller,$rootScope,$uibModal) {
-
-     $scope.params=$routeParams;
-     if($routeParams.itemId!=null){
-              var itemId;
-              $scope.EbayListing={itemId:$routeParams.itemId};
-              }
-     $scope.save = function(obj) {
-     $http.post("/vintedData/"+$scope.params.id, obj).then(function successCallback(response,obj){
-                             window.location.href="#!/vintedData";
-                                 console.log("Successfully POST-ed data");
-                             }, function errorCallback(response){
-                             window.location.href="#!/vintedData";
-                                 console.log("POST-ing of data failed");
-                             });
-                  }
-     $scope.loadVintedData=function(obj){
-
-        $http.get('#!/vintedData/'+(obj)).
-              then(function(response) {
-                  $scope.vintedData = response.data.results;
-                 // $scope.page.currentPage=response.data.totalPages;
-
-              });
-      }
-      $scope.loadVintedData=function(){
-        $http.get('vintedData?page='+($scope.page.currentPage-1)+"&pageSize="+$scope.page.pageSize).
-              then(function(response) {
-                  $scope.tableVal = response.data.results;
-                  $scope.page.totalElements=response.data.totalElements;
-                 // $scope.page.currentPage=response.data.totalPages;
-
-              });
-
-     }
-    }])
-    .controller('VintedNewCtrl', ['$scope','$http','$routeParams','$controller',function($scope,$http,$routeParams,$controller) {
+    .controller('vintedNewCtrl', ['$scope','$http','$routeParams','$controller',function($scope,$http,$routeParams,$controller) {
 
          $scope.params=$routeParams;
          if($routeParams.itemId!=null){
@@ -236,9 +175,10 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
 
 
         }]).controller('ListCURDCtrl', ['$scope','$http','$routeParams','$rootScope','$uibModal', function($scope,$http,$routeParams,$rootScope,$uibModal) {
-           $scope.stock={};
+           $scope.myCategory={};
            $scope.page={totalElements:0,currentPage:1,pageSize:200,loading:false};
-           $scope.tableVal=[ ];
+           $scope.tableVal=[];
+           $scope.vintedDataList = [];
 
         $rootScope.showCalculator = function() {
             $rootScope.modalInstance = $uibModal.open({
@@ -249,17 +189,38 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 size: 'lg'
             });
         }
+        $scope.onCategoryChange = function(id) {
+                $scope.selected = $scope.StockListing.category;
+                if($scope.myCategory.catalog_children_tree[$scope.selected]!=null){
+                    $scope.tableVal=[];
+                    for (let i = 0; i < $scope.myCategory.catalog_children_tree[$scope.selected].length; i++) {
 
-         $scope.save=function(obj){
-         $http.post("/api/stock", obj)
+                        $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[$scope.selected][i]]);
+                        }
+                }else
+                    return true;
+             }
+
+         $http.get("/vintedData/"+$scope.params.id+"/category" )
                     .then(function successCallback(response){
-                    window.location.href="#!/stock";
+                    var s =response.data.description;
+                    $scope.myCategory = eval(s)
+                    for (let i = 0; i < $scope.myCategory.catalog_children_tree[0].length; i++) {
+                        $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[0][i]]);
+                        }
+                   /* for (var i = 0; i < $scope.tableVal.length; i++) {
+                        var optn = document.createElement("option");
+                        optn.text = $scope.tableVal[i].title;
+                        optn.value = $scope.tableVal[i].id;
+                        $scope.vintedDataList.push(optn);
+                        }*/
+                    window.location.href="#!/vintedStock/"+$scope.params.id+"/new";
                         console.log("Successfully POST-ed data");
                     }, function errorCallback(response){
-                    window.location.href="#!/stock";
+                    window.location.href="#!/vintedStock/"+$scope.params.id+"/new";
                         console.log("POST-ing of data failed");
                     });
-         }
+
 
          $scope.searchText='';
          $scope.search=function(){
@@ -271,7 +232,8 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
 
          $scope.postListing=function(obj,accountId){
          $scope.params=$routeParams;
-         $http.post("api/ActiveListing/post/"+accountId,obj)
+         $scope.student = { "id": obj.id,"itemId": obj.itemId,"url": obj.url,"category": obj.category,"imageUrl": obj.imageUrl,"description": obj.description,"platform": obj.platform,"genre": obj.genre,"brand": obj.brand,"mpn": obj.mpn,"colour": obj.colour,"size": obj.buyItNowPriceValue,"price": obj.buyItNowPriceValue,"quantity": obj.buyItNowPriceValue,"title": obj.title,"ean": obj.ean,"condition": obj.condition,"sku": obj.sku,"ownerId": obj.ownerId,"accountId": obj.accountId,"createdAt": obj.createdAt,"originalPriceNumeric": obj.originalPriceNumeric,"itemClosingAction": obj.itemClosingAction,"modifiedDate": obj.modifiedDate }
+                  $http.post("/api/Vinted/post/"+$scope.params.id,$scope.student)
                      .then(function successCallback(response){
                      window.location.href="#!/ActiveListing/"+$scope.params.id;
                           console.log("Successfully POST-ed data");
@@ -384,39 +346,3 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
 
         }
         }])
-    .controller('vintedNewCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
-        $scope.params = $routeParams;
-        $scope.stock = {}
-        $scope.stockList = [];
-        $scope.page = {
-            totalElements: 0,
-            currentPage: 1,
-            pageSize: 20,
-            loading: false,
-            date: '',
-            date1: ''
-        };
-        $scope.StockListing = function(){
-//        $http.post('/vintedData/' + $scope.params.id).
-//                    then(function(response) {
-//                        $scope.page.loading = false;
-//                        $scope.stockList = response.data
-//                        // $scope.check=[];
-//                        // $scope.init();
-//
-//                    });
-
-        }
-
-        $scope.postListing=function(obj,accountId){
-                 $scope.params=$routeParams;
-                 $http.post("api/ActiveListing/post/"+accountId,obj)
-                             .then(function successCallback(response){
-                             window.location.href="#!/ActiveListing/"+$scope.params.id;
-                                  console.log("Successfully POST-ed data");
-                             },function errorCallback(response){
-                             window.location.href="#!/ActiveListing/"+$scope.params.id;
-                                 console.log("POST-ing of data failed");
-                             });
-                 }
-    }])
