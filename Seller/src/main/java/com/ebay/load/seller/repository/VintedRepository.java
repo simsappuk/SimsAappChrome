@@ -53,4 +53,13 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
             nativeQuery = true
     )
     Optional<Vinted> findById(String accountId);
+
+    @Query(
+            value="select accounts.accounts_id from accounts where account_name=?1",
+            nativeQuery = true
+    )
+    String findIdByAccountId(String accountId);
+
+
+    List<Vinted> findByItemId(String s);
 }

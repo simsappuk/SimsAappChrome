@@ -30,7 +30,7 @@ public class ActiveListingController {
         return ebayService.findAllByOwnerId(SessionUserInfo.getLoggedInUser().getUser().getId(),id, new PageRequest(page, pageSize));
 
     }
-//ean,imageUrl,sku,title,brand,quantity,description,accountId:ff80818187ad52c40187ad75ab370007
+
     @RequestMapping(value = "/post/{accountId}",method = RequestMethod.POST)
     public ResponseEntity<ItemType> postEbayListing(@PathVariable("accountId") String accountId,@RequestBody EbayListing item){
         return ebayService.postNewListing(accountId,item);
