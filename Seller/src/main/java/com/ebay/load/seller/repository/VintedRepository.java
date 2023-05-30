@@ -49,10 +49,10 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
             nativeQuery = true)
     List<Vinted>  findAllDispatchListing(String Id, Date start, Date end);
     @Query(
-            value = "select * from vinted where account_id=?1 and id=?2",
+            value = "select * from vinted where item_id=?1",
             nativeQuery = true
     )
-    Optional<Vinted> findById(String accountId);
+    List<Vinted> findByItemId(String accountId);
 
     @Query(
             value="select accounts.accounts_id from accounts where account_name=?1",
@@ -61,5 +61,5 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
     String findIdByAccountId(String accountId);
 
 
-    List<Vinted> findByItemId(String s);
+    Optional<Vinted> findById(String s);
 }

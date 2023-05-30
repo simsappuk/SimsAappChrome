@@ -25,6 +25,14 @@
                                         <option ng-repeat="x in tableVal" value="{{x.id}}">{{x.title}}</option>
                                     </select>
                                 </div>
+                                <div style="display: none;" class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-repeat="x in tableVal" ng-model="StockListing.category1"  value="{{x.title}}" class="form-control">
+<!--                                    <select class="form-control" ng-model="StockListing.category1" ng-change="onCategoryChange(this)" name="StockListing.category1">-->
+<!--                                        <option value=""> Select Category</option>-->
+<!--                                        <option ng-repeat="x in tableVal" value="{{x.title}}">{{x.id}}</option>-->
+<!--                                    </select>-->
+                                </div>
                                 <span class="help-block">Select Category</span>
                             </div>
                         </div>
