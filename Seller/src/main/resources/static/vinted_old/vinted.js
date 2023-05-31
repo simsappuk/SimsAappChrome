@@ -20,25 +20,36 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             templateUrl: 'vinted/dispatch.html',
             controller: 'dispatchCtrl'
         });
+
         $routeProvider.when('/vintedStock/:id', {
-            templateUrl: 'vinted/vintedStock.html',
-            controller: 'vintedListCtrl'
-        });
-//        $routeProvider.when('/listing-new/:id', {
-//              templateUrl: 'listing/addForm.html',
-//              controller: 'ListNewCtrl'
-//            });
-        $routeProvider.when('/vintedStock/:id/new', {
-            templateUrl: 'vinted/new.html',
-            controller: 'vintedNewCtrl'
-        });
+                    templateUrl: 'vinted/stock.html',
+                    controller: 'vintedListCtrl'
+                });
+                $routeProvider.when('/listing-new/:id', {
+                      templateUrl: 'listing/addForm.html',
+                      controller: 'ListNewCtrl'
+                    });
+                $routeProvider.when('/vintedStock/:id/new', {
+                    templateUrl: 'listing/addForm.html',
+                    controller: 'vintedNewCtrl'
+                });
 
-//        $routeProvider.when('/vintedSaveStock/:id', {
-//                    templateUrl: 'vinted/stock.html',
-//                    controller: 'vintedListCtrl',
-//                    params: {page: { value: '1', squash: true }, pageSize: { value: '15', squash: true }, totalElements: { value: '0', squash: true }, filter: { value: 'MY', squash: true }, q: { value: '', squash: true } }
-//                });
 
+//        $routeProvider.when('/vintedStock/:id', {
+//            templateUrl: 'vinted/vintedStock.html',
+//            controller: 'vintedListCtrl'
+//        });
+
+//        $routeProvider.when('/vintedStock/:id/new', {
+//            templateUrl: 'vinted/new.html',
+//            controller: 'vintedNewCtrl'
+//        });
+
+            $routeProvider.when('/vintedSaveStock/:id', {
+                    templateUrl: 'vinted/stock.html',
+                    controller: 'vintedListCtrl',
+                    params: { page: {value: '1',squash: true},pageSize: {value: '15',squash: true},totalElements: {value: '0',squash: true},filter: {value: 'MY',squash: true},q: {value: '',squash: true}}
+                });
     }])
 
     .controller('vintedCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
@@ -246,36 +257,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                          console.log("POST-ing of data failed");
                      });
          }
-          $scope.check=[];
-          $scope.selected=function(obj1,obj){
-          if(obj1==true && (obj!=null && obj.length!=0))
-          $scope.check.push(obj);
-          else if(obj1==false)
-          $scope.check.pop(obj);
-          }
 
-           $scope.activeRelist=function(obj){
-           $scope.params=$routeParams;
-           if(obj.length==0||obj==undefined)
-                       noty({text: 'Please Select an Item To ReList', layout: 'topRight', type: 'warning',killer :true,timeout:2000});
-              else{
-                      $http.post("/api/ActiveListing/pushListing?listingId="+obj+"&accountId="+$scope.params.id)
-                      .then(function successCallback(response){
-                        if(response.data.errors){
-                          noty({text:response.data.messages[0].messageText, layout: 'topRight', type: 'error',killer : true});
-                          $scope.check=[];
-                          }
-                        else
-                          noty({text: 'Successfully Added to Relist', layout: 'topRight', type: 'success',killer : true,timeout:2000});
-                          window.location.href="#!/ActiveListing/"+$routeParams.id;
-                          $scope.check=[];
-                          console.log("Successfully POST-ed data");
-                      }, function errorCallback(response){
-                      noty({text: response.data.messages[0].messageText, layout: 'topRight', type: 'error',killer : true});
-                          window.location.href="#!/ActiveListing/"+$routeParams.id;
-                          $scope.check=[];
-                          console.log("POST-ing of data failed");
-                      });
-                      }
-           }
+
+
         }])

@@ -20,7 +20,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             controller: 'dispatchCtrl'
         });
         $routeProvider.when('/vintedStock/:id', {
-            templateUrl: 'vinted/stock.html',
+            templateUrl: 'vinted/vintedStock.html',
             controller: 'vintedListCtrl'
         });
         $routeProvider.when('/listing-new/:id', {
@@ -28,35 +28,14 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
               controller: 'ListNewCtrl'
             });
         $routeProvider.when('/vintedStock/:id/new', {
-            templateUrl: 'listing/addForm.html',
+            templateUrl: 'vinted/new.html',
             controller: 'vintedNewCtrl'
         });
-        $routeProvider.when('/vintedSaveStock/:id', {
-                    templateUrl: 'vinted/stock.html',
-                    controller: 'vintedListCtrl',
-                    params: {
-                                                    page: {
-                                                        value: '1',
-                                                        squash: true
-                                                    },
-                                                    pageSize: {
-                                                        value: '15',
-                                                        squash: true
-                                                    },
-                                                    totalElements: {
-                                                        value: '0',
-                                                        squash: true
-                                                    },
-                                                    filter: {
-                                                        value: 'MY',
-                                                        squash: true
-                                                    },
-                                                    q: {
-                                                        value: '',
-                                                        squash: true
-                                                    }
-                                                }
-                });
+//        $routeProvider.when('/vintedSaveStock/:id', {
+//                    templateUrl: 'vinted/stock.html',
+//                    controller: 'vintedListCtrl',
+//                    params: { page: {value: '1',squash: true},pageSize: {value: '15',squash: true},totalElements: {value: '0',squash: true},filter: {value: 'MY',squash: true},q: {value: '',squash: true}}
+//                });
 
     }])
 
@@ -175,18 +154,14 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
     }])
     .controller('vintedListCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
         $scope.params = $routeParams;
-        $scope.stockList = [];
-        $scope.page = {
-            totalElements: 0,
-            currentPage: 1,
-            pageSize: 20,
-            loading: false,
-            date: '',
-            date1: ''
-        };
-        $scope.vintedSaveStock = function() {
-        alert("running save stock...");
-        }
+                $scope.tableVal = [];
+                $scope.myCategory={};
+                $scope.page = {totalElements: 0,currentPage: 1,pageSize: 20,loading: false,date: '',date1: ''};
+
+                $http.get("/api/Vinted/vintedStock/"+$scope.params.id)
+                                            .then(function successCallback(response){
+                                            $scope.tableVal = response.data.results;
+                                            })
 
     }])
     .controller('ListNewCtrl', ['$scope','$http','$routeParams','$controller',function($scope,$http,$routeParams,$controller) {
@@ -349,26 +324,57 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
     }
     }])
     .controller('vintedNewCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
+        var list = [];
+        $scope.page = {totalElements: 0, currentPage: 1, pageSize: 200 };
+        $scope.tableVal = [];
+        $scope.stock = {sku: [], itemId: [], ean: [] };
         $scope.params = $routeParams;
-        $scope.stock = {}
-        $scope.stockList = [];
-        $scope.page = {
-            totalElements: 0,
-            currentPage: 1,
-            pageSize: 20,
-            loading: false,
-            date: '',
-            date1: ''
-        };
-        $scope.changeSelected = function() {
-            console.log($scope.stock);
-            $http.get('/api/Vinted/vintedCategorySearch/' + $scope.params.id + '?query=' + $scope.stock.category).
-            then(function(response) {
-                $scope.page.loading = false;
-                $scope.stockList = response.data
-                // $scope.check=[];
-                // $scope.init();
+        $scope.myCategory={};
+        $scope.page={totalElements:0,currentPage:1,pageSize:200,loading:false};
+        $scope.vintedDataList = [];
+        $scope.vintedDataList1 = [];
+        $scope.vintedCategory = "";
+        $scope.onCategoryChange = function(id) {
+                        $scope.selected = $scope.StockListing.category;
+                        $scope.vintedDataList.push($scope.selected)
+                        if($scope.myCategory.catalog_children_tree[$scope.selected]!=null){
+                            $scope.vintedDataList1.push($scope.myCategory.catalogs[$scope.selected].title);
+                            $scope.tableVal=[];
+                            for (let i = 0; i < $scope.myCategory.catalog_children_tree[$scope.selected].length; i++) {
+                                $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[$scope.selected][i]]);
+                                }
+                        }else
+                            return true;
+                     }
+        $scope.postListing=function(obj,accountId){
+                 $scope.params=$routeParams;
+                 for(let i= 0;i<$scope.vintedDataList1.length;i++){
+                    $scope.vintedCategory = $scope.vintedCategory+"-->"+$scope.vintedDataList1[i];
+                 }
+                 $scope.student = {"errors": false,"messages": [],"requestId": null,"results": {"id": obj.id,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedCategory,"imageUrl": obj.imageUrl,"description": obj.description,"platform": obj.platform,"genre": obj.genre,"brand": obj.brand,"mpn": obj.mpn,"colour": obj.colour,"size": obj.size,"price": obj.price,"quantity": obj.quantity,"title": obj.title,"ean": obj.ean,"condition": obj.condition,"sku": obj.sku,"ownerId": obj.ownerId,"accountId": obj.accountId,"createdAt": obj.createdAt,"originalPriceNumeric": obj.originalPriceNumeric,"itemClosingAction": obj.itemClosingAction,"modifiedDate": obj.modifiedDate },"totalElements": null,"totalPages": null  }
+                 //$scope.student = {"id": obj.id,"itemId": obj.itemId,"url": obj.url,"category": obj.category,"imageUrl": obj.imageUrl,"description": obj.description,"platform": obj.platform,"genre": obj.genre,"brand": obj.brand,"mpn": obj.mpn,"colour": obj.colour,"size": obj.size,"price": obj.price,"quantity": obj.quantity,"title": obj.title,"ean": obj.ean,"condition": obj.condition,"sku": obj.sku,"ownerId": obj.ownerId,"accountId": obj.accountId,"createdAt": obj.createdAt,"originalPriceNumeric": obj.originalPriceNumeric,"itemClosingAction": obj.itemClosingAction,"modifiedDate": obj.modifiedDate }
+                          $http.post("/api/Vinted/post/"+$scope.params.id,$scope.student.results)
+                             .then(function successCallback(response){
+                             window.location.href="#!/vintedStock/"+$scope.params.id;
+                                  console.log("Successfully POST-ed data");
+                             },function errorCallback(response){
+                             window.location.href="#!/vintedStock/"+$scope.params.id;
+                                 console.log("POST-ing of data failed");
+                             });
+                 }
+        $http.get("/vintedData/"+$scope.params.id+"/category" )
+                            .then(function successCallback(response){
+                            var s =response.data.description;
+                            $scope.myCategory = eval(s)
+                            for (let i = 0; i < $scope.myCategory.catalog_children_tree[0].length; i++) {
+                                $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[0][i]]);
+                                }
+                            window.location.href="#!/vintedStock/"+$scope.params.id+"/new";
+                                console.log("Successfully POST-ed data");
+                            }, function errorCallback(response){
+                            window.location.href="#!/vintedStock/"+$scope.params.id+"/new";
+                                console.log("POST-ing of data failed");
+                            });
 
-            });
-        }
+
     }])
