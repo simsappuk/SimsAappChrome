@@ -1,0 +1,58 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+                       <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><large contenteditable>Dispatch Listings ({{page.totalElements}})&nbsp;&nbsp;&nbsp;</large></h3>
+                    <input ng-model="page.date" type="date" style="border:inset;margin-top: 5px;line-height: 23px;" ng-change="changeDate()"> TO
+                    <input ng-model="page.date1" type="date" style="border:inset;margin-top: 5px;line-height: 23px;" ng-change="changeDateTo()">
+                    <input type="submit" value="Go" class="btn btn-info pull-center"  style="border-color: antiquewhite;" ng-click="ititData()">
+
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th style="width:7%; text-align: center;">ItemId</th>
+                            <th style="width:11%; text-align: center;">SKU</th>
+                            <th style="width:13%; ">Quantity Available</th>
+                            <th style="width:6%; text-align: center;">Price(£)</th>
+                            <th style="width:10%; text-align: center;">Start Time</th>
+                        </tr>
+
+                        <tr  ng-repeat="x in tableVal" >
+
+                            <td>
+                                <label class="container">
+                                    <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <img src="{{x.imageUrl}}"/><a href="{{x.url}}">&nbsp;&nbsp;{{x.title}}</a><i uib-tooltip="{{x.url}} " class="fa fa-eye fa-2 text-success" aria-hidden="true"></i></td>
+                            <td style="text-align: center">{{x.itemId}}</td>
+                            <td style="text-align: center"><input type="text" ng-model="x.sku" ng-model-options="{updateOn: 'blur'}" ng-change="reviseSku(x)" class="myInput"></td>
+                            <td style="text-align: center">{{x.quantityAvailable}}</td>
+                            <td style="text-align: center"><i ng-if="x.startPriceCurrencyId=='GBP'" class="fa fa-gbp"></i><i ng-if="x.startPriceCurrencyId=='EUR'" class="fa fa-eur"></i>&nbsp;{{x.originalPriceNumeric}}</td>
+                            <td style="text-align: center">{{x.createdAt |  date:'mediumDate'}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <style>
+            .myInput{border-style:none;padding-left:15px;}
+            .myInput:hover{ border-style:solid; border:1px solid green;}
+            .myInput:focus{ border-style:solid; border:1px solid red;}
+</style>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" ng-model="page.currentPage" ng-change="loadListingData(params.id,value)"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- PAGE CONTENT WRAPPER -->
