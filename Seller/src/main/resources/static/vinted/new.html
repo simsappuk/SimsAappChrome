@@ -15,27 +15,18 @@
                     </div>
                     <div class="panel-body">
 
-                        <div class="form-group" >
-                            <label class="col-md-3 col-xs-12 control-label">Category</label>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Image URL</label>
                             <div class="col-md-7 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <select class="form-control" ng-model="StockListing.category" ng-change="onCategoryChange(this)" name="StockListing.category">
-                                        <option value=""> Select Category</option>
-                                        <option ng-repeat="x in tableVal" value="{{x.id}}">{{x.title}}</option>
-                                    </select>
+                                    <input type="text" ng-model="StockListing.imageUrl" class="form-control">
                                 </div>
-                                <div style="display: none;" class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-repeat="x in tableVal" ng-model="StockListing.category1"  value="{{x.title}}" class="form-control">
-                                    <!--                                    <select class="form-control" ng-model="StockListing.category1" ng-change="onCategoryChange(this)" name="StockListing.category1">-->
-                                    <!--                                        <option value=""> Select Category</option>-->
-                                    <!--                                        <option ng-repeat="x in tableVal" value="{{x.title}}">{{x.id}}</option>-->
-                                    <!--                                    </select>-->
-                                </div>
-                                <span class="help-block">Select Category</span>
+                                <span class="help-block">Upload One Image URL Only <a href="https://imgbb.com/" target="_blank">Get URL From Here</a></span>
                             </div>
                         </div>
+
 
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Title*</label>
@@ -48,26 +39,43 @@
                             </div>
                         </div>
 
+
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Custom Label</label>
+                            <label class="col-md-3 col-xs-12 control-label">Description*</label>
                             <div class="col-md-7 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-model="StockListing.sku" class="form-control"/>
-                                </div>
-                                <span class="help-block">Enter SKU</span>
+                                <textarea  ng-model="StockListing.description" class="form-control" rows="9"></textarea>
+                                <span class="help-block"></span>
                             </div>
                         </div>
 
-
+                        <div class="form-group" >
+                            <label class="col-md-3 col-xs-12 control-label">Category</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <select class="form-control" ng-model="StockListing.category" ng-change="onCategoryChange(this)" name="StockListing.category">
+                                        <option value=""> Select Category</option>
+                                        <option ng-repeat="x in tableVal" value="{{x.id}}">{{x.title}}</option>
+                                    </select>
+                                </div>
+<!--                                <div style="display: none;" class="input-group">-->
+<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                    <input type="text" ng-repeat="x in tableVal" ng-model="StockListing.category1"  value="{{x.title}}" class="form-control">-->
+<!--                                    &lt;!&ndash;                                    <select class="form-control" ng-model="StockListing.category1" ng-change="onCategoryChange(this)" name="StockListing.category1">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <option value=""> Select Category</option>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <option ng-repeat="x in tableVal" value="{{x.title}}">{{x.id}}</option>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                    </select>&ndash;&gt;-->
+<!--                                </div>-->
+                                <span class="help-block">Select Category</span>
+                            </div>
+                        </div>
 
                         <div class="form-group">
-
-                            <label class="col-md-3 col-xs-12 control-label">EAN</label>
+                            <label class="col-md-3 col-xs-12 control-label">Brand</label>
                             <div class="col-md-3 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-model="StockListing.ean" value="Does Not Apply" class="form-control">
+                                    <input type="text" ng-model="StockListing.brand" value="Does Not Apply" class="form-control">
                                 </div>
                                 <span class="help-block"></span>
                             </div>
@@ -90,66 +98,89 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Image URL</label>
-                            <div class="col-md-7 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-model="StockListing.imageUrl" class="form-control">
-                                </div>
-                                <span class="help-block">Upload One Image URL Only <a href="https://imgbb.com/" target="_blank">Get URL From Here</a></span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Description*</label>
-                            <div class="col-md-7 col-xs-12">
-                                <textarea  ng-model="StockListing.description" class="form-control" rows="9"></textarea>
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Platform</label>
+                            <label class="col-md-3 col-xs-12 control-label">Price*</label>
                             <div class="col-md-3 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-model="StockListing.platform"  class="form-control">
+                                    <input  ng-model="StockListing.buyItNowPriceValue" type="number" class="form-control"/>
                                 </div>
                                 <span class="help-block"></span>
                             </div>
 
                             <div class="col-md-4 col-xs-12">
-                                <label class="col-md-3 col-xs-12 control-label">Genre</label>
+                                <label class="col-md-3 col-xs-12 control-label">Quantity*</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-model="StockListing.platform"  class="form-control">
+                                    <input  ng-model="StockListing.quantityAvailable" type="number" class="form-control"/>
                                 </div>
-                                <span class="help-block"></span>
                             </div>
                         </div>
 
-
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Brand</label>
+                            <label class="col-md-3 col-xs-12 control-label">EAN</label>
                             <div class="col-md-3 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-model="StockListing.brand" value="Does Not Apply" class="form-control">
+                                    <input type="text" ng-model="StockListing.ean" value="Does Not Apply" class="form-control">
                                 </div>
                                 <span class="help-block"></span>
                             </div>
 
+
+
                             <div class="col-md-4 col-xs-12">
-                                <label class="col-md-3 col-xs-12 control-label">MPN</label>
+                                <label class="col-md-3 col-xs-12 control-label">URL</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="text" ng-model="StockListing.mpn" value="Does Not Apply" class="form-control">
+                                    <input type="text" ng-model="StockListing.url"  class="form-control">
                                 </div>
-                                <span class="help-block"></span>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">SKU</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" ng-model="StockListing.sku" class="form-control"/>
+                                </div>
+                                <span class="help-block">Enter SKU</span>
                             </div>
                         </div>
+
+
+
+
+
+
+
+
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-md-3 col-xs-12 control-label">Platform</label>-->
+<!--                            <div class="col-md-3 col-xs-12">-->
+<!--                                <div class="input-group">-->
+<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                    <input type="text" ng-model="StockListing.platform"  class="form-control">-->
+<!--                                </div>-->
+<!--                                <span class="help-block"></span>-->
+<!--                            </div>-->
+
+<!--                            <div class="col-md-4 col-xs-12">-->
+<!--                                <label class="col-md-3 col-xs-12 control-label">Genre</label>-->
+<!--                                <div class="input-group">-->
+<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
+<!--                                    <input type="text" ng-model="StockListing.platform"  class="form-control">-->
+<!--                                </div>-->
+<!--                                <span class="help-block"></span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+
+
 
 
                         <!--                        <div class="form-group">-->
@@ -224,32 +255,12 @@
                         <!--                        &lt;!&ndash;<h3>Selling Details</h3>&ndash;&gt;-->
 
 
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Price*</label>
-                            <div class="col-md-3 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input  ng-model="StockListing.buyItNowPriceValue" type="number" class="form-control"/>
-                                </div>
-                                <span class="help-block"></span>
-                            </div>
 
-                            <!--                            <div class="col-md-4 col-xs-12">-->
-                            <!--                                <label class="col-md-3 col-xs-12 control-label">Quantity*</label>-->
-                            <!--                                <div class="input-group">-->
-                            <!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-                            <!--                                    <input  ng-model="StockListing.quantityAvailable" type="number" class="form-control"/>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                        </div>-->
-
-
-                        </div>
                         <div class="panel-footer">
                             <button ng-click="postListing(StockListing,params.id)" ng-disabled="!(StockListing.title)" class="btn btn-primary pull-right m-r-xs">Submit</button>
                         </div>
                     </div>
-                </div>
+
             </form>
 
         </div>

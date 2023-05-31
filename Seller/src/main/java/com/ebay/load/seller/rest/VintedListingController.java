@@ -100,9 +100,7 @@ public class VintedListingController {
         vintedRepository.save(s);
         return s;
     }
-//        Vinted response = vintedRepository.save(vinted);
-//        JSONObject k= new JSONObject(response);
-//        return k;
+
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> postVintedListing1(@PathVariable("accountId") String accountId){
         String s = vintedRepository.findIdByAccountId(accountId);
