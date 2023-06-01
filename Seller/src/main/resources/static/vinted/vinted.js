@@ -334,6 +334,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         $scope.vintedDataList = [];
         $scope.vintedDataList1 = [];
         $scope.vintedCategory = "";
+        $scope.vintedValue = "";
         $scope.onCategoryChange = function(id) {
                         $scope.selected = $scope.StockListing.category;
                         $scope.vintedDataList.push($scope.selected)
@@ -343,8 +344,10 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                             for (let i = 0; i < $scope.myCategory.catalog_children_tree[$scope.selected].length; i++) {
                                 $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[$scope.selected][i]]);
                                 }
-                        }else
+                        }else {
+                            $scope.tableValue=$scope.myCategory.catalogs[$scope.selected].title;
                             return true;
+                            }
                      }
         $scope.postListing=function(obj,accountId){
                  $scope.params=$routeParams;

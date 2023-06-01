@@ -58,14 +58,6 @@
                                         <option ng-repeat="x in tableVal" value="{{x.id}}">{{x.title}}</option>
                                     </select>
                                 </div>
-<!--                                <div style="display: none;" class="input-group">-->
-<!--                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>-->
-<!--                                    <input type="text" ng-repeat="x in tableVal" ng-model="StockListing.category1"  value="{{x.title}}" class="form-control">-->
-<!--                                    &lt;!&ndash;                                    <select class="form-control" ng-model="StockListing.category1" ng-change="onCategoryChange(this)" name="StockListing.category1">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        <option value=""> Select Category</option>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        <option ng-repeat="x in tableVal" value="{{x.title}}">{{x.id}}</option>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                    </select>&ndash;&gt;-->
-<!--                                </div>-->
                                 <span class="help-block">Select Category</span>
                             </div>
                         </div>
@@ -116,6 +108,27 @@
                             </div>
                         </div>
 
+                        <div ng-show="tableValue== 'Games' "  class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Select Rating:</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <select class="form-control" ng-model="StockListing.rating" name="rating" onchange="onRatingChange(this)" >
+                                        <option value="">Select Rating</option><option value="AO">AO - Adults only</option>
+                                        <option value="Everyone">E – Everyone</option><option value="E10+">E10+ – Everyone 10+</option>
+                                        <option value="M">M - Mature 17+</option><option value="PEGI 12">PEGI 12</option>
+                                        <option value="PEGI 16">PEGI 16</option><option value="PEGI 18">PEGI 18</option>
+                                        <option value="PEGI 3">PEGI 3</option><option value="PEGI 7">PEGI 7</option>
+                                        <option value="Rating pending">RP - Rating pending</option><option value="T">T – Teen 13+</option>
+                                        <option value="USK 0">USK 0</option><option value="USK 12">USK 12</option>
+                                        <option value="USK 16">USK 16</option><option value="USK 18">USK 18</option>
+                                        <option value="USK 6">USK 6</option><option value="Unspecified">Unspecified</option>
+                                    </select>
+                                </div>
+                                <span class="help-block">Select Rating</span>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">EAN</label>
                             <div class="col-md-3 col-xs-12">
@@ -125,9 +138,6 @@
                                 </div>
                                 <span class="help-block"></span>
                             </div>
-
-
-
                             <div class="col-md-4 col-xs-12">
                                 <label class="col-md-3 col-xs-12 control-label">URL</label>
                                 <div class="input-group">
@@ -135,12 +145,7 @@
                                     <input type="text" ng-model="StockListing.url"  class="form-control">
                                 </div>
                             </div>
-
-
                         </div>
-
-
-
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">SKU</label>
                             <div class="col-md-7 col-xs-12">
@@ -151,13 +156,34 @@
                                 <span class="help-block">Enter SKU</span>
                             </div>
                         </div>
-
-
-
-
-
-
-
+                        <div ng-show="tableValue == 'Consoles'" class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Select Parcel Weight</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div ng-model="StockListing.parcelWeight " class="input-group">
+                                    <input type="radio" id="weight1" name="weight" value="5kg" checked><span></span>
+                                    <label for="weight1">5kg</label>
+                                    <input type="radio" id="weight2" name="weight" value="10kg"><span></span>
+                                    <label for="weight2">10kg</label>
+                                    <input type="radio" id="weight3" name="weight" value="20kg"><span></span>
+                                    <label for="weight3">20kg</label>
+                                </div>
+<!--                                <span class="help-block">Select Weight</span>-->
+                            </div>
+                        </div>
+                        <div ng-if="tableValue" ng-show="tableValue!='Consoles'" class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Parcel Size</label>
+                            <div class="col-md-7 col-xs-12">
+                                <div ng-model="StockListing.parcelSize" class="input-group">
+                                    <input type="radio" id="size1" name="size" value="small" checked><span></span>
+                                    <label for="size1">Small</label>
+                                    <input type="radio" id="size2" name="size" value="medium"><span></span>
+                                    <label for="size2">Medium</label>
+                                    <input type="radio" id="size3" name="size" value="large"><span></span>
+                                    <label for="size3">Large</label>
+                                </div>
+<!--                                <span class="help-block">Select Parcel Size</span>-->
+                            </div>
+                        </div>
 
 <!--                        <div class="form-group">-->
 <!--                            <label class="col-md-3 col-xs-12 control-label">Platform</label>-->
@@ -260,7 +286,6 @@
                             <button ng-click="postListing(StockListing,params.id)" ng-disabled="!(StockListing.title)" class="btn btn-primary pull-right m-r-xs">Submit</button>
                         </div>
                     </div></div>
-
             </form>
 
         </div>
