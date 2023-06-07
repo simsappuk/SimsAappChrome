@@ -62,4 +62,10 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
 
 
     Optional<Vinted> findById(String s);
+
+    @Query(
+            value = "select * from vinted where item_id=?1",
+            nativeQuery = true
+    )
+    String findByItemAccountId(String s);
 }

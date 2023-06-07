@@ -81,7 +81,7 @@ public class VintedListingController {
     @RequestMapping(value = "/post/{accountId}",method = RequestMethod.POST)
     public ResponseEntity postVintedListing(@PathVariable("accountId") String accountId, @RequestBody Vinted vinted){
 //        Optional<Vinted> s = vintedRepository.findById(accountId);
-        if (vinted.getItemId() == null) {
+        if (vinted.getId() == null) {
             String s = vintedRepository.findIdByAccountId(accountId);
             vinted.setItemId(s);
             Vinted s1 = vintedRepository.save(vinted);
@@ -100,13 +100,20 @@ public class VintedListingController {
         vintedRepository.save(s);
         return s;
     }
+//    @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
+//    public ResponseEntity<Vinted> postVintedListing1(@PathVariable("accountId") String accountId){
+//        String s = vintedRepository.findIdByAccountId(accountId);
+//        Optional<Vinted> vinted = vintedRepository.findById(s);
+//        ResponseEntity<Vinted> k = new ResponseEntity<>(new Vinted());
+//        return k;
+//    }
 
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> postVintedListing1(@PathVariable("accountId") String accountId){
         String s = vintedRepository.findIdByAccountId(accountId);
         List<Vinted> vinted = vintedRepository.findByItemId(s);
         return new ResponseEntity<List<Vinted>>().withResults(vinted);
-        
+
     }
 
     @RequestMapping(value = "/{id}/list/vinted", method = RequestMethod.GET)

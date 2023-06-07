@@ -22,18 +22,25 @@ public class Vinted {
     private String imageUrl;
     private String description;
     private String platform;
-    private String genre;
+    private String isbn;
+
     private String brand;
     private String mpn;
-    private String colour;
-    private Long size;
+    private String color;
+    private String size;
+    private String parcelSize;
     private Long price;
     private Long quantity;
     private String title;
     private String ean;
-    private String condition;
+    private String conditionId;
     private String sku;
+    private String rating;
+
+
+    private String measurements;
     private String ownerId;
+    private String tooltip;
 
     private String accountId;
     private String createdAt;
@@ -45,6 +52,43 @@ public class Vinted {
     @LastModifiedDate
     private Date modifiedDate;
 
+    public String getColor() {
+        return color;
+    }
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    public void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getMeasurements() {
+        return measurements;
+    }
+
+    public void setMeasurements(String measurements) {
+        this.measurements = measurements;
+    }
     public String getId() {
         return id;
     }
@@ -109,13 +153,7 @@ public class Vinted {
         this.platform = platform;
     }
 
-    public String getGenre() {
-        return genre;
-    }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
 
     public String getBrand() {
         return brand;
@@ -133,20 +171,21 @@ public class Vinted {
         this.mpn = mpn;
     }
 
-    public String getColour() {
-        return colour;
-    }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public Long getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Long size) {
+    public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getParcelSize() {
+        return parcelSize;
+    }
+
+    public void setParcelSize(String parcelSize) {
+        this.parcelSize = parcelSize;
     }
 
     public Long getPrice() {
@@ -181,12 +220,12 @@ public class Vinted {
         this.ean = ean;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getConditionId() {
+        return conditionId;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setConditionId(String conditionId) {
+        this.conditionId = conditionId;
     }
 
     public String getSku() {
