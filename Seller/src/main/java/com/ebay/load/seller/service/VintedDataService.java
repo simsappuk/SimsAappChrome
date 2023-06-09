@@ -32,9 +32,10 @@ public class VintedDataService {
             vdt1.setDescription(vintedData.getDescription());
             vdt1.setUpdatedAt(new Date());
             vintedData = vdt1;
-        }
-        //vintedData.setCreatedAt(new Date());
+        }else{
+        vintedData.setCreatedAt(new Date());
         vintedData.setUpdatedAt(new Date());
+        }
         VintedData response = vintedDataRepository.save(vintedData);
         return response;
     }
