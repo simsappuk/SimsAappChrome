@@ -15,7 +15,7 @@ public interface VintedDataRepository extends JpaRepository<VintedData,String> {
 
     @Query(value = "select id from vinted_data where account_id=?1 and action=?2",
             nativeQuery = true)
-    Long findByIdAct(String accountId,String action);
+    String findByIdAct(String accountId,String action);
     @Query(value = "select * from vinted_data where account_id=?1 and action=?2",
             nativeQuery = true)
     VintedData findByIdaa(String accountId,String action);

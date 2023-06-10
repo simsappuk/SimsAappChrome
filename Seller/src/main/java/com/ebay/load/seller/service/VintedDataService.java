@@ -24,7 +24,7 @@ public class VintedDataService {
     @Transactional
     public VintedData save(VintedData vintedData, String name){
         String s = vintedDataRepository.findByAccountName(name);
-        Long l = vintedDataRepository.findByIdAct(s,vintedData.getAction());
+        String l = vintedDataRepository.findByIdAct(s,vintedData.getAction());
         vintedData.setAccountId(s);
         if (l!=null){
             VintedData vdt1 = vintedDataRepository.findById(l).get();
@@ -42,7 +42,7 @@ public class VintedDataService {
     @Transactional
     public VintedData findAllById(String id,String action) {
         String accountId = vintedDataRepository.findByAccountName(id);
-        Long pId = vintedDataRepository.findByIdAct(accountId,action);
+        String pId = vintedDataRepository.findByIdAct(accountId,action);
         VintedData vintedData1 = vintedDataRepository.findById(pId).get();
         return vintedData1;
     }
