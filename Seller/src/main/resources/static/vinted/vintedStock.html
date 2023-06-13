@@ -44,9 +44,9 @@
             </select>
             <a href="#!/vintedStock/{{params.id}}/new" class="btn btn-info pull-right"  style="border-color: antiquewhite;">New Stock</a>
             &nbsp;&nbsp;
-<!--
-            <a ng-hide="stock.getData==null" href="#!/stock-log/{{params}}/{{stock.getData}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Submit</a>
--->
+<!--            <a class="btn btn-info pull-right" ng-click="getListings()" style="border-color: antiquewhite;">Add to Listings</a>-->
+<!--            <a href="#!/stock-log/{{params}}/{{stock.getData}}" class="btn btn-info pull-right" style="border-color: antiquewhite;">Submit</a>-->
+
             <li ng-if="data.upload">
               <a uib-tooltip="Uploading Data from Vinted" class="panel-collapse btn-info disabled">
               <span class="btn-info fa fa-refresh fa-spin"></span>
@@ -72,6 +72,7 @@
               <th style="text-align: center;width:108px;">EAN</th>
               <th style="text-align: center;width:75px;">Avg Price</th>
               <th style="text-align: center;width:104px;">Modified Date</th>
+<!--              <th style="text-align: center;width:104px;">Edit</th>-->
 <!--
               <th style="width:190px;">Created Date</th>
 -->
@@ -83,7 +84,7 @@
                   <span class="checkmark"></span>
                 </label>
                 <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" src="{{x.imageUrl}}" style="width:46px;height:60px;"><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:46px;height:60px;"></a>
-                <a href="#!/stock-edit/{{x.accountId}}/{{x.id}}">&nbsp;&nbsp;<text>{{x.title}}</text></a>&nbsp;
+                <a href="#!/vintedStockEdit/{{x.accountId}}/{{x.id}}">&nbsp;&nbsp;<text>{{x.title}}</text></a>&nbsp;
                 <a href="#!/stock-history/{{x.id}}">
                   <i uib-tooltip="{{x.title}} History" tooltip-placement="right" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>
                 </a>
@@ -139,6 +140,7 @@
 <!--              </td>-->
               <td style="text-align: center;">{{x.avgPrice}}</td>
               <td>{{x.modifiedDate|date}}</td>
+<!--              <td ><a href="{{x.id}}"></a></td>-->
 
 <!--
               <td>{{x.createdDate | date}}</td>

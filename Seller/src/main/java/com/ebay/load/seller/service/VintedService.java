@@ -1,6 +1,7 @@
 package com.ebay.load.seller.service;
 import com.ebay.load.seller.config.SessionUserInfo;
 import com.ebay.load.seller.dto.EbayListing;
+import com.ebay.load.seller.model.Stock;
 import com.ebay.load.seller.model.Vinted;
 import com.ebay.load.seller.repository.VintedRepository;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
@@ -14,7 +15,6 @@ import java.util.Optional;
 
 public class VintedService {
     @Autowired
-    static
     VintedRepository vintedRepository;
     public Vinted postNewListing(String accountId, Vinted item) {
             Optional<Vinted> s = vintedRepository.findById(accountId);
@@ -23,6 +23,13 @@ public class VintedService {
             //cred.seteBayToken(s.getApiToken());
             //apiContext.setApiServerUrl(s.getUrl());
             apiContext.setSite(SiteCodeType.UK);
+            return null;
+    }
+    public ResponseEntity <Vinted> findByAccountId(String id) {
+        Vinted s2 = vintedRepository.findOneById(id);
+        if (s2 != null)
+            return new ResponseEntity < Vinted> ().withResults(s2);
+        else
             return null;
     }
 }

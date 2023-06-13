@@ -1,0 +1,963 @@
+&nbsp;
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+  <div class="row" style="font-size:13px;">
+    <div class="col-md-12">
+
+      <form name="myForm" class="form-horizontal">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Edit </strong> Vinted Stock</h3>
+          </div>
+          <div class="panel-body">
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Image URL</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="StockListing.imageUrl" class="form-control">
+                </div>
+                <span class="help-block">Upload One Image URL Only <a href="https://imgbb.com/" target="_blank">Get URL From Here</a></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Title*</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="StockListing.title" class="form-control">
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Description*</label>
+              <div class="col-md-7 col-xs-12">
+                <textarea  ng-model="StockListing.description" class="form-control" rows="9"></textarea>
+                <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="form-group" >
+              <label class="col-md-3 col-xs-12 control-label">Category</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.category" ng-change="onCategoryChange(this)" name="StockListing.category">
+                    <option value=""> Select Category</option>
+                    <option ng-repeat="x in tableVal" value="{{x.id}}">{{x.title}}</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Category</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Brand</label>
+              <div class="col-md-3 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.brand" name="Size" >
+                    <option value="">Select Brand</option>      <option value="Next">Next</option>      <option value="Primark">Primark</option>      <option value="New Look">New Look</option>
+                    <option value="H&M">H&M</option>      <option value="Zara">Zara</option>      <option value="Shein">Shein</option>      <option value="PrettyLittleThing">PrettyLittleThing</option>
+                    <option value="River Island">River Island</option><option value="Marks & Spencer">Marks & Spencer</option>      <option value="George">George</option><option value="F&F">F&F</option>
+                    <option value="TU">TU</option><option value="Boohoo">Boohoo</option>      <option value="Topshop">Topshop</option><option value="Nike">Nike</option>
+                    <option value="Matalan">Matalan</option><option value="adidas">adidas</option>
+                    <option value="NO LABEL">NO LABEL</option><option value="ASOS">ASOS</option><option value="George at ASDA">George at ASDA</option><option value="Missguided">Missguided</option><option value="Dorothy Perkins">Dorothy Perkins</option><option value="Nutmeg">Nutmeg</option><option value="Papaya">Papaya</option><option value="Bundle">Bundle</option>
+                    <option value="Ted Baker">Ted Baker</option><option value="Miss Selfridge">Miss Selfridge</option><option value="Urban Outfitters">Urban Outfitters</option><option value="Superdry">Superdry</option><option value="Joules">Joules</option><option value="Oasis">Oasis</option><option value="Quiz">Quiz</option><option value="Monsoon">Monsoon</option>
+                    <option value="Ralph Lauren">Ralph Lauren</option><option value="Hollister">Hollister</option><option value="Lipsy">Lipsy</option><option value="Warehouse">Warehouse</option><option value="Puma">Puma</option><option value="Disney">Disney</option><option value="GAP">GAP</option><option value="Oh Polly">Oh Polly</option>
+                    <option value="Peacocks">Peacocks</option><option value="I Saw it First">I Saw it First</option><option value="Mothercare">Mothercare</option><option value="TU Kids">TU Kids</option><option value="Jack Wills">Jack Wills</option><option value="Clarks">Clarks</option><option value="John Lewis">John Lewis</option><option value="ASOS Design">ASOS Design</option><option value="Bershka">Bershka</option><option value="No brand indicated">No brand indicated</option>
+                    <option value="List without brand">List without brand</option>
+                  </select>
+                </div>
+                <span class="help-block"></span>
+              </div>
+
+              <div id="container" class="col-md-4 col-xs-12">
+                <label class="col-md-3 col-xs-12 control-label">Condition</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select id="Tooltip" ng-model="StockListing.conditionID" class="form-control">
+                    <option value=""  title=""> Select Condition</option>
+
+                    <option id="1" value="New with tags"  title="A brand-new, unused item with tags attached or in the original packaging">New with tags</option>
+
+                    <option id="2" value="New without tags" title="A brand-new, unused item without tags or original packaging"> without tags</option>
+
+                    <option id="3" value="Very good" title="A lightly used item that may have slight imperfections, but still looks great. Include photos and descriptions of any flaws in your listing">Very good</option>
+
+                    <option id="4" value="Good"  title="A used item that may show imperfections and signs of wear. Include photos and descriptions of flaws in your listing">Good</option>
+
+                    <option id="5" value="Satisfactory"  title="A frequently used item with imperfections and signs of wear.Include photos and descriptions of flaws in your listing">Satisfactory</option>
+
+                    <option id="6" value="Acceptable" title="A frequently used item with imperfections and signs of wear">Acceptable</option>
+
+                  </select>
+                </div>
+                <span class="help-block"></span>
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Price*</label>
+              <div class="col-md-3 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input  ng-model="StockListing.buyItNowPriceValue" type="text" class="form-control"/>
+                </div>
+                <span class="help-block"></span>
+              </div>
+              <div ng-show="isbnValue== 1 " class="col-md-4 col-xs-12">
+                <label class="col-md-3 col-xs-12 control-label">ISBN</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input  ng-model="StockListing.isbn" type="text" name="isbn" class="form-control"/>
+                </div>
+              </div>
+
+            </div>
+
+            <div ng-show="gameRatingValue"  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Rating:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.rating" name="rating"  >
+                    <option value="">Select Rating</option><option value="AO">AO - Adults only</option>
+                    <option value="Everyone">E – Everyone</option><option value="E10+">E10+ – Everyone 10+</option>
+                    <option value="M">M - Mature 17+</option><option value="PEGI 12">PEGI 12</option>
+                    <option value="PEGI 16">PEGI 16</option><option value="PEGI 18">PEGI 18</option>
+                    <option value="PEGI 3">PEGI 3</option><option value="PEGI 7">PEGI 7</option>
+                    <option value="Rating pending">RP - Rating pending</option><option value="T">T – Teen 13+</option>
+                    <option value="USK 0">USK 0</option><option value="USK 12">USK 12</option>
+                    <option value="USK 16">USK 16</option><option value="USK 18">USK 18</option>
+                    <option value="USK 6">USK 6</option><option value="Unspecified">Unspecified</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Rating</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 7 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="size" >
+                    <option value="">Select Size</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option><option value="2.5">2.5</option>
+                    <option value="3">3</option><option value="3.5">3.5</option><option value="4">4</option><option value="4.5">4.5</option>
+                    <option value="5">5</option><option value="5.5">5.5</option><option value="6">6</option><option value="6.5">6.5</option>
+                    <option value="7">7</option><option value="7.5">7.5</option><option value="8">8</option><option value="8.5">8.5</option>
+                    <option value="9">9</option><option value="9.5">9.5</option><option value="10">10</option><option value="10.5">10.5</option>
+                    <option value="11">11</option><option value="44.5">44.5</option><option value="12">12</option><option value="12.5">12.5</option>
+                    <option value="13">13</option><option value="One size">One size</option><option value="Other">Other</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Rating</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 14 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Rating:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="size" >
+                    <option value="">Select Size</option>                                        <option value="XS">XS</option>                                        <option value="S">S</option>
+                    <option value="M">M</option>                                        <option value="L">L</option>                                        <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>                                        <option value="XXXL">XXXL</option>                                        <option value="4XL">4XL</option>
+                    <option value="5XL">5XL</option>                                        <option value="6XL">6XL</option>                                        <option value="7XL">7XL</option>
+                    <option value="8XL">8XL</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 4 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="size" >
+                    <option value="">Select Size</option>
+                    <option value="XXXS / 2">XXXS / 2</option><option value="XXS / 4">XXS / 4</option>    <option value="XS / 6">XS / 6</option><option value="S / 8">S / 8</option>
+                    <option value="M / 10">M / 10</option><option value="L / 12">L / 12</option>    <option value="XL / 14">XL / 14</option><option value="XXL / 16">XXL / 16</option>
+                    <option value="XXXL / 18">XXXL / 18</option><option value="4XL / 20">4XL / 20</option>    <option value="5XL / 22">5XL / 22</option><option value="6XL / 24">6XL / 24</option>
+                    <option value="7XL / 26">7XL / 26</option><option value="8XL / 28">8XL / 28</option>    <option value="9XL / 30">9XL / 30</option><option value="One size">One size</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 57 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.rating" name="rating" onchange="onRatingChange(this)" >
+                    <option value="">Select Size</option>
+                    <option value="XS">XS</option><option value="S">S</option><option value="M">M</option><option value="L">L</option>
+                    <option value="XL">XL</option><option value="XXL">XXL</option><option value="Other">Other</option><option value="One size">One size</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 59 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.rating" name="rating" onchange="onRatingChange(this)" >
+                    <option value="">Select Size</option>
+                    <option value="30 x 50 cm">30 x 50 cm</option><option value="35 x 50 cm">35 x 50 cm</option><option value="40 x 40 cm">40 x 40 cm</option>
+                    <option value="40 x 60 cm">40 x 60 cm</option><option value="45 x 45 cm">45 x 45 cm</option><option value="50 x 50 cm">50 x 50 cm</option>
+                    <option value="60 x 60 cm">60 x 60 cm</option><option value="65 x 65 cm">65 x 65 cm</option><option value="Other">Other</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 65 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.rating" name="rating" onchange="onRatingChange(this)" >
+                    <option value="">Select Size</option>
+                    <option value="Up to 149 cm">Up to 149 cm</option><option value="150 cm - 199 cm">150 cm - 199 cm</option>
+                    <option value="200 cm - 249 cm">200 cm - 249 cm</option><option value="250 cm - 299 cm">250 cm - 299 cm</option><option value="300 cm and up">300 cm and up</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 66 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="size" >
+                    <option value="">Select Size</option>
+                    <option value="35 x 40 cm">35 x 40 cm</option><option value="40 x 40 cm">40 x 40 cm</option>
+                    <option value="40 x 60 cm">40 x 60 cm</option><option value="40 x 75 cm">40 x 75 cm</option><option value="40 x 80 cm">40 x 80 cm</option>
+                    <option value="40 x 90 cm">40 x 90 cm</option><option value="50 x 50 cm">50 x 50 cm</option><option value="50 x 60 cm">50 x 60 cm</option>
+                    <option value="50 x 66 cm">50 x 66 cm</option><option value="50 x 70 cm">50 x 70 cm</option>
+                    <option value="50 x 90 cm">50 x 90 cm</option><option value="65 x 65 cm">65 x 65 cm</option><option value="80 x 80 cm">80 x 80 cm</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 69 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="size" >
+                    <option value="">Select Size</option>
+                    <option value="Single">Single</option><option value="Double">Double</option><option value="King">King</option><option value="Super King">Super King</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 67 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option>
+                    <option value="  70 x 90 cm">  70 x 90 cm</option><option value="80 x 100 cm">80 x 100 cm</option><option value="90 x 90 cm">90 x 90 cm</option>
+                    <option value="100 x 150 cm">100 x 150 cm</option><option value="110 x 150 cm">110 x 150 cm</option>
+                    <option value="110 x 170 cm">110 x 170 cm</option><option value="120 x 160 cm">120 x 160 cm</option><option value="125 x 150 cm">125 x 150 cm</option>
+                    <option value="130 x 170 cm">130 x 170 cm</option><option value="150 x 200 cm">150 x 200 cm</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 73 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="size"  >
+                    <option value="">Select Size</option><option value="XS">XS</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option>
+                    <option value="XXL">XXL</option><option value="XXXL">XXXL</option><option value="4XL">4XL</option><option value="5XL">5XL</option><option value="6XL">6XL</option>
+                    <option value="7XL">7XL</option><option value="8XL">8XL</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 26 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="No. 0 (up to 2 kg)">No. 0 (up to 2 kg)</option><option value="No. 1 (2-5 kg)">No. 1 (2-5 kg)</option>
+                    <option value="No.2 (3-6 kg)">No.2 (3-6 kg)</option><option value="No. 3 (4-9 kg)">No. 3 (4-9 kg)</option><option value="No. 4 (7-18 kg)">No. 4 (7-18 kg)</option>
+                    <option value="No. 4+ (9-20 kg)">No. 4+ (9-20 kg)</option><option value="No. 5 (11-25 kg)">No. 5 (11-25 kg)</option><option value="No. 5 + (13-27 kg)">No. 5 + (13-27 kg)</option>
+                    <option value="No. 6 (16+ kg)">No. 6 (16+ kg)</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 29 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="Any">Any</option><option value="From 0 months">From 0 months</option><option value="From 3 months">From 3 months</option>
+                    <option value="From 6 months">From 6 months</option><option value="From 9 months">From 9 months</option>
+                    <option value="From 1 year">From 1 year</option><option value="From 1.5 years">From 1.5 years</option>
+                    <option value="From 2 years">From 2 years</option><option value="From 3 years">From 3 years</option><option value="From 4 years">From 4 years</option>
+                    <option value="From 5 years">From 5 years</option><option value="From 6 years">From 6 years</option><option value="From 7 years">From 7 years</option>
+                    <option value="From 8 years">From 8 years</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 68 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="Moses basket / crib">Moses basket / crib</option><option value="Mini cot / Compact cot">Mini cot / Compact cot</option>
+                    <option value="Travel cot">Travel cot</option><option value="Cot / Toddler bed">Cot / Toddler bed</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 30 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="XS">XS</option><option value="S">S</option><option value="M">M</option><option value="L ">L</option><option value="XL ">XL</option>
+                    <option value="XXL">XXL</option><option value="One size">One size</option><option value="Other">Other</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 43 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="Preemies, 12 inches">Preemies, 12 inches  </option>
+                    <option value="0-3 months, 15 inches">0-3 months, 15 inches  </option>
+                    <option value="3-6 months, 17 inches">3-6 months, 17 inches  </option>
+                    <option value="6-12 months, 18 inches">6-12 months, 18 inches  </option>
+                    <option value="1-2 years, 19 inches">1-2 years, 19 inches  </option>
+                    <option value="2-3 years, 20 inches">2-3 years, 20 inches  </option>
+                    <option value="3-5 years, 21 inches">3-5 years, 21 inches  </option>
+                    <option value="5-8 years, 22 inches">5-8 years, 22 inches  </option>
+                    <option value="8-12 years, 23 inches">8-12 years, 23 inches  </option>
+                    <option value="12 and older > 23 inches">12 and older > 23 inches  </option>
+                    <option value="One size">One size</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 27 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="0-13 kg / 0 - 29 lb">0-13 kg / 0 - 29 lb</option>
+                    <option value="9-18 kg / 20 - 40 lb">9-18 kg / 20 - 40 lb</option>
+                    <option value="15-36 kg / 33 lb - 5 st 9 lb">15-36 kg / 33 lb - 5 st 9 lb</option>
+                    <option value="22-36 kg / 48 lb - 5 st 9 lb">22-36 kg / 48 lb - 5 st 9 lb</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 72 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="S | 2-5.5">S | 2-5.5 </option>
+                    <option value="M | 6-9.5">M | 6-9.5 </option>
+                    <option value="L | 10-12.5">L | 10-12.5 </option>
+                    <option value="XL | 13-15">XL | 13-15 </option>
+                    <option value="One size">One size</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 31 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="Tiny baby / EU 12">Tiny baby / EU 12</option>
+                    <option value="Tiny baby / EU 13">Tiny baby / EU 13</option>                                        <option value="Tiny baby / EU 14">Tiny baby / EU 14 </option>
+                    <option value="15 and smaller">15 and smaller </option>                                        <option value="0 baby / EU 16">0 baby / EU 16 </option>
+                    <option value="1 baby / EU 17">1 baby / EU 17 </option>                                        <option value="2 baby / EU 18">2 baby / EU 18 </option>
+                    <option value="3 baby / EU 19">3 baby / EU 19 </option>                                        <option value="3.5 baby / EU 20">3.5 baby / EU 20 </option>
+                    <option value="4 baby / EU 21">4 baby / EU 21 </option>                                        <option value="5 baby / EU 22">5 baby / EU 22 </option>
+                    <option value="6 baby / EU 23">6 baby / EU 23 </option>                                        <option value="7 child / EU 24">7 child / EU 24 </option>
+                    <option value="8 child / EU 25">8 child / EU 25 </option>                                        <option value="8.5 child / EU 26">8.5 child / EU 26</option>
+                    <option value="9 child / EU 27">9 child / EU 27 </option>                                        <option value="10 child / EU 28">10 child / EU 28</option>
+                    <option value="11 child / EU 29">11 child / EU 29 </option>                                        <option value="11.5 child / EU 30">11.5 child / EU 30 </option>
+                    <option value="12 child / EU 31">12 child / EU 31</option>                                        <option value="13 child / EU 32">13 child / EU 32</option>
+                    <option value="1 junior / EU 33">1 junior / EU 33</option>                                        <option value="2 junior / EU 34">2 junior / EU 34</option>
+                    <option value="2.5 junior / EU 35">2.5 junior / EU 35</option>                                        <option value="3 junior / EU 36">3 junior / EU 36</option>
+                    <option value="4 junior / EU 37">4 junior / EU 37</option>                                        <option value="5 junior / EU 38">5 junior / EU 38</option>
+                    <option value="6 junior / EU 39">6 junior / EU 39</option>                                        <option value="6.5 junior / EU 40">6.5 junior / EU 40</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 38 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="5">5</option>
+                    <option value="6">6</option>                                        <option value="6.5">6.5</option>                                        <option value="7">7</option>
+                    <option value="7.5">7.5</option>                                        <option value="8">8</option>                                        <option value="8.5">8.5</option>                                        <option value="9">9</option>
+                    <option value="9.5">9.5</option>                                        <option value="10">10</option>                                        <option value="10.5">10.5</option>                                        <option value="11">11</option>                                        <option value="12">12</option>
+                    <option value="13">13</option>                                        <option value="14">14</option>                                        <option value="15">15</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 32 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="Preemie">Preemie</option>
+                    <option value="up to 44cm">up to 44cm</option>
+                    <option value="Newborns / 44 cm">Newborns / 44 cm</option>
+                    <option value="Up to 1 month / 50 cm">Up to 1 month / 50 cm</option>
+                    <option value="1-3 months / 56 cm">1-3 months / 56 cm</option>
+                    <option value="3-6 months / 62 cm">3-6 months / 62 cm</option>
+                    <option value="6-9 months / 68 cm">6-9 months / 68 cm</option>
+                    <option value="9-12 months / 74 cm">9-12 months / 74 cm</option>
+                    <option value="12-18 months / 80 cm">12-18 months / 80 cm</option>
+                    <option value="18-24 months / 86 cm">18-24 months / 86 cm</option>
+                    <option value="24-36 months / 92 cm">24-36 months / 92 cm</option>
+                    <option value="3 years / 98-103 cm">3 years / 98-103 cm</option>
+                    <option value="4 years / 104 cm">4 years / 104 cm</option>
+                    <option value="5 years / 110 cm">5 years / 110 cm</option>
+                    <option value="6 years / 116 cm">6 years / 116 cm</option>
+                    <option value="7 years / 122 cm">7 years / 122 cm</option>
+                    <option value="8 years / 128 cm">8 years / 128 cm</option>
+                    <option value="9 years / 134 cm">9 years / 134 cm</option>
+                    <option value="10 years / 140 cm">10 years / 140 cm</option>
+                    <option value="11 years / 146 cm">11 years / 146 cm</option>
+                    <option value="12 years / 152 cm">12 years / 152 cm</option>
+                    <option value="13 years / 158 cm">13 years / 158 cm</option>
+                    <option value="14 years / 164 cm">14 years / 164 cm</option>
+                    <option value="15 years / 170 cm">15 years / 170 cm</option>
+                    <option value="16 years / 176 cm">16 years / 176 cm</option>
+                    <option value="One size">One size</option>
+                    <option value="XS">XS</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 60 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="XS">XS</option>
+                    <option value="S">S</option>                                        <option value="M">M</option>                                        <option value="L">L</option>                                        <option value="XL">XL</option>                                        <option value="XXL">XXL</option>
+                    <option value="One size">One size</option>                                        <option value="UK 6 3/8">UK 6 3/8</option>                                        <option value="UK 6 1/2">UK 6 1/2</option>                                        <option value="UK 6 5/8">UK 6 5/8</option>                                        <option value="UK 6 3/4">UK 6 3/4</option>
+                    <option value="UK 6 7/8">UK 6 7/8</option>                                        <option value="UK 7">UK 7</option>                                        <option value="UK 7 1/8">UK 7 1/8</option>                                        <option value="UK 7 1/4">UK 7 1/4</option>                                        <option value="UK 7 3/8">UK 7 3/8</option>                                        <option value="UK 7 1/2">UK 7 1/2</option>
+                    <option value="UK 7 5/8">UK 7 5/8</option>                                        <option value="UK 7 3/4">UK 7 3/4</option>                                        <option value="UK 7 7/8">UK 7 7/8</option>                                        <option value="UK 8">UK 8</option>
+                    <option value="Match the size">Match the size</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 53 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option>
+                    <option value="30A & AA">30A & AA</option>                                        <option value="30B">30B</option>                                        <option value="30C">30C</option>                                        <option value="30D">30D</option>
+                    <option value="30DD">30DD</option>                                        <option value="30E">30E</option>                                        <option value="30F">30F</option>                                        <option value="30FF">30FF</option>                                        <option value="30G">30G</option>
+                    <option value="30GG">30GG</option>                                        <option value="32A & AA">32A & AA</option>                                        <option value="32B">32B</option>                                        <option value="32C">32C</option>                                        <option value="32D">32D</option>                                        <option value="32DD">32DD</option>                                        <option value="32E">32E</option>
+                    <option value="32F">32F</option>                                        <option value="32FF">32FF</option>                                        <option value="32G">32G</option>                                        <option value="32GG">32GG</option>                                        <option value="34A & AA">34A & AA</option>                                        <option value="34B">34B</option>                                        <option value="34C">34C</option>                                        <option value="34D">34D</option>
+                    <option value="34DD">34DD</option>                                        <option value="34E">34E</option>                                        <option value="34F">34F</option>                                        <option value="34F">34FF</option>                                        <option value="34GG">34GG</option>                                        <option value="36A & AA">36A & AA</option>                                        <option value="36B">36B</option>                                        <option value="36C">36C</option>                                        <option value="36D">36D</option>                                        <option value="36DD">36DD</option>                                        <option value="36E">36E</option>
+                    <option value="36F">36F</option>                                        <option value="36FF">36FF</option>                                        <option value="36G">36G</option>                                        <option value="36GG">36GG</option>                                        <option value="38A & AA">38A & AA</option>                                        <option value="38B">38B</option>                                        <option value="38C">38C</option>                                        <option value="38D">38D</option>                                        <option value="38DD">38DD</option>                                        <option value="38E">38E</option>                                        <option value="38F">38F</option>
+                    <option value="38FF">38FF</option>                                        <option value="38G">38G</option>                                        <option value="38GG">38GG</option>                                        <option value="40A & AA">40A & AA</option>                                        <option value="40B">40B</option>                                        <option value="40C">40C</option>                                        <option value="40D">40D</option>                                        <option value="40DD">40DD</option>
+                    <option value="40E">40E</option>                                        <option value="40F">40F</option>                                        <option value="40FF">40FF</option>                                        <option value="40G">40G</option>                                        <option value="40GG">40GG</option>                                        <option value="42A & AA">42A & AA</option>                                        <option value="42B">42B</option>                                        <option value="42B">42B</option>                                        <option value="42D">42D</option>                                        <option value="42DD">42DD</option>                                        <option value="42E">42E</option>
+                    <option value="42F">42F</option>                                        <option value="42FF">42FF</option>                                        <option value="42G">42G</option>                                        <option value="42GG">42GG</option>                                        <option value="44A & AA">44A & AA</option>                                        <option value="44B">44B</option>                                        <option value="44C">44C</option>                                        <option value="44D">44D</option>                                        <option value="44DD">44DD</option>                                        <option value="44E">44E</option>
+                    <option value="44F">44F</option>                                        <option value="44FF">44FF</option>                                        <option value="44G">44G</option>                                        <option value="44GG">44GG</option>                                        <option value="Other">Other</option>                                        <option value="XXS">XXS</option>                                        <option value="XS">XS</option>                                        <option value="S">S</option>                                        <option value="M">M</option>                                        <option value="L">L</option>                                        <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>                                        <option value="XXXL">XXXL</option>                                        <option value="4XL">4XL</option>                                        <option value="5XL">5XL</option>                                        <option value="6XL">6XL</option>                                        <option value="7XL">7XL</option>                                        <option value="8XL">8XL</option>                                        <option value="9XL">9XL</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 52 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size" >
+                    <option value="">Select Size</option><option value="14.1 mm / F½">14.1 mm / F½</option><option value="14.5 mm / G½">14.5 mm / G½</option><option value="14.9 mm / H½">14.9 mm / H½</option>
+                    <option value="15.3 mm / I½">15.3 mm / I½</option><option value="15.7 mm / J½">15.7 mm / J½</option>
+                    <option value="16.1 mm / K½">16.1 mm / K½</option><option value="16.5 mm / L½">16.5 mm / L½</option><option value="16.9 mm / M½">16.9 mm / M½</option>
+                    <option value="17.3 mm / N½">17.3 mm / N½</option><option value="17.7 mm / O½">17.7 mm / O½</option>
+                    <option value="18.1 mm / P½">18.1 mm / P½</option><option value="18.5 mm / Q½">18.5 mm / Q½</option><option value="19 mm / R½">19 mm / R½</option>
+                    <option value="19.4 mm / S½">19.4 mm / S½</option><option value="19.8 mm / T½">19.8 mm / T½</option>
+                    <option value="20.2 mm / U½">20.2 mm / U½</option><option value="20.6 mm / V½">20.6 mm / V½</option><option value="21 mm / W½">21 mm / W½</option>
+                    <option value="21.4 mm / X½">21.4 mm / X½</option><option value="21.8 mm / Z">21.8 mm / Z</option>
+                    <option value="22.2 mm / Z+1">22.2 mm / Z+1</option><option value="22.6 / Z+2">22.6 / Z+2</option><option value="Adjustable">Adjustable</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 61 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="30 mm and under">30 mm and under</option>
+                    <option value="31 mm - 38 mm">31 mm - 38 mm</option>
+                    <option value="39 - 42 mm">39 - 42 mm</option>
+                    <option value="43 - 46 mm">43 - 46 mm</option>
+                    <option value="47 mm and above">47 mm and above</option>
+                    <option value="One size">One size</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 63 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="32 inches">32 inches</option>
+                    <option value="34 inches">34 inches</option>
+                    <option value="36 inches">36 inches</option>
+                    <option value="38 inches">38 inches</option>
+                    <option value="40 inches">40 inches</option>
+                    <option value="42 inches">42 inches</option>
+                    <option value="44 inches">44 inches</option>
+                    <option value="45 inches">45 inches</option>
+                    <option value="47 inches">47 inches</option>
+                    <option value="49 inches">49 inches</option>
+                    <option value="Adjustable">Adjustable</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 'wag' "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <!--                                    <div id="wag" class="wag">-->
+                  <!--                                        <label for="wag">Select Size:</label>-->
+                  <!--                                        <select name="wag" >-->
+                  <!--                                            <option value="">Select Size</option>-->
+                  <!--                                            <option value="5">5</option>-->
+                  <!--                                            <option value="5.5">5.5</option>-->
+                  <!--                                            <option value="6">6</option>-->
+                  <!--                                            <option value="6.5">6.5</option>-->
+                  <!--                                            <option value="7">7</option>-->
+                  <!--                                            <option value="7.5">7.5</option>-->
+                  <!--                                            <option value="8">8</option>-->
+                  <!--                                            <option value="8.5">8.5</option>-->
+                  <!--                                            <option value="9">9</option>-->
+                  <!--                                            <option value="">9.5</option>-->
+                  <!--                                            <option value="10">10</option>-->
+                  <!--                                            <option value="10.5">10.5</option>-->
+                  <!--                                            <option value="11">11</option>-->
+                  <!--                                            <option value="11.5">11.5</option>-->
+                  <!--                                            <option value="12">12</option>-->
+                  <!--                                            <option value="One size">One size</option>-->
+                  <!--                                            <option value="XS">XS</option>-->
+                  <!--                                            <option value="S">S</option>-->
+                  <!--                                            <option value="M">M</option>-->
+                  <!--                                            <option value="">L</option>-->
+                  <!--                                            <option value="XL">XL</option>-->
+                  <!--                                        </select>-->
+                  <!--                                    </div>-->
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="AO">AO - Adults only</option>
+                    <option value="Everyone">E – Everyone</option><option value="E10+">E10+ – Everyone 10+</option>
+                    <option value="M">M - Mature 17+</option><option value="PEGI 12">PEGI 12</option>
+                    <option value="PEGI 16">PEGI 16</option><option value="PEGI 18">PEGI 18</option>
+                    <option value="PEGI 3">PEGI 3</option><option value="PEGI 7">PEGI 7</option>
+                    <option value="Size pending">RP - Size pending</option><option value="T">T – Teen 13+</option>
+                    <option value="USK 0">USK 0</option><option value="USK 12">USK 12</option>
+                    <option value="USK 16">USK 16</option><option value="USK 18">USK 18</option>
+                    <option value="USK 6">USK 6</option><option value="Unspecified">Unspecified</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 62 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="30 mm and under">30 mm and under</option> <option value="31 mm - 38 mm">31 mm - 38 mm</option>
+                    <option value="39 - 42 mm">39 - 42 mm</option> <option value="43 - 46 mm">43 - 46 mm</option>
+                    <option value="47 mm and above">47 mm and above</option> <option value="One size">One size</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="sizeId== 64 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="26 inches">26 inches</option> <option value="28 inches">28 inches</option>
+                    <option value="30 inches">30 inches</option> <option value="32 inches">32 inches</option>
+                    <option value="34 inches">34 inches</option> <option value="36 inches">36 inches</option>
+                    <option value="38 inches">38 inches</option> <option value="40 inches">40 inches</option>
+                    <option value="42 inches">42 inches</option> <option value="44 inches">44 inches</option>
+                    <option value="46 inches">46 inches</option> <option value="Adjustable">Adjustable</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="statusId== 'statusId' "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <!--                                    <div id="statusId" class="statusId">-->
+                  <!--                                        <label for="statusId">statusId:</label><input type="text" id="statusId" name="statusId">-->
+                  <!--                                    </div>-->
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.size" name="Size"  >
+                    <option value="">Select Size</option><option value="AO">AO - Adults only</option>
+                    <option value="Everyone">E – Everyone</option><option value="E10+">E10+ – Everyone 10+</option>
+                    <option value="M">M - Mature 17+</option><option value="PEGI 12">PEGI 12</option>
+                    <option value="PEGI 16">PEGI 16</option><option value="PEGI 18">PEGI 18</option>
+                    <option value="PEGI 3">PEGI 3</option><option value="PEGI 7">PEGI 7</option>
+                    <option value="Size pending">RP - Size pending</option><option value="T">T – Teen 13+</option>
+                    <option value="USK 0">USK 0</option><option value="USK 12">USK 12</option>
+                    <option value="USK 16">USK 16</option><option value="USK 18">USK 18</option>
+                    <option value="USK 6">USK 6</option><option value="Unspecified">Unspecified</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Size</span>
+              </div>
+            </div>
+
+            <div ng-show="materialFieldValue== 1 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Material:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.material" name="Size"  >
+                    <option value="">Select Material</option><option value="Acrylic">Acrylic</option><option value="Alpaca">Alpaca</option><option value="Bamboo">Bamboo</option><option value="Canvas">Canvas</option><option value="Cardboard">Cardboard</option><option value="Cashmere">Cashmere</option><option value="Ceramic">Ceramic</option><option value="Chiffon">Chiffon</option>
+                    <option value="Corduroy">Corduroy</option><option value="Cotton">Cotton</option><option value="Denim">Denim</option><option value="Down">Down</option><option value="Elastane">Elastane</option><option value="Faux fur">Faux fur</option><option value="Faux leather">Faux leather</option><option value="Felt">Felt</option>
+                    <option value="Flannel">Flannel</option><option value="Fleece">Fleece</option><option value="Foam">Foam</option><option value="Glass">Glass</option><option value="Gold">Gold</option><option value="Jute">Jute</option><option value="Lace">Lace</option>
+                    <option value="Latex">Latex</option><option value="Leather">Leather</option><option value="Linen">Linen</option><option value="Merino">Merino</option><option value="Mesh">Mesh</option><option value="Metal">Metal</option><option value="Mohair">Mohair</option><option value="Neoprene">Neoprene</option><option value="Nylon">Nylon</option>
+                    <option value="Paper">Paper</option><option value="Patent leather">Patent leather</option><option value="Plastic">Plastic</option><option value="Polyester">Polyester</option><option value="Porcelain">Porcelain</option><option value="Rattan">Rattan</option><option value="Rubber">Rubber</option><option value="Satin">Satin</option><option value="Sequin">Sequin</option>
+                    <option value="Silicone">Silicone</option><option value="Silk">Silk</option><option value="Silver">Silver</option><option value="Stone">Stone</option><option value="Straw">Straw</option><option value="Suede">Suede</option><option value="Tulle">Tulle</option><option value="Tweed">Tweed</option><option value="Velour">Velour</option><option value="Velvet">Velvet</option>
+                    <option value="Viscose">Viscose</option><option value="Wood">Wood</option><option value="Wool">Wool</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Material</span>
+              </div>
+            </div>
+
+            <div ng-show="materialFieldValue== 2 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Material:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.material" name="Size" >
+                    <option value="">Select Material</option>
+                    <option value="Acrylic">Acrylic</option><option value="Alpaca">Alpaca</option><option value="Bamboo">Bamboo</option><option value="Canvas">Canvas</option><option value="Cardboard">Cardboard</option><option value="Cashmere">Cashmere</option>
+                    <option value="Ceramic">Ceramic</option><option value="Chiffon">Chiffon</option><option value="Corduroy">Corduroy</option><option value="Cotton">Cotton</option><option value="Denim">Denim</option><option value="Down">Down</option><option value="Elastane">Elastane</option>
+                    <option value="Faux fur">Faux fur</option><option value="Faux leather">Faux leather</option><option value="Felt">Felt</option><option value="Flannel">Flannel</option><option value="Fleece">Fleece</option><option value="Foam">Foam</option><option value="Glass">Glass</option>
+                    <option value="Gold">Gold</option><option value="Jute">Jute</option><option value="Lace">Lace</option><option value="Latex">Latex</option><option value="Leather">Leather</option><option value="Linen">Linen</option><option value="Merino">Merino</option><option value="Mesh">Mesh</option>
+                    <option value="Metal">Metal</option><option value="Mohair">Mohair</option><option value="Neoprene">Neoprene</option><option value="Nylon">Nylon</option><option value="Paper">Paper</option><option value="Patent leather">Patent leather</option><option value="Plastic">Plastic</option>
+                    <option value="Polyester">Polyester</option><option value="Porcelain">Porcelain</option><option value="Rattan">Rattan</option><option value="Rubber">Rubber</option><option value="Satin">Satin</option><option value="Sequin">Sequin</option><option value="Silicone">Silicone</option><option value="Silk">Silk</option>
+                    <option value="Silver">Silver</option><option value="Stone">Stone</option><option value="Straw">Straw</option><option value="Suede">Suede</option><option value="Tulle">Tulle</option><option value="Tweed">Tweed</option><option value="Velour">Velour</option><option value="Velvet">Velvet</option><option value="Viscose">Viscose</option>
+                    <option value="Wood">Wood</option><option value="Wool">Wool</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Material</span>
+              </div>
+            </div>
+
+            <div ng-show="materialFieldValue== 3 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Material:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.material" name="Size" >
+                    <option value="">Select Material</option>
+                    <option value="Acrylic">Acrylic</option><option value="Alpaca">Alpaca</option><option value="Bamboo">Bamboo</option><option value="Canvas">Canvas</option><option value="Cardboard">Cardboard</option><option value="Cashmere">Cashmere</option>
+                    <option value="Ceramic">Ceramic</option><option value="Chiffon">Chiffon</option><option value="Corduroy">Corduroy</option><option value="Cotton">Cotton</option><option value="Denim">Denim</option><option value="Down">Down</option><option value="Elastane">Elastane</option>
+                    <option value="Faux fur">Faux fur</option><option value="Faux leather">Faux leather</option><option value="Felt">Felt</option><option value="Flannel">Flannel</option><option value="Fleece">Fleece</option><option value="Foam">Foam</option><option value="Glass">Glass</option>
+                    <option value="Gold">Gold</option><option value="Jute">Jute</option><option value="Lace">Lace</option><option value="Latex">Latex</option><option value="Leather">Leather</option><option value="Linen">Linen</option><option value="Merino">Merino</option><option value="Mesh">Mesh</option>
+                    <option value="Metal">Metal</option><option value="Mohair">Mohair</option><option value="Neoprene">Neoprene</option><option value="Nylon">Nylon</option><option value="Paper">Paper</option><option value="Patent leather">Patent leather</option><option value="Plastic">Plastic</option>
+                    <option value="Polyester">Polyester</option><option value="Porcelain">Porcelain</option><option value="Rattan">Rattan</option><option value="Rubber">Rubber</option><option value="Satin">Satin</option><option value="Sequin">Sequin</option><option value="Silicone">Silicone</option><option value="Silk">Silk</option>
+                    <option value="Silver">Silver</option><option value="Stone">Stone</option><option value="Straw">Straw</option><option value="Suede">Suede</option><option value="Tulle">Tulle</option><option value="Tweed">Tweed</option><option value="Velour">Velour</option><option value="Velvet">Velvet</option><option value="Viscose">Viscose</option>
+                    <option value="Wood">Wood</option><option value="Wool">Wool</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Material</span>
+              </div>
+            </div>
+
+            <div ng-show="materialFieldValue== 4 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Material:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.material" name="Size"  >
+                    <option value="">Select Material</option>
+                    <option value="Acrylic">Acrylic</option><option value="Alpaca">Alpaca</option><option value="Bamboo">Bamboo</option><option value="Canvas">Canvas</option><option value="Cardboard">Cardboard</option><option value="Cashmere">Cashmere</option>
+                    <option value="Ceramic">Ceramic</option><option value="Chiffon">Chiffon</option><option value="Corduroy">Corduroy</option><option value="Cotton">Cotton</option><option value="Denim">Denim</option><option value="Down">Down</option><option value="Elastane">Elastane</option>
+                    <option value="Faux fur">Faux fur</option><option value="Faux leather">Faux leather</option><option value="Felt">Felt</option><option value="Flannel">Flannel</option><option value="Fleece">Fleece</option><option value="Foam">Foam</option><option value="Glass">Glass</option>
+                    <option value="Gold">Gold</option><option value="Jute">Jute</option><option value="Lace">Lace</option><option value="Latex">Latex</option><option value="Leather">Leather</option><option value="Linen">Linen</option><option value="Merino">Merino</option><option value="Mesh">Mesh</option>
+                    <option value="Metal">Metal</option><option value="Mohair">Mohair</option><option value="Neoprene">Neoprene</option><option value="Nylon">Nylon</option><option value="Paper">Paper</option><option value="Patent leather">Patent leather</option><option value="Plastic">Plastic</option>
+                    <option value="Polyester">Polyester</option><option value="Porcelain">Porcelain</option><option value="Rattan">Rattan</option><option value="Rubber">Rubber</option><option value="Satin">Satin</option><option value="Sequin">Sequin</option><option value="Silicone">Silicone</option><option value="Silk">Silk</option>
+                    <option value="Silver">Silver</option><option value="Stone">Stone</option><option value="Straw">Straw</option><option value="Suede">Suede</option><option value="Tulle">Tulle</option><option value="Tweed">Tweed</option><option value="Velour">Velour</option><option value="Velvet">Velvet</option><option value="Viscose">Viscose</option>
+                    <option value="Wood">Wood</option><option value="Wool">Wool</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Material</span>
+              </div>
+            </div>
+
+            <div ng-show="colorValue"  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Color:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.color" name="color"  >
+                    <option value="">Select Color</option>        <option value="Black">Black</option><option value="Brown">Brown</option>
+                    <option value="Grey">Grey</option><option value="Beige">Beige</option><option value="Pink">Pink</option>      <option value="Purple">Purple</option><option value="Red">Red</option><option value="Yellow">Yellow</option>
+                    <option value="Blue">Blue</option><option value="Green">Green</option><option value="Orange">Orange</option>      <option value="White">White</option><option value="Multi">Multi</option><option value="Khaki">Khaki</option>
+                    <option value="Turquoise">Turquoise</option><option value="Cream">Cream</option>      <option value="Gold">Gold</option><option value="Apricot">Apricot</option><option value="Coral">Coral</option>
+                    <option value="Burgundy">Burgundy</option><option value="Gold">Gold</option><option value="Rose">Rose</option>      <option value="Lilac">Lilac</option><option value="Light blue">Light blue</option><option value="Navy">Navy</option>
+                    <option value="Dark green">Dark green</option><option value="Mustard">Mustard</option><option value="Mint">Mint</option>
+                  </select>
+                </div>
+                <span class="help-block">Select Color</span>
+              </div>
+            </div>
+
+            <div ng-show="measurementsValue "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Measurements Width x Height</label>
+              <div class="col-md-7 col-xs-12">
+                <div ng-model="StockListing.measurements" class="input-group">
+                  <div class="row">
+                    <input type="text" placeholder="width" >
+                    <input type="text" placeholder="height" >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="unisex== true "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select unisex:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <div id="unisex" class="unisex">
+                    <input type="checkbox" name="unisex" value="unisex"  />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="packageSizeValue == 3 " class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Parcel Weight</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.parcelSize" name="color"  >
+                    <option value="">Select Color</option>
+                    <option value="5kg">5kg</option>
+                    <option value="10kg">10kg</option>
+                    <option value="20kg">20kg</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="packageSizeValue== 1 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Parcel Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.parcelSize" name="color"  >
+                    <option value="">Select Parcel Size</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="packageSizeValue== 2 "  class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Select Parcel Size:</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.parcelSize" name="color"  >
+                    <option value="">Select Parcel Size</option>
+                    <option value="Custom">Custom</option>
+                    <option value="No shipping">No Shipping</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+
+            <div ng-show="packageSizeValue == 0 " class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Parcel Size</label>
+              <div class="col-md-7 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <select class="form-control" ng-model="StockListing.parcelSize" name="color"  >
+                    <option value="">Select Parcel Size</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">EAN</label>
+              <div class="col-md-3 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="StockListing.ean" value="Does Not Apply" class="form-control">
+                </div>
+                <span class="help-block"></span>
+              </div>
+              <div class="col-md-4 col-xs-12">
+                <label class="col-md-3 col-xs-12 control-label">URL</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="StockListing.url"  class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">SKU</label>
+              <div class="col-md-3 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input type="text" ng-model="StockListing.sku" class="form-control"/>
+                </div>
+                <span class="help-block">Enter SKU</span>
+              </div>
+              <div class="col-md-4 col-xs-12">
+                <label class="col-md-3 col-xs-12 control-label">Quantity*</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                  <input  ng-model="StockListing.quantityAvailable" type="text" class="form-control"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-footer">
+              <label class="col-md-3 col-xs-12 control-label">Add to Listing</label>
+              <div class="col-md-7 col-xs-12">
+                <input type="checkbox" ng-model="StockListing.status" ng-click="showStatus(StockListing,params.id,itemId)">
+
+                <!--                                <input class="control-label" type="checkbox" ng-click="addToVintedListing(StockListing,params.id,status)" ng-model="StockListing.status" name="vintedListing" value="not sent">-->
+
+              </div>
+              <button ng-click="postListing(StockListing,params.id)" ng-disabled="!(StockListing.title)" class="btn btn-primary pull-right m-r-xs">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>

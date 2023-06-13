@@ -31,11 +31,11 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             templateUrl: 'vinted/new.html',
             controller: 'vintedNewCtrl'
         });
-//        $routeProvider.when('/vintedSaveStock/:id', {
-//                    templateUrl: 'vinted/stock.html',
-//                    controller: 'vintedListCtrl',
-//                    params: { page: {value: '1',squash: true},pageSize: {value: '15',squash: true},totalElements: {value: '0',squash: true},filter: {value: 'MY',squash: true},q: {value: '',squash: true}}
-//                });
+        $routeProvider.when('/vintedStockEdit/:accountId/:id', {
+                    templateUrl: 'vinted/vintedStockEdit.html',
+                    controller: 'vintedEditCtrl',
+                    params: { page: {value: '1',squash: true},pageSize: {value: '15',squash: true},totalElements: {value: '0',squash: true},filter: {value: 'MY',squash: true},q: {value: '',squash: true}}
+                });
 
     }])
 
@@ -327,7 +327,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         var list = [];
         $scope.page = {totalElements: 0, currentPage: 1, pageSize: 200 };
         $scope.tableVal = [];
-        $scope.stock = {sku: [], itemId: [], ean: [] };
+        $scope.vintedStock = {};
         $scope.params = $routeParams;
         $scope.myCategory={};
         $scope.myCondition={};
@@ -338,7 +338,9 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         $scope.vintedCategory = "";
         $scope.vintedLastCategory = "";
         $scope.sizeId = "";
+        $scope.status = "";
         $scope.ratingValue = "";
+
         $scope.showHiding = function(){
            var flag = false;
            for(var i=0; i<$scope.covers.length; i++)
@@ -351,6 +353,48 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             }
             return flag;
          };
+         $scope.showStatus = function(obj,id,accountId) {
+                     var checkbox = document.getElementById("checkbox");
+                     var statusTable = document.getElementById("statusTable");
+
+                     if (checkbox.checked) {
+                         statusTable.style.display = "table";
+                     } else {
+                         statusTable.style.display = "none";
+                     }
+                     $http.get("/vintedListing/"+$scope.params.id)
+                                                 .then(function successCallback(response){
+                                                 var s =response.data.description;
+                                                 $scope.myCategory = eval(s);
+                                                 for (let i = 0; i < $scope.myCategory.catalog_children_tree[0].length; i++) {
+                                                     $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[0][i]]);
+
+                                                     }
+
+                                                 window.location.href="#!/vintedStock/"+$scope.params.id+"/new";
+                                                     console.log("Successfully POST-ed data");
+                                                 }, function errorCallback(response){
+                                                 window.location.href="#!/vintedStock/"+$scope.params.id+"/new";
+                                                     console.log("POST-ing of data failed");
+                                                 });
+                 }
+         $scope.getListings = function(obj,id,accountId) {
+         if(obj.status==false){
+         $scope.status = "not sent";
+         }else{
+              $http.get('api/Vinted/listings/database').then(function(response) {
+                  $scope.page.loading = true;
+                  noty({text: 'Please wait while updating data',layout: 'topRight',type: 'success',killer: true,timeout: 2000 });
+                  if (response.data.errors)
+                     $scope.displayError(response.data.messages);
+                  else {
+                     $scope.loadStocks();
+                     noty({text: 'Stock Updated',layout: 'topRight',type: 'success',killer: true,timeout: 2000 });
+                     $scope.page.loading = false;
+                     }
+                  });
+              }
+              }
         $scope.onCategoryChange = function(id) {
                         $scope.selected = $scope.StockListing.category;
                         $scope.vintedDataList.push($scope.selected)
@@ -415,7 +459,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                     $scope.vintedLastCategory = $scope.vintedDataList1[i];
                     $scope.vintedCategory = $scope.vintedCategory+"--"+$scope.vintedDataList1[i];
                  }
-                 $scope.student = {"errors": false,"messages": [],"requestId": null,"results": {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip":$scope.vintedCategory,"imageUrl": obj.imageUrl,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": obj.accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null},"totalElements": null,"totalPages": null}
+                 $scope.student = {"errors": false,"messages": [],"requestId": null,"results": {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip":$scope.vintedCategory,"imageUrl": obj.imageUrl,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null},"totalElements": null,"totalPages": null}
                           $http.post("/api/Vinted/post/"+$scope.params.id,$scope.student.results)
                              .then(function successCallback(response){
                              window.location.href="#!/vintedStock/"+$scope.params.id;
@@ -431,23 +475,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                             $scope.myCategory = eval(s);
                             for (let i = 0; i < $scope.myCategory.catalog_children_tree[0].length; i++) {
                                 $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[0][i]]);
-//                                if($scope.myCategory.catalogs[i]!=null ){
-//                                    //if($scope.myCategory.catalogs[i].condition_field_visible==true{
-//                                        $scope.condition =  $scope.myCategory.catalogs[i].condition_field_visible;
-//                                      //  }
-//                                      var ele = document.getElementById('Tooltip');
-////                                      if(ele) {
-////                                          ele.style.visibility = "visible";
-////                                       }
-//                                        $scope.content = ["","A brand-new, unused item with tags attached or in the original packaging.","A brand-new, unused item without tags or original packaging.","A lightly used item that may have slight imperfections, but still looks great. Include photos and descriptions of any flaws in your listing.","A used item that may show imperfections and signs of wear. Include photos and descriptions of flaws in your listing.","A frequently used item with imperfections and signs of wear. Include photos and descriptions of flaws in your listing.","A frequently used item with imperfections and signs of wear"]
-//                                       for(let i=0;i<ele.options.length;i++){
-//                                            $scope.myCondition = {id:ele.options[i].id,text:ele.options[i].value,content:$scope.content[i]}
-//                                            list.push($scope.myCondition);
-//                                       }
-////
-//                                    }
                                 }
-
                             window.location.href="#!/vintedStock/"+$scope.params.id+"/new";
                                 console.log("Successfully POST-ed data");
                             }, function errorCallback(response){
@@ -457,3 +485,36 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
 
 
     }])
+
+    .controller('vintedEditCtrl', ['$scope', '$http', '$routeParams', '$rootScope', '$controller', function($scope, $http, $routeParams, $rootScope, $controller) {
+            $scope.action = "Edit";
+            $scope.StockListing = {};
+            $scope.params=$routeParams;
+            $scope.vintedStock={};
+            angular.extend(this, $controller('ListCURDCtrl', {
+                $scope: $scope
+            }));
+
+            $http.get("/api/Vinted/"+ ($scope.params.id))
+                .then(function(response) {
+                   $scope.StockListing = response.data.results;
+                   $http.get("/vintedData/"+$scope.params.accountId+"/category")
+                        .then(function successCallback(response){
+                            var s =response.data.description;
+                            $scope.myCategory = eval(s);
+                            for (let i = 0; i < $scope.myCategory.catalog_children_tree[0].length; i++) {
+                            $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[0][i]]);
+                            }
+
+                   // $scope.page.currentPage=response.data.totalPages;
+                   });
+                   window.location.href="#!/vintedStockEdit/"+$scope.params.accountId+"/"+$scope.params.id;
+                                               console.log("Successfully POST-ed data");
+                                               }, function errorCallback(response){
+                                               window.location.href="#!/vintedStockEdit/"+$scope.params.accountId+"/"+$scope.params.id;
+                                               console.log("POST-ing of data failed");
+                                               });
+
+
+
+        }])

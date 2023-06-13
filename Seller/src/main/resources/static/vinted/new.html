@@ -9,12 +9,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><strong>ADD</strong> Vinted Stock Listing</h3>
-                        <!--                        <ul class="panel-controls">-->
-                        <!--                            <li><a href="#!/ActiveListing/{{params.id}}" class="panel-remove"><span class="fa fa-times"></span></a></li>-->
-                        <!--                        </ul>-->
                     </div>
                     <div class="panel-body">
-
 
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Image URL</label>
@@ -27,7 +23,6 @@
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Title*</label>
                             <div class="col-md-7 col-xs-12">
@@ -38,7 +33,6 @@
                                 <span class="help-block"></span>
                             </div>
                         </div>
-
 
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Description*</label>
@@ -149,8 +143,6 @@
                             </div>
                         </div>
 
-
-
                         <div ng-show="sizeId== 7 "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
                             <div class="col-md-7 col-xs-12">
@@ -204,7 +196,6 @@
                                 <span class="help-block">Select Size</span>
                             </div>
                         </div>
-
 
                         <div ng-show="sizeId== 57 "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
@@ -709,41 +700,6 @@
                             </div>
                         </div>
 
-                        <div ng-show="sizeId== 'gameSize' "  class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
-                            <div class="col-md-7 col-xs-12">
-                                <div class="input-group">
-<!--                                    <div id="gameSize" class="gameSize">-->
-<!--                                        <label for="gameSize">Select Categories:</label>-->
-<!--                                        <select name="gameSize" >-->
-<!--                                            <option value="">Select Size</option>        <option value="AO">AO - Adults only</option>        <option value="Everyone">E – Everyone</option>        <option value="E10+">E10+ – Everyone 10+</option>-->
-<!--                                            <option value="M">M - Mature 17+</option>        <option value="PEGI 12">PEGI 12</option>        <option value="PEGI 16">PEGI 16</option>        <option value="PEGI 18">PEGI 18</option>-->
-<!--                                            <option value="PEGI 3">PEGI 3</option>        <option value="PEGI 7">PEGI 7</option>        <option value="Size pending">RP - Size pending</option>        <option value="T">T – Teen 13+</option>-->
-<!--                                            <option value="USK 0">USK 0</option>        <option value="USK 12">USK 12</option>        <option value="USK 16">USK 16</option>        <option value="USK 18">USK 18</option>-->
-<!--                                            <option value="USK 6">USK 6</option>        <option value="Unspecified">Unspecified</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <select class="form-control" ng-model="StockListing.size" name="Size"  >
-                                        <option value="">Select Size</option><option value="AO">AO - Adults only</option>
-                                        <option value="Everyone">E – Everyone</option><option value="E10+">E10+ – Everyone 10+</option>
-                                        <option value="M">M - Mature 17+</option><option value="PEGI 12">PEGI 12</option>
-                                        <option value="PEGI 16">PEGI 16</option><option value="PEGI 18">PEGI 18</option>
-                                        <option value="PEGI 3">PEGI 3</option><option value="PEGI 7">PEGI 7</option>
-                                        <option value="Size pending">RP - Size pending</option><option value="T">T – Teen 13+</option>
-                                        <option value="USK 0">USK 0</option><option value="USK 12">USK 12</option>
-                                        <option value="USK 16">USK 16</option><option value="USK 18">USK 18</option>
-                                        <option value="USK 6">USK 6</option><option value="Unspecified">Unspecified</option>
-                                    </select>
-                                </div>
-                                <span class="help-block">Select Size</span>
-                            </div>
-                        </div>
-
-
-
-
-
                         <div ng-show="statusId== 'statusId' "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
                             <div class="col-md-7 col-xs-12">
@@ -768,18 +724,6 @@
                             </div>
                         </div>
 
-<!--                        <div ng-show="bookAuthor== 'bookAuthor' "  class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Select Size:</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--                                    <div id="bookAuthor" class="bookAuthor">-->
-<!--                                        <label for="bookAuthor">bookAuthor:</label><input type="text" id="bookAuthor" name="bookAuthor">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <span class="help-block">Select Size</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
                         <div ng-show="materialFieldValue== 1 "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Material:</label>
                             <div class="col-md-7 col-xs-12">
@@ -798,6 +742,7 @@
                                 <span class="help-block">Select Material</span>
                             </div>
                         </div>
+
                         <div ng-show="materialFieldValue== 2 "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Material:</label>
                             <div class="col-md-7 col-xs-12">
@@ -818,6 +763,7 @@
                                 <span class="help-block">Select Material</span>
                             </div>
                         </div>
+
                         <div ng-show="materialFieldValue== 3 "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Material:</label>
                             <div class="col-md-7 col-xs-12">
@@ -860,36 +806,6 @@
                             </div>
                         </div>
 
-<!--                        <div ng-show="bookTitle== 'bookTitle' "  class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Select Size:</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--&lt;!&ndash;                                    <div id="bookTitle" class="bookTitle">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <label for="bookTitle">bookTitle:</label><input type="text" id="bookTitle" name="bookTitle">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </div>&ndash;&gt;                                    -->
-<!--                                </div>-->
-<!--                                <span class="help-block">Select Size</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div ng-show="sizeField== 'sizeField' "  class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Select Size:</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <div class="input-group">-->
-<!--&lt;!&ndash;                                    <div id="sizeField" class="sizeField">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <label for="sizeField">Select Size:</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <select name="sizeField" >&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <option value="">Select Size</option>      <option value="XS">XS</option>      <option value="S">S</option>      <option value="M">M</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <option value="L">L</option>      <option value="XL">XL</option>      <option value="XXL">XXL</option>      <option value="Other">Other</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <option value="One size">One size</option>&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                        </select>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--                                </div>-->
-<!--                                <span class="help-block">Select Size</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
                         <div ng-show="colorValue"  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Color:</label>
                             <div class="col-md-7 col-xs-12">
@@ -920,17 +836,6 @@
                             </div>
                         </div>
 
-<!--                        <div ng-show="shippableValue"  class="form-group">-->
-<!--                            <label class="col-md-3 col-xs-12 control-label">Select shippable:</label>-->
-<!--                            <div class="col-md-7 col-xs-12">-->
-<!--                                <div ng-model="StockListing.shippable" class="input-group">-->
-<!--                                    <div class="shippable">-->
-<!--                                        <input type="text" id="shippable" name="shippable">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
                         <div ng-show="unisex== true "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select unisex:</label>
                             <div class="col-md-7 col-xs-12">
@@ -956,6 +861,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div ng-show="packageSizeValue== 1 "  class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">Select Parcel Size:</label>
                             <div class="col-md-7 col-xs-12">
@@ -1000,6 +906,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">EAN</label>
                             <div class="col-md-3 col-xs-12">
@@ -1017,6 +924,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">SKU</label>
                             <div class="col-md-3 col-xs-12">
@@ -1035,13 +943,18 @@
                             </div>
                         </div>
 
-
-
-
                         <div class="panel-footer">
+                            <label class="col-md-3 col-xs-12 control-label">Add to Listing</label>
+                            <div class="col-md-7 col-xs-12">
+                                <input type="checkbox" ng-model="StockListing.status" ng-click="showStatus(StockListing,params.id,itemId)">
+
+    <!--                                <input class="control-label" type="checkbox" ng-click="addToVintedListing(StockListing,params.id,status)" ng-model="StockListing.status" name="vintedListing" value="not sent">-->
+
+                            </div>
                             <button ng-click="postListing(StockListing,params.id)" ng-disabled="!(StockListing.title)" class="btn btn-primary pull-right m-r-xs">Submit</button>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </form>
 
         </div>

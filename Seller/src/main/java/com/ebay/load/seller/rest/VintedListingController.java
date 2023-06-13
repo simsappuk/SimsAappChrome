@@ -1,13 +1,27 @@
 package com.ebay.load.seller.rest;
 
+import com.ebay.load.seller.dto.EbayListing;
+import com.ebay.load.seller.model.Accounts;
 import com.ebay.load.seller.model.Stock;
 import com.ebay.load.seller.model.Vinted;
 import com.ebay.load.seller.repository.AccountsRepository;
 import com.ebay.load.seller.repository.VintedRepository;
+import com.ebay.load.seller.seller.schema.beans.base.Message;
+import com.ebay.load.seller.seller.schema.beans.base.MessageType;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
+import com.ebay.load.seller.service.VintedService;
+import com.ebay.sdk.ApiContext;
+import com.ebay.sdk.ApiCredential;
+import com.ebay.sdk.call.GetMyeBaySellingCall;
+import com.ebay.soap.eBLBaseComponents.ItemListCustomizationType;
+import com.ebay.soap.eBLBaseComponents.ItemType;
+import com.ebay.soap.eBLBaseComponents.PaginationType;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -20,8 +34,9 @@ import java.util.Optional;
 public class VintedListingController {
     @Autowired
     VintedRepository vintedRepository;
-    @Autowired
-    AccountsRepository accountsRepository;
+
+    VintedService vintedService;
+
 
     @ResponseBody
     @RequestMapping(value = "/vinted/getJsonData", method = RequestMethod.GET)
@@ -100,13 +115,7 @@ public class VintedListingController {
         vintedRepository.save(s);
         return s;
     }
-//    @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
-//    public ResponseEntity<Vinted> postVintedListing1(@PathVariable("accountId") String accountId){
-//        String s = vintedRepository.findIdByAccountId(accountId);
-//        Optional<Vinted> vinted = vintedRepository.findById(s);
-//        ResponseEntity<Vinted> k = new ResponseEntity<>(new Vinted());
-//        return k;
-//    }
+
 
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> postVintedListing1(@PathVariable("accountId") String accountId){
@@ -114,6 +123,16 @@ public class VintedListingController {
         List<Vinted> vinted = vintedRepository.findByItemId(s);
         return new ResponseEntity<List<Vinted>>().withResults(vinted);
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public ResponseEntity<Vinted> postVintedStock(@PathVariable("id") String id){
+        Vinted s2 = vintedRepository.findOneById(id);
+        if (s2 != null)
+            return new ResponseEntity < Vinted> ().withResults(s2);
+        else
+            return null;
     }
 
     @RequestMapping(value = "/{id}/list/vinted", method = RequestMethod.GET)
