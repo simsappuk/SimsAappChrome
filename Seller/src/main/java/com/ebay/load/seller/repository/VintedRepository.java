@@ -11,6 +11,7 @@ import java.util.Optional;
 
 
 public interface VintedRepository extends JpaRepository<Vinted,String> {
+
     Page<Vinted> findByOwnerIdAndAccountId(String ownerId, String accountId, Pageable p);
 
 
@@ -53,6 +54,13 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
             nativeQuery = true
     )
     List<Vinted> findByItemId(String accountId);
+
+    @Query(
+            value = "delete from vinted where item_id=?1 and id=?2",
+            nativeQuery = true
+    )
+    List<Vinted> deleteStockById(String accountId,String id);
+
     @Query(
             value="select * from vinted where item_id=?1 and id=?2",
             nativeQuery = true

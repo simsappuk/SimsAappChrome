@@ -72,22 +72,24 @@
               <th style="text-align: center;width:108px;">EAN</th>
               <th style="text-align: center;width:75px;">Avg Price</th>
               <th style="text-align: center;width:104px;">Modified Date</th>
-<!--              <th style="text-align: center;width:104px;">Edit</th>-->
-<!--
-              <th style="width:190px;">Created Date</th>
--->
+              <th></th>
             </tr>
             <tr  ng-repeat="x in tableVal" >
+<!--              <td>-->
+<!--                <a ng-click="removeAddedItem(x)"><i class="fa fa-trash-o" style="font-size:14px;margin-left:-18px;"></i></a>-->
+<!--                <input type="text" title="{{x.title}}" data-toggle="tooltip" data-placement="top" ng-show="x.imageUrl==null" style="font-size:13px;" ng-model="x.imageUrl" ng-change="saveChanges(x)" contenteditable>-->
+<!--                <input type="text" title="{{x.title}}" data-toggle="tooltip" data-placement="top" ng-show="x.imageUrl!=null" style="font-size:13px;" ng-model="x.imageUrl" ng-change="saveChanges(x)" contenteditable>-->
+<!--              </td>-->
               <td>
                 <label class="container">
                   <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
                   <span class="checkmark"></span>
                 </label>
-                <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" src="{{x.imageUrl}}" style="width:46px;height:60px;"><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:46px;height:60px;"></a>
+                <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" src="{{x.imageUrl}}" style="width:46px;height:60px;"><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:36px;height:60px;"></a>
                 <a href="#!/vintedStockEdit/{{x.accountId}}/{{x.id}}">&nbsp;&nbsp;<text>{{x.title}}</text></a>&nbsp;
-                <a href="#!/stock-history/{{x.id}}">
-                  <i uib-tooltip="{{x.title}} History" tooltip-placement="right" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>
-                </a>
+<!--                <a href="#!/stock-history/{{x.id}}">-->
+<!--                  <i uib-tooltip="{{x.title}} History" tooltip-placement="right" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>-->
+<!--                </a>-->
               </td>
               <td>{{x.quantity}}</td>
               <td>{{x.sku}}</td>
@@ -102,44 +104,13 @@
               <td title="{{x.tooltip}}">{{x.category}}</td>
               <td>{{x.id}}</td>
               <td>{{x.conditionId}}</td>
-
-<!--              <td style="text-align: center;">-->
-<!--                <select ng-model="x.category" ng-change="save(x)" style="width: 100%;text-align:center;background-color:white;" class="myInput">-->
-<!--                  <option value="console">Console</option>-->
-<!--                  <option value="games">Games</option>-->
-<!--                  <option value="accessories">Accessories</option>-->
-<!--                  <option value="Misc">Mics</option>-->
-<!--              </select>-->
-<!--              </td>-->
-
-<!--              <td style="text-align: center;">-->
-<!--                <select ng-model="x.itemSubCategory" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" style="width: 100%;text-align:center;background-color:white;" class="myInput">-->
-<!--                  <option value="Sony PlayStation 4">PS4</option>-->
-<!--                  <option value="Sony PlayStation 3">PS3</option>-->
-<!--                  <option value="Sony PlayStation Vita">PS Vita</option>-->
-<!--                  <option value="Microsoft Xbox One">Xbox One</option>-->
-<!--                  <option value="Microsoft Xbox 360">Xbox 360</option>-->
-<!--                  <option value="Microsoft Xbox">Xbox</option>-->
-<!--                  <option value="Nintendo Wii">Wii</option>-->
-<!--                  <option value="Nintendo Wii U">Wii U</option>-->
-<!--                  <option value="Nintendo Switch">Switch</option>-->
-<!--                  <option value="Nintendo DS">DS</option>-->
-<!--                  <option value="Nintendo 3DS">3DS</option>-->
-<!--                </select>-->
-<!--              </td>-->
-
-<!--              <td style="text-align: center;">-->
-<!--              <select type="text" style="text-align: center;width:84%;text-align:center;background-color:white;" ng-model="x.condition" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" class="myInput">-->
-<!--                <option>New</option>-->
-<!--                <option>Used</option>-->
-<!--              </select>-->
-<!--            </td>-->
               <td>{{x.ean}}</td>
 <!--              <td style="text-align: center;">-->
 <!--                <input type="text" style="Width:104%;text-align:center;"ng-model="x.ean" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" class="myInput">-->
 <!--              </td>-->
               <td style="text-align: center;">{{x.avgPrice}}</td>
               <td>{{x.modifiedDate|date}}</td>
+              <td><a href="#!/vintedItemDelete/{{x.accountId}}/{{x.id}}" ><text>Delete</text></a></td>
 <!--              <td ><a href="{{x.id}}"></a></td>-->
 
 <!--

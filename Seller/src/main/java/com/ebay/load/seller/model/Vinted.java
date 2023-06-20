@@ -1,8 +1,10 @@
 package com.ebay.load.seller.model;
 
 
+import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -10,7 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="vinted")
-public class Vinted {
+public class Vinted extends ResponseEntity<Vinted> {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -20,6 +22,7 @@ public class Vinted {
     private String url;
     private String category;
     private String imageUrl;
+    private String image;
     private String description;
     private String platform;
     private String isbn;
@@ -51,6 +54,16 @@ public class Vinted {
     @Column(name = "modified_date")
     @LastModifiedDate
     private Date modifiedDate;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
 
     public String getColor() {
         return color;

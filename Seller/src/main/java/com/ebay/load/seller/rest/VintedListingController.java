@@ -10,6 +10,12 @@ import com.ebay.load.seller.seller.schema.beans.base.Message;
 import com.ebay.load.seller.seller.schema.beans.base.MessageType;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
 import com.ebay.load.seller.service.VintedService;
+import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import com.ebay.sdk.ApiContext;
 import com.ebay.sdk.ApiCredential;
 import com.ebay.sdk.call.GetMyeBaySellingCall;
@@ -29,6 +35,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+@WebServlet("/upload")
+@MultipartConfig
 @RestController
 @RequestMapping(value = "/api/Vinted")
 public class VintedListingController {
@@ -93,14 +103,18 @@ public class VintedListingController {
 
     }
 
-    @RequestMapping(value = "/post/{accountId}",method = RequestMethod.POST)
-    public ResponseEntity postVintedListing(@PathVariable("accountId") String accountId, @RequestBody Vinted vinted){
+@RequestMapping(value = "/post/{accountId}",method = RequestMethod.POST)
+    public ResponseEntity postVintedListing(@PathVariable("accountId") String accountId, @RequestBody Vinted vinted){       //@RequestPart("images") MultipartFile[] imageUrlData,
 //        Optional<Vinted> s = vintedRepository.findById(accountId);
+//        for (MultipartFile image : imageUrlData) {
+//            System.out.println("Uploaded Image: " + image.getOriginalFilename());
+//            System.out.println("File Size: " + image.getSize() + " bytes");
+//        }
         if (vinted.getId() == null) {
             String s = vintedRepository.findIdByAccountId(accountId);
             vinted.setItemId(s);
             Vinted s1 = vintedRepository.save(vinted);
-            return new ResponseEntity < Vinted > ().withResults(s1);
+            return new ResponseEntity < Vinted > ().withResults(s1);//.status(HttpStatus.OK)
         } else if (vinted.getItemId() != null) {
             Vinted s1 = updateVinted(vinted);
             vintedRepository.save(s1);
@@ -115,12 +129,24 @@ public class VintedListingController {
         vintedRepository.save(s);
         return s;
     }
+    @RequestMapping(value = "/vintedStockData/{accountId}",method = RequestMethod.GET)
+    public ResponseEntity<Vinted> postVintedListing2(@PathVariable("accountId") String accountId){
+        return new ResponseEntity<Vinted>().withResults(new Vinted());
 
+    }
 
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> postVintedListing1(@PathVariable("accountId") String accountId){
         String s = vintedRepository.findIdByAccountId(accountId);
         List<Vinted> vinted = vintedRepository.findByItemId(s);
+        return new ResponseEntity<List<Vinted>>().withResults(vinted);
+
+    }
+
+    @RequestMapping(value = "/vintedItemDelete/{accountId}/{id}",method = RequestMethod.GET)
+    public ResponseEntity<List<Vinted>> deleteVintedItem(@PathVariable("accountId") String accountId,@PathVariable("id") String id){
+        String s = vintedRepository.findIdByAccountId(accountId);
+        List<Vinted> vinted = vintedRepository.deleteStockById(s,id);
         return new ResponseEntity<List<Vinted>>().withResults(vinted);
 
     }
