@@ -404,6 +404,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         $scope.myCategory = {};
         $scope.myCondition = {};
         $scope.content = [];
+
         $scope.page = {
             totalElements: 0,
             currentPage: 1,
@@ -430,30 +431,25 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             }
             return flag;
         };
-        $scope.handleFileUpload = function(event) {
-            const files = event.target.files;
-            $scope.previewImages = [];
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const reader = new FileReader();
-                reader.onload = (function(file) {
-                    return function(event) {$scope.previewImages.push(event.target.result);$scope.$apply();};
-                })(file);
+       $scope.SelectFile = function(event) {
+         var files = event.target.files;
+         $scope.StockListing.imageUrls = [];
+         $scope.PreviewImages = []; // Array to store preview images
 
-                reader.readAsDataURL(file);
-            }
-        };
+         for (var i = 0; i < files.length; i++) {
+           var reader = new FileReader();
+           reader.onload = (function(file) {
+             return function(event) {
+               $scope.$apply(function() {
+                 $scope.PreviewImages.push(event.target.result); // Add the preview image URL to the array
+               });
+             };
+           })(files[i]);
+           reader.readAsDataURL(files[i]);
+           $scope.StockListing.imageUrls.push(URL.createObjectURL(files[i]));
+         }
+       };
 
-        $scope.uploadImage = function() {
-            const fileInput = document.getElementById("fileInput");
-            const files = fileInput.files;
-
-            const formData = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                formData.append("photos", files[i]);
-            }
-            return formData;
-        };
 
         $scope.onCategoryChange = function(id) {
             $scope.selected = $scope.StockListing.category;
