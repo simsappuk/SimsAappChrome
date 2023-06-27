@@ -393,34 +393,9 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
     }])
     .controller('vintedNewCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
         var list = [];
-        $scope.page = {
-            totalElements: 0,
-            currentPage: 1,
-            pageSize: 200
-        };
-        $scope.tableVal = [];
-        $scope.vintedStock = {};
-        $scope.params = $routeParams;
-        $scope.myCategory = {};
-        $scope.myCondition = {};
-        $scope.content = [];
-
-        $scope.page = {
-            totalElements: 0,
-            currentPage: 1,
-            pageSize: 200,
-            loading: false
-        };
-        $scope.previewImages = [];
-        $scope.vintedDataList = [];
-        $scope.vintedDataList1 = [];
-        $scope.vintedCategory = "";
-        $scope.vintedLastCategory = "";
-        $scope.sizeId = "";
-        $scope.status = "";
-        $scope.ratingValue = "";
-        $scope.StockListing = [];
-
+        $scope.tableVal = [];$scope.vintedStock = {};$scope.params = $routeParams;$scope.myCategory = {};$scope.myCondition = {};$scope.content = [];
+        $scope.page = {totalElements: 0,currentPage: 1,pageSize: 200,loading: false};$scope.previewImages = [];$scope.vintedDataList = [];$scope.vintedDataList1 = [];
+        $scope.vintedCategory = "";$scope.vintedLastCategory = "";$scope.sizeId = "";$scope.status = "";$scope.ratingValue = "";$scope.StockListing = [];$scope.StockListing.imageUrls = [];
         $scope.showHiding = function() {
             var flag = false;
             for (var i = 0; i < $scope.covers.length; i++) {
@@ -448,6 +423,20 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
            reader.readAsDataURL(files[i]);
            $scope.StockListing.imageUrls.push(URL.createObjectURL(files[i]));
          }
+       };
+       $scope.UploadImages = function() {
+         var formData = new FormData();
+         var imageFiles = $scope.StockListing.imageUrls;
+           for (var i = 0; i < imageFiles.length; i++) {
+             formData.append('imageFiles', imageFiles[i]);
+           }
+         $http.post('api/Vinted/vintedImageData/'+$scope.params.id, formData, {transformRequest: angular.identity,headers: { 'Content-Type': undefined } })// Let the browser set the proper headers
+         .then(function(response) {
+           console.log('Upload success:', response.data);
+         })
+         .catch(function(error) {
+           console.error('Upload error:', error);
+         });
        };
 
 
@@ -496,14 +485,11 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                     if ($scope.myCategory.catalogs[$scope.selected].size_field_visibility == 1) {
                         $scope.sizeId = $scope.myCategory.catalogs[$scope.selected].size_group_id;
                     }
-
                     if ($scope.myCategory.catalogs[$scope.selected].author_field_visibility != 0) {
-                        $scope.authorValue = $scope.myCategory.catalogs[$scope.selected].title;
-
+                       $scope.authorValue = $scope.myCategory.catalogs[$scope.selected].title;
                     }
                     if ($scope.myCategory.catalogs[$scope.selected].book_title_field_visibility != 0) {
                         $scope.bookTitle = $scope.myCategory.catalogs[$scope.selected].title;
-
                     }
                     if ($scope.myCategory.catalogs[$scope.selected].brand_field_visibility == 1) {
                         $scope.brandValue = $scope.myCategory.catalogs[$scope.selected].title;
@@ -517,7 +503,6 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                     if ($scope.myCategory.catalogs[$scope.selected].material_field_visibility != 0) {
                         $scope.materialFieldValue = $scope.myCategory.catalogs[$scope.selected].material_group_id;
                     }
-
                     if ($scope.myCategory.catalogs[$scope.selected].measurements_field_visibility == true) {
                         $scope.measurementsValue = $scope.myCategory.catalogs[$scope.selected].title;
                     }
@@ -528,16 +513,13 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                     }
                     if ($scope.myCategory.catalogs[$scope.selected].shippable == true) {
                         $scope.shippableValue = $scope.myCategory.catalogs[$scope.selected].shippable;
-                    }
-                    //
+                    }                    //
                     if ($scope.myCategory.catalogs[$scope.selected].video_game_rating_field_visibility == 1) {
                         $scope.gameRatingValue = $scope.myCategory.catalogs[$scope.selected].title;
-
                     }
                     if ($scope.myCategory.catalogs[$scope.selected].package_size_group != null) {
                         $scope.packageSizeValue = $scope.myCategory.catalogs[$scope.selected].package_size_group;
                     }
-
                     return true;
                 }
             }
@@ -548,52 +530,31 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 $scope.vintedLastCategory = $scope.vintedDataList1[i];
                 $scope.vintedCategory = $scope.vintedCategory + "--" + $scope.vintedDataList1[i];
             }
-            $scope.student = {
-                "errors": false,
-                "messages": [],
-                "requestId": null,
-                "results": {
-                    "id": null,
-                    "itemId": obj.itemId,
-                    "url": obj.url,
-                    "category": $scope.vintedLastCategory,
-                    "tooltip": $scope.vintedCategory,
-                    "imageUrl": obj.imageUrl,
-                    "image": obj.image,
-                    "description": obj.description,
-                    "platform": obj.platform,
-                    "isbn": obj.isbn,
-                    "brand": obj.brand,
-                    "mpn": obj.mpn,
-                    "color": obj.color,
-                    "size": obj.size,
-                    "parcelSize": obj.parcelSize,
-                    "price": obj.buyItNowPriceValue,
-                    "quantity": obj.quantityAvailable,
-                    "title": obj.title,
-                    "ean": obj.ean,
-                    "conditionId": obj.conditionID,
-                    "sku": obj.sku,
-                    "rating": obj.rating,
-                    "measurements": obj.measurements,
-                    "ownerId": obj.ownerId,
-                    "accountId": accountId,
-                    "createdAt": null,
-                    "originalPriceNumeric": 0.0,
-                    "itemClosingAction": null,
-                    "modifiedDate": null
-                },
-                "totalElements": null,
-                "totalPages": null
-            }
+            $scope.student = {"errors": false,"messages": [],"requestId": null,"results": {
+                    "id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,
+                    "imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,
+                    "parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,
+                    "measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,
+                    "modifiedDate": null},"totalElements": null,"totalPages": null}
             $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student.results)
                 .then(function successCallback(response) {
+                var formData = response.data.results;
+                formData.imageUrl = $scope.StockListing.imageUrls[0];
+                formData.imageUrls = $scope.StockListing.imageUrls;
+                         $http.post('/api/Vinted/vintedImageData/'+$scope.params.id, formData, {transformRequest: angular.identity,headers: { 'Content-Type': undefined }})// Send a POST request to the server with the FormData
+                         .then(function(response) {// Handle the success response
+                           console.log('Upload success:', response.data);
+                         })
+                         .catch(function(error) {// Handle the error response
+                           console.error('Upload error:', error);
+                         });
                     window.location.href = "#!/vintedStock/" + $scope.params.id;
                     console.log("Successfully POST-ed data");
                 }, function errorCallback(response) {
                     window.location.href = "#!/vintedStock/" + $scope.params.id;
                     console.log("POST-ing of data failed");
                 });
+
         }
         $http.get("/vintedData/" + $scope.params.id + "/category")
             .then(function successCallback(response) {

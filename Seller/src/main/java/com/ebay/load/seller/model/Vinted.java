@@ -4,11 +4,10 @@ package com.ebay.load.seller.model;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="vinted")
@@ -22,7 +21,17 @@ public class Vinted extends ResponseEntity<Vinted> {
     private String url;
     private String category;
     private String imageUrl;
-    private String image;
+    private String imageUrls;
+//    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @JoinTable(name = "vinted_images",
+//            joinColumns = {
+//                @JoinColumn(name="vinted_id")
+//            },
+//            inverseJoinColumns = {
+//                @JoinColumn(name="image_id")
+//            }
+//    )
+//    private Set<ImageModel>vintedImages;
     private String description;
     private String platform;
     private String isbn;
@@ -55,15 +64,25 @@ public class Vinted extends ResponseEntity<Vinted> {
     @LastModifiedDate
     private Date modifiedDate;
 
-    public String getImage() {
-        return image;
+    public String getImageUrls() {
+        return imageUrls;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(String imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
+    public void setImageUrls(String imageUrls) {
+        this.imageUrls = imageUrls;
+    }
 
+//    public Set<ImageModel> getVintedImages() {
+//        return vintedImages;
+//    }
+//
+//    public void setVintedImages(Set<ImageModel> vintedImages) {
+//        this.vintedImages = vintedImages;
+//    }
 
     public String getColor() {
         return color;

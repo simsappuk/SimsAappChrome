@@ -12,20 +12,19 @@
                     </div>
                     <div class="panel-body">
 
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Upload Images</label>
-                            <div class="col-md-7 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    <input type="file" accept="image/png, image/jpeg" ng-model="StockListing.imageUrls" onchange="angular.element(this).scope().SelectFile(event)" class="form-control" multiple>
+                            <div class="form-group">
+                                <label class="col-md-3 col-xs-12 control-label">Upload Images</label>
+                                <div class="col-md-7 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                        <input type="file" accept="image/png, image/jpeg" onchange="angular.element(this).scope().SelectFile(event)" class="form-control" multiple>
+                                    </div>
+                                    <span class="help-block">Upload One or More Images</span>
                                 </div>
-                                <span class="help-block">Upload One Image URL Only <a href="https://imgbb.com/" target="_blank">Get URL From Here</a></span>
+                                <button ng-click="UploadImages()" class="btn btn-primary">Upload</button>
                             </div>
-<!--                            <div>-->
-<!--                                <img ng-src="{{previewImage}}" ng-repeat="previewImage in PreviewImages" ng-show="PreviewImage != null" alt="" style="height:100px;width:100px;margin:10px" />-->
-<!--                            </div>-->
 
-                        </div>
+
                         <div class="preview" id="previewContainer">
                             <img ng-src="{{previewImage}}" ng-repeat="previewImage in PreviewImages" style="height:100px;width:100px;margin:10px">
                         </div>
@@ -177,12 +176,12 @@
                                         <option value="13">13</option><option value="One size">One size</option><option value="Other">Other</option>
                                     </select>
                                 </div>
-                                <span class="help-block">Select Rating</span>
+                                <span class="help-block">Select Size</span>
                             </div>
                         </div>
 
                         <div ng-show="sizeId== 14 "  class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">Select Rating:</label>
+                            <label class="col-md-3 col-xs-12 control-label">Select Size:</label>
                             <div class="col-md-7 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
@@ -972,8 +971,7 @@
                             </div>
                             <button ng-click="postListing(StockListing,params.id)" ng-disabled="!(StockListing.title)" class="btn btn-primary pull-right m-r-xs">Submit</button>
                         </div>
-                    </div>
-                </div>
+                    </div></div>
             </form>
 
         </div>
