@@ -195,8 +195,9 @@ public class VintedListingController {
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> postVintedListing1(@PathVariable("accountId") String accountId){
         String s = vintedRepository.findIdByAccountId(accountId);
+        List<ImageModel> images = imageRepository.findByItemId(s);
         List<Vinted> vinted = vintedRepository.findByItemId(s);
-        return new ResponseEntity<List<Vinted>>().withResults(vinted);
+        return new ResponseEntity<List<ImageModel>>().withResults(images);
     }
 
     @RequestMapping(value = "/vintedItemDelete/{accountId}/{id}",method = RequestMethod.GET)
