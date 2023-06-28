@@ -406,11 +406,26 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             }
             return flag;
         };
+
        $scope.SelectFile = function(event) {
          var files = event.target.files;
          $scope.StockListing.imageUrls = [];
          $scope.PreviewImages = []; // Array to store preview images
-
+//         for(let i = 0; i < files.length; i++) {
+//                   const img = document.createElement("img");
+//                   img.src = "https://picsum.photos/200/301?id=" + i;
+//
+//                   img.setAttribute("class", "img-margin");
+//
+//                   img.addEventListener("click", function() {
+//
+//                     for (var i = 0; i < images.length; i++) {
+//                       images[i].classList.remove('img-rounded-border');
+//                     }
+//                     img.classList.add("img-rounded-border");
+//                   })
+//                   document.body.appendChild(img);
+//                 }
          for (var i = 0; i < files.length; i++) {
            var reader = new FileReader();
            reader.onload = (function(file) {
@@ -424,20 +439,20 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
            $scope.StockListing.imageUrls.push(URL.createObjectURL(files[i]));
          }
        };
-       $scope.UploadImages = function() {
-         var formData = new FormData();
-         var imageFiles = $scope.StockListing.imageUrls;
-           for (var i = 0; i < imageFiles.length; i++) {
-             formData.append('imageFiles', imageFiles[i]);
-           }
-         $http.post('api/Vinted/vintedImageData/'+$scope.params.id, formData, {transformRequest: angular.identity,headers: { 'Content-Type': undefined } })// Let the browser set the proper headers
-         .then(function(response) {
-           console.log('Upload success:', response.data);
-         })
-         .catch(function(error) {
-           console.error('Upload error:', error);
-         });
-       };
+//       $scope.UploadImages = function() {
+//         var formData = new FormData();
+//         var imageFiles = $scope.StockListing.imageUrls;
+//           for (var i = 0; i < imageFiles.length; i++) {
+//             formData.append('imageFiles', imageFiles[i]);
+//           }
+//         $http.post('api/Vinted/vintedImageData/'+$scope.params.id, formData, {transformRequest: angular.identity,headers: { 'Content-Type': undefined } })// Let the browser set the proper headers
+//         .then(function(response) {
+//           console.log('Upload success:', response.data);
+//         })
+//         .catch(function(error) {
+//           console.error('Upload error:', error);
+//         });
+//       };
 
 
         $scope.onCategoryChange = function(id) {
@@ -532,7 +547,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             }
             $scope.student = {"errors": false,"messages": [],"requestId": null,"results": {
                     "id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,
-                    "imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,
+                    "imageUrl": "https://picsum.photos/id/"+obj.id+"/200/300","image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,
                     "parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,
                     "measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,
                     "modifiedDate": null},"totalElements": null,"totalPages": null}

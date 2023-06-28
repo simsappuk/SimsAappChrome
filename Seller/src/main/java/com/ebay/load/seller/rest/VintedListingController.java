@@ -108,7 +108,7 @@ public class VintedListingController {
         return "";
     }
     @RequestMapping(value = "/upload1/{accountId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} , method = RequestMethod.POST)
-    public ResponseEntity<List<ImageModel>> handleFilesUpload(@PathVariable("accountId") String accountId, @RequestParam("images") MultipartFile[] files) {
+    public ResponseEntity<List<ImageModel>> handleFilesUpload(@PathVariable("accountId") String accountId,Vinted vinted,@RequestParam("images") MultipartFile[] files) {
         //String uploadDir = "/dev-data/Projects/irshad/";
         String timestamp = LocalDateTime.now().toString().replace(":", "-");
         try {
@@ -120,9 +120,8 @@ public class VintedListingController {
                 imageModel.setName(timestamp+"_"+file.getOriginalFilename());
                 imageModel.setType(file.getContentType());
                 ImageUtils.compressImage(imageModel.setPicByte(file.getBytes()));
-                imageModel.setImageItemId(timestamp);
+                imageModel.setVinted(vinted);
                 imageModel.setItemId(vintedRepository.findIdByAccountId(accountId));
-
                 imageModels.add(imageModel);
                 try {
                     Path filePath = uploadPath.resolve(fileName);
@@ -170,28 +169,8 @@ public class VintedListingController {
             vinted.setItemId(s);
             vinted.setImageUrl(vinted.getImageUrl());
             Vinted s1 = vintedRepository.save(vinted);
-
+            handleFilesUpload(accountId,s1,file);
             return new ResponseEntity < Vinted > ().withResults(s1);//.status(HttpStatus.OK)
-            //String uploadDir = accountId+"/" +s+"/" + s1.getId();
-//            try {
-//                Set<ImageModel> imageModels =new HashSet<>();
-//                for(MultipartFile files:file){
-//                    ImageModel imageModel = new ImageModel(
-//                            files.getOriginalFilename(),
-//                            files.getContentType(),
-//                            ImageUtils.compressImage(files.getBytes())
-//                    );
-//                    imageModels.add(imageModel);
-//
-//                }
-//                //return imageModels;
-//                //Set<ImageModel> images =vintedService.uploadImage(file);
-//                vinted.setVintedImages(imageModels);
-//
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-
         } else if (vinted.getItemId() != null) {
             Vinted s1 = updateVinted(vinted);
             vintedRepository.save(s1);
@@ -211,24 +190,6 @@ public class VintedListingController {
     public ResponseEntity<Vinted> postVintedListing2(@PathVariable("accountId") String accountId){
         return new ResponseEntity<Vinted>().withResults(new Vinted());
     }
-//    @RequestMapping(value = "/{accountId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, method = RequestMethod.POST)
-//    public ResponseEntity<Vinted> handleImageUpload(@PathVariable("accountId") String accountId, @RequestPart("vinted") Vinted vinted,@RequestPart("imageFiles") MultipartFile[] imageFiles) throws IOException {
-//        String path = "/dev-data/Projects/java/SimsAappChrome/Seller/src/main/resources/static";
-//        for (MultipartFile imageFile : imageFiles) {
-//            // Get the file data
-//            byte[] fileData = imageFile.getBytes();
-//            // Get the file name
-//            String fileName = imageFile.getOriginalFilename();
-//            // Get the file URL
-//            String fileUrl = "http://localhost:8080/vintedStock/71527462-excelstuff/" + fileName;
-//            // Perform operations with the file data and URL
-//            // For example, save the file to disk or store the URL in the database
-//        }
-//
-//        Vinted savedVinted = vintedRepository.save(vinted);
-//        String uploadDir = path+"/"+accountId+"/" + savedVinted.getId();
-//        return new ResponseEntity<Vinted>().withResults(new Vinted());
-//    }
 
 
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
@@ -236,7 +197,6 @@ public class VintedListingController {
         String s = vintedRepository.findIdByAccountId(accountId);
         List<Vinted> vinted = vintedRepository.findByItemId(s);
         return new ResponseEntity<List<Vinted>>().withResults(vinted);
-
     }
 
     @RequestMapping(value = "/vintedItemDelete/{accountId}/{id}",method = RequestMethod.GET)
