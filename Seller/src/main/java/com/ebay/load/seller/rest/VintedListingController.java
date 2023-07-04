@@ -1,15 +1,17 @@
 package com.ebay.load.seller.rest;
 import com.ebay.load.seller.model.ImageModel;
 import com.ebay.load.seller.model.Vinted;
+import com.ebay.load.seller.payload.UploadFileResponse;
 import com.ebay.load.seller.repository.VintedRepository;
 import com.ebay.load.seller.repository.ImageRepository;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
-import com.ebay.load.seller.service.VintedService;
 import com.ebay.load.seller.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +30,7 @@ import java.util.*;
 import org.springframework.core.io.Resource;
 
 import javax.servlet.annotation.MultipartConfig;
-
+import javax.servlet.annotation.WebServlet;
 
 @MultipartConfig
 @RestController
@@ -40,136 +42,77 @@ public class VintedListingController {
     VintedRepository vintedRepository;
     @Autowired
     ImageRepository imageRepository;
-
-    VintedService vintedService;
-
-
-
-    @ResponseBody
-    @RequestMapping(value = "/vinted/getJsonData", method = RequestMethod.GET)
-    public void getJson(@RequestParam(value = "dat", defaultValue = "{}", required = false) String dat) throws IOException {
-        System.out.println("working.....:" + dat);
-        JSONObject json = null;
-        try {
-            json = new JSONObject(dat);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        // System.out.println("ok");
-        String k = "";
-        String itemid;
-        String itemClosingAction;
-        String accountId;
-        String accountName;
-        Double price;
-        try {
-            itemid = json.getString("id");
-            itemClosingAction = json.getString("item_closing_action");
-            accountName = json.getString("account_name");
-            price = json.getDouble("original_price_numeric");
-            k = vintedRepository.findExistingByItemId(itemid);
-            accountId = vintedRepository.findExistingAccountByAccountName(accountName);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        if (k.equals("0")) {
-            Vinted vin = new Vinted();
-            try {
-                vin.setItemId(json.getString("id"));
-                vin.setTitle(json.getString("title"));
-                vin.setUrl(json.getString("url"));
-                vin.setCreatedAt(json.getString("created_at"));
-                vin.setOriginalPriceNumeric(price);
-                vin.setItemClosingAction(json.getString("item_closing_action"));
-                //    vin. setModifiedDate (json.getString("ModifiedDate"));
-                vin.setAccountId(accountId);
-                vintedRepository.save(vin);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            Optional<Vinted> s = vintedRepository.findById(k);
-            Vinted v1 = s.get();
-            v1.setItemClosingAction(itemClosingAction);
-            v1.setOriginalPriceNumeric(price);
-            v1.setModifiedDate(new Date());
-            vintedRepository.save(v1);
-        }
-
-    }
-
-    private static String getFileExtension(String fileName) {
-        int lastDotIndex = fileName.lastIndexOf(".");
-        if (lastDotIndex > 0) {
-            return fileName.substring(lastDotIndex);
-        }
-        return "";
-    }
-    @RequestMapping(value = "/upload1/{accountId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} , method = RequestMethod.POST)
-    public ResponseEntity<List<ImageModel>> handleFilesUpload(@PathVariable("accountId") String accountId,Vinted vinted,@RequestParam("images") MultipartFile[] files) {
-        //String uploadDir = "/dev-data/Projects/irshad/";
+    @PostMapping("/uploadMultipleFiles/{accountId}")
+    public ResponseEntity<List<UploadFileResponse>> uploadMultipleFiles(@PathVariable("accountId") String accountId,@RequestPart("vinted") Vinted vinted,@RequestPart("files") MultipartFile[] files) throws IOException {
+        //return Arrays.asList(files).stream().map(file -> uploadFile(file)).collect(Collectors.toList());
         String timestamp = LocalDateTime.now().toString().replace(":", "-");
-        try {
-            Set<ImageModel> imageModels = new HashSet<>();
-            Path uploadPath = Paths.get(uploadDirectory);
-            for (MultipartFile file : files) {
-                String fileName = timestamp + "_" + file.getOriginalFilename();
-                ImageModel imageModel = new ImageModel(file.getOriginalFilename(),file.getContentType(),file.getBytes());
-                imageModel.setName(timestamp+"_"+file.getOriginalFilename());
-                imageModel.setType(file.getContentType());
-                ImageUtils.compressImage(imageModel.setPicByte(file.getBytes()));
-                imageModel.setVinted(vinted);
-                imageModel.setItemId(vintedRepository.findIdByAccountId(accountId));
-                imageModels.add(imageModel);
-                try {
-                    Path filePath = uploadPath.resolve(fileName);
-                    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    throw new IOException("Failed to save file: " + fileName, e);
-                }
-            }
-            List<ImageModel> savedImageModels = new ArrayList<>(imageModels);
-            List<ImageModel> savedImageModel = imageRepository.saveAll(savedImageModels);
-            return new ResponseEntity(savedImageModel);
-        } catch (IOException e) {
-            return new ResponseEntity<String>().withResults("Failed to upload files: "+ e.getMessage());
-        }
-
-    }
-
-
-    @RequestMapping(value = "/images/{imageName}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} , method = RequestMethod.GET)
-    public ResponseEntity<Resource> getImage(@PathVariable String imageName) throws IOException {
-        //String uploadDir = "/dev-data/Projects/irshad/";
-        Path imagePath = Paths.get(uploadDirectory + "/" + imageName);
-        Resource imageResource = (Resource) new UrlResource(imagePath.toUri());
-        if (imageResource.exists() && imageResource.isReadable()) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_JPEG);
-            return new ResponseEntity<HttpHeaders>().withResults(headers);
-        } else {
-            return new ResponseEntity<String>().withResults("Files download successfully.");
-        }
-    }
-
-    public ImageModel updateImageModel(ImageModel s) {
-        //s.setModifiedBy(SessionUserInfo.getLoggedInUser().getUser().getId());
-        Optional<ImageModel> s2 = imageRepository.findById(s.getId());
-        imageRepository.save((Set<ImageModel>) s);
-        return s;
-    }
-    @RequestMapping(value = "/post/{accountId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} , method = RequestMethod.POST)
-    public ResponseEntity postVintedListing(@PathVariable("accountId") String accountId, @RequestPart("vinted") Vinted vinted, @RequestPart("images") MultipartFile[] file) throws IOException {       //@RequestPart("images") MultipartFile[] imageUrlData,
-//        Optional<Vinted> s = vintedRepository.findById(accountId);
-        //String profilePictureFileName = StringUtils.cleanPath(multipartFiles.getOriginalFilename());
         if (vinted.getId() == null) {
             String s = vintedRepository.findIdByAccountId(accountId);
             vinted.setItemId(s);
-            vinted.setImageUrl(vinted.getImageUrl());
             Vinted s1 = vintedRepository.save(vinted);
-            handleFilesUpload(accountId,s1,file);
+            try {
+                Set<ImageModel> imageModels = new HashSet<>();
+                Path uploadPath = Paths.get(uploadDirectory);
+                for (MultipartFile file : files) {
+                    String fileName = timestamp + "_" + file.getOriginalFilename();
+                    ImageModel imageModel = new ImageModel(file.getOriginalFilename(),file.getContentType(),file.getBytes());
+                    imageModel.setName(timestamp+"_"+file.getOriginalFilename());
+                    imageModel.setType(file.getContentType());
+                    ImageUtils.compressImage(imageModel.setPicByte(file.getBytes()));
+                    imageModel.setImageItemId(timestamp);
+                    vinted.setImageUrl(imageModel.getPicByte());
+                    imageModel.setVinted(vinted);
+                    imageModel.setItemId(vintedRepository.findIdByAccountId(accountId));
+                    imageModels.add(imageModel);
+                    try {
+                        Path filePath = uploadPath.resolve(fileName);
+                        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        throw new IOException("Failed to save file: " + e);
+                    }
+                }
+                List<ImageModel> savedImageModels = new ArrayList<>(imageModels);
+                List<ImageModel> savedImageModel = imageRepository.saveAll(savedImageModels);
+                return new ResponseEntity < Vinted > ().withResults(s1);//.status(HttpStatus.OK)
+            } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+        }else if (vinted.getItemId() != null) {
+            Vinted s1 = updateVinted(vinted);
+            vintedRepository.save(s1);
+        }
+        return new ResponseEntity < Vinted > ().withResults(vinted);
+
+    }
+//    @RequestMapping(value = "/post/{accountId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} , method = RequestMethod.POST)
+//    public ResponseEntity<List<UploadFileResponse>> postVintedListing(@PathVariable("accountId") String accountId, @RequestPart("vinted") Vinted vinted, @RequestPart("images") MultipartFile[] file) throws IOException {       //@RequestPart("images") MultipartFile[] imageUrlData,
+////        Optional<Vinted> s = vintedRepository.findById(accountId);
+//        //String profilePictureFileName = StringUtils.cleanPath(multipartFiles.getOriginalFilename());
+//        if (vinted.getId() == null) {
+//            String s = vintedRepository.findIdByAccountId(accountId);
+//            vinted.setItemId(s);
+//            vinted.setImageUrl(vinted.getImageUrl());
+//            Vinted s1 = vintedRepository.save(vinted);
+//            uploadMultipleFiles(accountId,s1,file);
+//            return new ResponseEntity < Vinted > ().withResults(s1);//.status(HttpStatus.OK)
+//        } else if (vinted.getItemId() != null) {
+//            Vinted s1 = updateVinted(vinted);
+//            vintedRepository.save(s1);
+//        }
+//        return new ResponseEntity < Vinted > ().withResults(vinted);
+//    }
+    @RequestMapping(value = "/vintedImages/{accountId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, method = RequestMethod.POST)
+    public ResponseEntity handleFilesUpload(@PathVariable("accountId") String accountId, @RequestParam("images") MultipartFile[] files) {
+        String timestamp = LocalDateTime.now().toString().replace(":", "-");
+        return null;
+    }
+
+    @RequestMapping(value = "/post/{accountId}",method = RequestMethod.POST)
+    public ResponseEntity postVintedListing(@PathVariable("accountId") String accountId, @RequestBody Vinted vinted){       //@RequestPart("images") MultipartFile[] imageUrlData,
+        if (vinted.getId() == null) {
+            String s = vintedRepository.findIdByAccountId(accountId);
+            vinted.setItemId(s);
+            Vinted s1 = vintedRepository.save(vinted);
             return new ResponseEntity < Vinted > ().withResults(s1);//.status(HttpStatus.OK)
         } else if (vinted.getItemId() != null) {
             Vinted s1 = updateVinted(vinted);
@@ -177,7 +120,6 @@ public class VintedListingController {
         }
         return new ResponseEntity < Vinted > ().withResults(vinted);
     }
-
 
     public Vinted updateVinted(Vinted s) {
         //s.setModifiedBy(SessionUserInfo.getLoggedInUser().getUser().getId());
@@ -189,15 +131,15 @@ public class VintedListingController {
     @RequestMapping(value = "/vintedStockData/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<Vinted> postVintedListing2(@PathVariable("accountId") String accountId){
         return new ResponseEntity<Vinted>().withResults(new Vinted());
-    }
 
+    }
 
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> postVintedListing1(@PathVariable("accountId") String accountId){
         String s = vintedRepository.findIdByAccountId(accountId);
-        List<ImageModel> images = imageRepository.findByItemId(s);
         List<Vinted> vinted = vintedRepository.findByItemId(s);
-        return new ResponseEntity<List<ImageModel>>().withResults(images);
+        return new ResponseEntity<List<Vinted>>().withResults(vinted);
+
     }
 
     @RequestMapping(value = "/vintedItemDelete/{accountId}/{id}",method = RequestMethod.GET)
@@ -216,49 +158,5 @@ public class VintedListingController {
             return new ResponseEntity < Vinted> ().withResults(s2);
         else
             return null;
-    }
-
-    @RequestMapping(value = "/{id}/list/vinted", method = RequestMethod.GET)
-    public ResponseEntity<List<Vinted>> loadCurrent(@PathVariable("id") String id,
-                                                    @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-
-                                                    @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize) {
-
-        return new ResponseEntity<List<Vinted>>().withResults(vintedRepository.findAllActiveListing(id));
-    }
-
-    @RequestMapping(value = "/{id}/list/vintedSold", method = RequestMethod.GET)
-    public ResponseEntity<List<Vinted>> loadSold(@PathVariable("id") String id,
-                                                 @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-
-                                                 @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize) {
-
-        return new ResponseEntity<List<Vinted>>().withResults(vintedRepository.findAllSoldListing(id));
-    }
-
-    @RequestMapping(value = "/{id}/list/vintedUpdateDispatch", method = RequestMethod.GET)
-    public void getIds(@PathVariable("id") String id, @RequestParam(value = "data", defaultValue = "", required = false) String dat) throws IOException {
-        System.out.println("working.....:" + dat);
-        String[] s = dat.split(",");
-        for (int i = 0; i < s.length; i++) {
-            Optional<Vinted> s2 = vintedRepository.findById(s[i]);
-            if (s2.isPresent()) {
-                Vinted v1 = s2.get();
-                v1.setItemClosingAction("Dispatched");
-                vintedRepository.save(v1);
-
-            }
-        }
-    }
-
-
-@RequestMapping(value = "/{id}/list/vintedDispatch", method = RequestMethod.GET)
-    public ResponseEntity<List<Vinted>> loadDispatch(@PathVariable("id") String id,
-                                                 @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-                                                     @RequestParam("startDate") Date startDate,
-                                                     @RequestParam("endDate") Date endDate,
-                                                 @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize) {
-        System.out.println(startDate);
-        return new ResponseEntity<List<Vinted>>().withResults(vintedRepository.findAllDispatchListing(id,startDate, endDate));
     }
 }

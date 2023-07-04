@@ -396,6 +396,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         $scope.tableVal = [];$scope.vintedStock = {};$scope.params = $routeParams;$scope.myCategory = {};$scope.myCondition = {};$scope.content = [];
         $scope.page = {totalElements: 0,currentPage: 1,pageSize: 200,loading: false};$scope.previewImages = [];$scope.vintedDataList = [];$scope.vintedDataList1 = [];
         $scope.vintedCategory = "";$scope.vintedLastCategory = "";$scope.sizeId = "";$scope.status = "";$scope.ratingValue = "";$scope.StockListing = [];$scope.StockListing.imageUrls = [];
+        $scope.files ={};
         $scope.showHiding = function() {
             var flag = false;
             for (var i = 0; i < $scope.covers.length; i++) {
@@ -406,27 +407,12 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             }
             return flag;
         };
-
        $scope.SelectFile = function(event) {
-         var files = event.target.files;
+         $scope.files = event.target.files;
          $scope.StockListing.imageUrls = [];
          $scope.PreviewImages = []; // Array to store preview images
-//         for(let i = 0; i < files.length; i++) {
-//                   const img = document.createElement("img");
-//                   img.src = "https://picsum.photos/200/301?id=" + i;
-//
-//                   img.setAttribute("class", "img-margin");
-//
-//                   img.addEventListener("click", function() {
-//
-//                     for (var i = 0; i < images.length; i++) {
-//                       images[i].classList.remove('img-rounded-border');
-//                     }
-//                     img.classList.add("img-rounded-border");
-//                   })
-//                   document.body.appendChild(img);
-//                 }
-         for (var i = 0; i < files.length; i++) {
+
+         for (var i = 0; i < $scope.files.length; i++) {
            var reader = new FileReader();
            reader.onload = (function(file) {
              return function(event) {
@@ -434,25 +420,11 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                  $scope.PreviewImages.push(event.target.result); // Add the preview image URL to the array
                });
              };
-           })(files[i]);
-           reader.readAsDataURL(files[i]);
-           $scope.StockListing.imageUrls.push(URL.createObjectURL(files[i]));
+           })($scope.files[i]);
+           reader.readAsDataURL($scope.files[i]);
+           $scope.StockListing.imageUrls.push(URL.createObjectURL($scope.files[i]));
          }
        };
-//       $scope.UploadImages = function() {
-//         var formData = new FormData();
-//         var imageFiles = $scope.StockListing.imageUrls;
-//           for (var i = 0; i < imageFiles.length; i++) {
-//             formData.append('imageFiles', imageFiles[i]);
-//           }
-//         $http.post('api/Vinted/vintedImageData/'+$scope.params.id, formData, {transformRequest: angular.identity,headers: { 'Content-Type': undefined } })// Let the browser set the proper headers
-//         .then(function(response) {
-//           console.log('Upload success:', response.data);
-//         })
-//         .catch(function(error) {
-//           console.error('Upload error:', error);
-//         });
-//       };
 
 
         $scope.onCategoryChange = function(id) {
@@ -545,24 +517,12 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 $scope.vintedLastCategory = $scope.vintedDataList1[i];
                 $scope.vintedCategory = $scope.vintedCategory + "--" + $scope.vintedDataList1[i];
             }
-            $scope.student = {"errors": false,"messages": [],"requestId": null,"results": {
-                    "id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,
-                    "imageUrl": "https://picsum.photos/id/"+obj.id+"/200/300","image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,
-                    "parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,
-                    "measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,
-                    "modifiedDate": null},"totalElements": null,"totalPages": null}
-            $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student.results)
+            $scope.student = {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,"imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null}
+            $http.post("/api/Vinted/uploadMultipleFiles/" + $scope.params.id, $scope.student,$scope.files)
                 .then(function successCallback(response) {
-                var formData = response.data.results;
-                formData.imageUrl = $scope.StockListing.imageUrls[0];
-                formData.imageUrls = $scope.StockListing.imageUrls;
-                         $http.post('/api/Vinted/vintedImageData/'+$scope.params.id, formData, {transformRequest: angular.identity,headers: { 'Content-Type': undefined }})// Send a POST request to the server with the FormData
-                         .then(function(response) {// Handle the success response
-                           console.log('Upload success:', response.data);
-                         })
-                         .catch(function(error) {// Handle the error response
-                           console.error('Upload error:', error);
-                         });
+                    var formData = response.data.results;
+                    formData.imageUrl = $scope.StockListing.imageUrls[0];
+                    //formData.imageUrls = $scope.StockListing.imageUrls;
                     window.location.href = "#!/vintedStock/" + $scope.params.id;
                     console.log("Successfully POST-ed data");
                 }, function errorCallback(response) {

@@ -23,13 +23,13 @@ public class VintedService {
     @Autowired
     VintedRepository vintedRepository;
     public Vinted postNewListing(String accountId, Vinted item) {
-            Optional<Vinted> s = vintedRepository.findById(accountId);
-            ApiContext apiContext = new ApiContext();
-            ApiCredential cred = apiContext.getApiCredential();
-            //cred.seteBayToken(s.getApiToken());
-            //apiContext.setApiServerUrl(s.getUrl());
-            apiContext.setSite(SiteCodeType.UK);
-            return null;
+        Optional<Vinted> s = vintedRepository.findById(accountId);
+        ApiContext apiContext = new ApiContext();
+        ApiCredential cred = apiContext.getApiCredential();
+        //cred.seteBayToken(s.getApiToken());
+        //apiContext.setApiServerUrl(s.getUrl());
+        apiContext.setSite(SiteCodeType.UK);
+        return null;
     }
     public ResponseEntity <Vinted> findByAccountId(String id) {
         Vinted s2 = vintedRepository.findOneById(id);

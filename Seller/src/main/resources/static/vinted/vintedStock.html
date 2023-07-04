@@ -82,17 +82,18 @@
 <!--              </td>-->
               <td>
                 <label class="container">
-                  <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.vinted.id)">
+                    <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
                   <span class="checkmark"></span>
                 </label>
-                <a href="{{x.vinted.imageUrl}}" target="_blank"><img ng-show="x.vinted.imageUrl!=null" src="{{x.imageUrl}}" style="width:46px;height:60px;"><img ng-show="x.vinted.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:36px;height:60px;"></a>
-                <a href="#!/vintedStockEdit/{{x.vinted.accountId}}/{{x.vinted.id}}">&nbsp;&nbsp;<text>{{x.vinted.title}}</text></a>&nbsp;
+                <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" style="width:46px;height:60px;" src="data:image/jpeg;base64,{{x.imageUrl}}" alt=""><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:36px;height:60px;"></a>
+                <a href="#!/vintedStockEdit/{{x.accountId}}/{{x.id}}">&nbsp;&nbsp;<text>{{x.title}}</text></a>&nbsp;
 <!--                <a href="#!/stock-history/{{x.id}}">-->
 <!--                  <i uib-tooltip="{{x.title}} History" tooltip-placement="right" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>-->
 <!--                </a>-->
+
               </td>
-              <td>{{x.vinted.quantity}}</td>
-              <td>{{x.vinted.sku}}</td>
+              <td>{{x.quantity}}</td>
+              <td>{{x.sku}}</td>
 <!--              <td>-->
 <!--                <input type="number" min="0" ng-model="x.quantity" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" style="WIDTH:98%;text-align:center;"class="myInput">-->
 <!--                <i ng-if="x.linkAwaitingDispatch==true" class="fa fa-check-circle" style="font-size: 14px;margin-left: 30px;color:green;text-align:center;"></i>-->
@@ -101,16 +102,16 @@
 <!--              <td style="text-align: center">-->
 <!--                <input type="text" style="Width:115%;"ng-model="x.sku" ng-model-options="{updateOn: 'blur'}" ng-change="saveSku(x)" class="myInput">-->
 <!--              </td>-->
-              <td title="{{x.vinted.tooltip}}">{{x.vinted.category}}</td>
-              <td>{{x.vinted.id}}</td>
-              <td>{{x.vinted.conditionId}}</td>
-              <td>{{x.vinted.ean}}</td>
+              <td title="{{x.tooltip}}">{{x.category}}</td>
+              <td>{{x.id}}</td>
+              <td>{{x.conditionId}}</td>
+              <td>{{x.ean}}</td>
 <!--              <td style="text-align: center;">-->
 <!--                <input type="text" style="Width:104%;text-align:center;"ng-model="x.ean" ng-model-options="{updateOn: 'blur'}" ng-change="save(x)" class="myInput">-->
 <!--              </td>-->
-              <td style="text-align: center;">{{x.vinted.avgPrice}}</td>
-              <td>{{x.vinted.modifiedDate|date}}</td>
-              <td><a href="#!/vintedItemDelete/{{x.vinted.accountId}}/{{x.vinted.id}}" ><text>Delete</text></a></td>
+              <td style="text-align: center;">{{x.avgPrice}}</td>
+              <td>{{x.modifiedDate|date}}</td>
+              <td><a href="#!/vintedItemDelete/{{x.accountId}}/{{x.id}}" ><text>Delete</text></a></td>
 <!--              <td ><a href="{{x.id}}"></a></td>-->
 
 <!--

@@ -20,18 +20,9 @@ public class Vinted extends ResponseEntity<Vinted> {
     private String itemId;
     private String url;
     private String category;
-    private String imageUrl;
+    @Column(length = 50000000)
+    private byte[] imageUrl;
     private String imageUrls;
-//    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    @JoinTable(name = "vinted_images",
-//            joinColumns = {
-//                @JoinColumn(name="vinted_id")
-//            },
-//            inverseJoinColumns = {
-//                @JoinColumn(name="image_id")
-//            }
-//    )
-//    private Set<ImageModel>vintedImages;
     private String description;
     private String platform;
     private String isbn;
@@ -161,11 +152,11 @@ public class Vinted extends ResponseEntity<Vinted> {
         this.category = category;
     }
 
-    public String getImageUrl() {
+    public byte[] getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(byte[] imageUrl) {
         this.imageUrl = imageUrl;
     }
 

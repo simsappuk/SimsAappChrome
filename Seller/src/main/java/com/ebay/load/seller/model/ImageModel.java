@@ -19,6 +19,8 @@ public class ImageModel extends ResponseEntity<ImageModel> {
     private String itemId;
     @Column(length = 50000000)
     private byte[] picByte;
+    private String imageItemId;
+
     @ManyToOne
     @JoinColumn(name = "vinted", referencedColumnName = "id")
     private Vinted vinted;
@@ -39,6 +41,13 @@ public class ImageModel extends ResponseEntity<ImageModel> {
         this.id = id;
     }
 
+    public String getImageItemId() {
+        return imageItemId;
+    }
+
+    public void setImageItemId(String imageItemId) {
+        this.imageItemId = imageItemId;
+    }
 
     public String getItemId() {
         return itemId;
