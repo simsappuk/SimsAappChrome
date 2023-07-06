@@ -518,10 +518,8 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 $scope.vintedCategory = $scope.vintedCategory + "--" + $scope.vintedDataList1[i];
             }
             $scope.student = {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,"imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null}
-            $http.post("/api/Vinted/uploadMultipleFiles/" + $scope.params.id, $scope.student,$scope.files)
+            $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student)
                 .then(function successCallback(response) {
-                    var formData = response.data.results;
-                    formData.imageUrl = $scope.StockListing.imageUrls[0];
                     //formData.imageUrls = $scope.StockListing.imageUrls;
                     window.location.href = "#!/vintedStock/" + $scope.params.id;
                     console.log("Successfully POST-ed data");

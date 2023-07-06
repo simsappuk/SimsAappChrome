@@ -85,7 +85,7 @@
                     <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
                   <span class="checkmark"></span>
                 </label>
-                <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" style="width:46px;height:60px;" src="data:image/jpeg;base64,{{x.imageUrl}}" alt=""><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:36px;height:60px;"></a>
+                <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" style="width:46px;height:60px;" src="{{x.imageUrl}}" alt=""><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:36px;height:60px;"></a>
                 <a href="#!/vintedStockEdit/{{x.accountId}}/{{x.id}}">&nbsp;&nbsp;<text>{{x.title}}</text></a>&nbsp;
 <!--                <a href="#!/stock-history/{{x.id}}">-->
 <!--                  <i uib-tooltip="{{x.title}} History" tooltip-placement="right" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>-->

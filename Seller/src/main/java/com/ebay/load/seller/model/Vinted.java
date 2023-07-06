@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.net.URL;
 import java.util.Date;
 import java.util.Set;
 
@@ -20,8 +21,8 @@ public class Vinted extends ResponseEntity<Vinted> {
     private String itemId;
     private String url;
     private String category;
-    @Column(length = 50000000)
-    private byte[] imageUrl;
+
+    private String imageUrl;
     private String imageUrls;
     private String description;
     private String platform;
@@ -59,21 +60,17 @@ public class Vinted extends ResponseEntity<Vinted> {
         return imageUrls;
     }
 
-    public void setImage(String imageUrls) {
-        this.imageUrls = imageUrls;
-    }
-
     public void setImageUrls(String imageUrls) {
         this.imageUrls = imageUrls;
     }
 
-//    public Set<ImageModel> getVintedImages() {
-//        return vintedImages;
-//    }
-//
-//    public void setVintedImages(Set<ImageModel> vintedImages) {
-//        this.vintedImages = vintedImages;
-//    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public String getColor() {
         return color;
@@ -152,13 +149,7 @@ public class Vinted extends ResponseEntity<Vinted> {
         this.category = category;
     }
 
-    public byte[] getImageUrl() {
-        return imageUrl;
-    }
 
-    public void setImageUrl(byte[] imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getDescription() {
         return description;
