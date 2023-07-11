@@ -1,7 +1,6 @@
 'use strict';
 
 var controller1 = angular.module('myApp.vinted', ['ngRoute'])
-
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/vinted/:id', {
             templateUrl: 'vinted/vinted.html',
@@ -31,27 +30,19 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             templateUrl: 'vinted/new.html',
             controller: 'vintedNewCtrl'
         });
+        $routeProvider.when('/vintedStockListing/:id', {
+                    templateUrl: 'vinted/vintedStockListing.html',
+                    controller: 'vintedListCtrl'
+                });
         $routeProvider.when('/vintedStockEdit/:accountId/:id', {
             templateUrl: 'vinted/vintedStockEdit.html',
             controller: 'vintedEditCtrl',
-            params: {
-                page: {value: '1',squash: true},
-                pageSize: {value: '15',squash: true},
-                totalElements: {value: '0',squash: true},
-                filter: {value: 'MY',squash: true},
-                q: {value: '',squash: true}
-            }
         });
+
         $routeProvider.when('/vintedItemDelete/:accountId/:id', {
             templateUrl: 'vinted/vintedStock.html',
             controller: 'vintedDeleteCtrl',
-            params: {
-                            page: {value: '1',squash: true},
-                            pageSize: {value: '15',squash: true},
-                            totalElements: {value: '0',squash: true},
-                            filter: {value: 'MY',squash: true},
-                            q: {value: '',squash: true}
-                        }
+            params: {page: {value: '1',squash: true},pageSize: {value: '15',squash: true},totalElements: {value: '0',squash: true},filter: {value: 'MY',squash: true},q: {value: '',squash: true}}
         });
 
     }])
@@ -171,23 +162,53 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
     }])
     .controller('vintedListCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
         $scope.params = $routeParams;
+        $rootScope.params = $routeParams.id;
         $scope.tableVal = [];
         $scope.myCategory = {};
-        $scope.page = {
-            totalElements: 0,
-            currentPage: 1,
-            pageSize: 20,
-            loading: false,
-            date: '',
-            date1: ''
-        };
-
+        $scope.page = {totalElements: 0,currentPage: 1,pageSize: 20,loading: false,date: '',date1: ''};
         $http.get("/api/Vinted/vintedStock/" + $scope.params.id)
             .then(function successCallback(response) {
                 $scope.tableVal = response.data.results;
             })
+        $rootScope.check = [];
+        $scope.selected = function(obj1, obj) {
+         if (obj1 == true && (obj != null && obj.length != 0))
+             $rootScope.check.push(obj);
+         else if (obj1 == false)
+             $rootScope.check.pop(obj);
+         }
+//         $rootScope.redirect = function() {
+//                             window.location.href = "https://simsapp.co.uk/#!/stock-log/" + $routeParams.id + "/Facebook/Data";
+//                         }
+//         $rootScope.callFacebookExtension = function() {
+//                             window.open("https://bulksell.ebay.co.uk/ws/eBayISAPI.dll?SingleList&sellingMode=SellSimilarItem&lineID=114245247845");
+//                         }
+//
+//                         $rootScope.callEbayListingExtension = function() {
+//                              window.open("https://bulksell.ebay.co.uk/ws/eBayISAPI.dll?SingleList&sellingMode=SellSimilarItem&lineID=115217895585");
+//                         }
 
-    }])
+        $rootScope.showItemToListOnVinted=function(obj){
+                           $http.get('api/Vinted/'+ obj).then(function(response) {
+                                //response.data.results.stockCode='vinted';
+                                $scope.tableVal = response.data.results;
+                                $http.post('https://simsapp.co.uk/#!/vintedStockListing/' + $scope.params.id).then(function(response) {
+                                    $scope.tableVal.status="send to listing";
+                                    window.location.href = "#!/vintedStockListing/" + $scope.params.id;
+                                    console.log("Successfully POST-ed data");
+                                    }, function errorCallback(response) {
+                                    window.location.href = "#!/vintedStockListing/" + $scope.params.id;
+                                    console.log("POST-ing of data failed");
+                                    });
+                                window.location.href = "#!/vintedStockListing/" + $scope.params.id;
+                                console.log("Successfully POST-ed data");
+                                }, function errorCallback(response) {
+                                 window.location.href = "#!/vintedStockListing/" + $scope.params.id;
+                                 console.log("POST-ing of data failed");
+                                 });
+                           }
+
+    }])//https://www.vinted.co.uk/items/new//https://www.vinted.co.uk/
     .controller('ListNewCtrl', ['$scope', '$http', '$routeParams', '$controller', function($scope, $http, $routeParams, $controller) {
 
         $scope.params = $routeParams;
@@ -204,12 +225,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
 
     }]).controller('ListCURDCtrl', ['$scope', '$http', '$routeParams', '$rootScope', '$uibModal', function($scope, $http, $routeParams, $rootScope, $uibModal) {
         $scope.stock = {};
-        $scope.page = {
-            totalElements: 0,
-            currentPage: 1,
-            pageSize: 200,
-            loading: false
-        };
+        $scope.page = {totalElements: 0,currentPage: 1,pageSize: 200,loading: false};
         $scope.tableVal = [];
         $scope.deleteItem = function(accountId,id){
                 alert("delete!")
@@ -220,8 +236,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 templateUrl: '/view1/calculator.html',
-                size: 'lg'
-            });
+                size: 'lg'});
         }
 
 //        $scope.save = function(obj) {
@@ -243,17 +258,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
 //            })
 //        }
 
-//        $scope.postListing = function(obj, accountId) {
-//            $scope.params = $routeParams;
-//            $http.post("api/ActiveListing/post/" + accountId, obj)
-//                .then(function successCallback(response) {
-//                    window.location.href = "#!/ActiveListing/" + $scope.params.id;
-//                    console.log("Successfully POST-ed data");
-//                }, function errorCallback(response) {
-//                    window.location.href = "#!/ActiveListing/" + $scope.params.id;
-//                    console.log("POST-ing of data failed");
-//                });
-//        }
+//
 
 //        $scope.reviseListing = function(obj, accountId) {
 //            $.mpb("show", {
@@ -395,7 +400,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         var list = [];
         $scope.tableVal = [];$scope.vintedStock = {};$scope.params = $routeParams;$scope.myCategory = {};$scope.myCondition = {};$scope.content = [];
         $scope.page = {totalElements: 0,currentPage: 1,pageSize: 200,loading: false};$scope.previewImages = [];$scope.vintedDataList = [];$scope.vintedDataList1 = [];
-        $scope.vintedCategory = "";$scope.vintedLastCategory = "";$scope.sizeId = "";$scope.status = "";$scope.ratingValue = "";$scope.StockListing = [];$scope.StockListing.imageUrls = [];
+        $scope.vintedCategory = "";$scope.vintedLastCategory = "";$scope.sizeId = "";$scope.ratingValue = "";$scope.StockListing = [];$scope.StockListing.imageUrls = [];
         $scope.files ={};
         $scope.showHiding = function() {
             var flag = false;
@@ -407,6 +412,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             }
             return flag;
         };
+
        $scope.SelectFile = function(event) {
          $scope.files = event.target.files;
          $scope.StockListing.imageUrls = [];
@@ -511,6 +517,20 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 }
             }
         }
+//        $scope.showStatus = function(a,b,c) {
+//                            if (confirm("WARNING:You are about to override stock with Active Listings.Please click ok to Continue"))
+//                                $http.get('api/Vinted/listings/database?accountId=' + $routeParams.id).then(function(response) {
+//                                    $scope.page.loading = true;
+//                                    noty({text: 'Please wait while updating data',layout: 'topRight',type: 'success',killer: true,timeout: 2000});
+//                                    if (response.data.errors)
+//                                        $scope.displayError(response.data.messages);
+//                                    else {
+//                                        //$scope.loadStocks();
+//                                        noty({text: 'Stock Updated',layout: 'topRight',type: 'success',killer: true,timeout: 2000});
+//                                        $scope.page.loading = false;
+//                                    }
+//                                });
+//                        }
         $scope.postListing = function(obj, accountId) {
             $scope.params = $routeParams;
             for (let i = 0; i < $scope.vintedDataList1.length; i++) {
@@ -518,15 +538,29 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 $scope.vintedCategory = $scope.vintedCategory + "--" + $scope.vintedDataList1[i];
             }
             $scope.student = {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,"imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null}
-            $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student)
-                .then(function successCallback(response) {
-                    //formData.imageUrls = $scope.StockListing.imageUrls;
-                    window.location.href = "#!/vintedStock/" + $scope.params.id;
-                    console.log("Successfully POST-ed data");
-                }, function errorCallback(response) {
-                    window.location.href = "#!/vintedStock/" + $scope.params.id;
-                    console.log("POST-ing of data failed");
-                });
+            if(obj.status===true){
+                $scope.student.status = "ready to send";
+                $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student)
+                            .then(function successCallback(response) {
+                                //formData.imageUrls = $scope.StockListing.imageUrls;
+                                window.location.href = "#!/vintedStock/" + $scope.params.id;
+                                console.log("Successfully POST-ed data");
+                            }, function errorCallback(response) {
+                                window.location.href = "#!/vintedStock/" + $scope.params.id;
+                                console.log("POST-ing of data failed");
+                            });
+            }else{
+                $scope.student.status = "not sent";
+                $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student)
+                            .then(function successCallback(response) {
+                                //formData.imageUrls = $scope.StockListing.imageUrls;
+                                window.location.href = "#!/vintedStock/" + $scope.params.id;
+                                console.log("Successfully POST-ed data");
+                            }, function errorCallback(response) {
+                                window.location.href = "#!/vintedStock/" + $scope.params.id;
+                                console.log("POST-ing of data failed");
+                            });
+            }
 
         }
         $http.get("/vintedData/" + $scope.params.id + "/category")

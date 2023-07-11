@@ -31,13 +31,8 @@ public class VintedService {
         apiContext.setSite(SiteCodeType.UK);
         return null;
     }
-    public ResponseEntity <Vinted> findByAccountId(String id) {
-        Vinted s2 = vintedRepository.findOneById(id);
-        if (s2 != null)
-            return new ResponseEntity < Vinted> ().withResults(s2);
-        else
-            return null;
-    }
+
+
 //    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
 //        Set<ImageModel> imageModels =new HashSet<>();
 //        for(MultipartFile files:multipartFiles){

@@ -263,16 +263,6 @@ public class VintedListingControllerOld {
 
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<Vinted> postVintedStock(@PathVariable("id") String id){
-        Vinted s2 = vintedRepository.findOneById(id);
-        if (s2 != null)
-            return new ResponseEntity < Vinted> ().withResults(s2);
-        else
-            return null;
-    }
-
     @RequestMapping(value = "/{id}/list/vinted", method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> loadCurrent(@PathVariable("id") String id,
                                                     @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,

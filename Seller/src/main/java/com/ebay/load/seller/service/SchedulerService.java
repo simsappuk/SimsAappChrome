@@ -61,10 +61,10 @@ public class SchedulerService {
     @Autowired
     CompeteRepository competeRepository;
 
-
-    @Scheduled(cron = "0 */15 * * * * ")
+    @Scheduled(cron = "0 * */8 * * * ")
+    //@Scheduled(cron = "0 */15 * * * * ")
+   // @Scheduled(cron = "0 */1 * * * * ")
     public void scheduler() {
-
         Scheduler sc = new Scheduler();
         sc.setName(System.getProperty("user.name"));
         sc.setStatus("STARTED");
@@ -81,11 +81,12 @@ public class SchedulerService {
             Date d = removeTime(dup);
             if(!s1.getInactive() && s1.getApiToken()!=null && s1.getAccountType().equals("eBay") && !s1.getAccountName().equals("Goodley") || s1.getInactive()==null)
                 updates(s1,s2,d,sc);
+//            if(!s1.getInactive() && s1.getApiToken()!=null && s1.getAccountType().equals("vinted") && !s1.getAccountName().equals("PoundMonkey") ||s1.getInactive()==null)
+//                updateVinted(s1,s2,d,sc);
 
         }
         System.out.println(new Date() + " This runs in a cron schedule");
     }
-
 
     public void updates(Accounts s1,Scheduler s2,Date d,Scheduler sc) {
         try {
@@ -114,6 +115,44 @@ public class SchedulerService {
             ArrayList<String> emailIds=new ArrayList<>();
             emailIds.add("meetmajid83@gmail.com");
             emailIds.add("shaiksazidh@gmail.com");
+            emailIds.add("ibasha36@gmail.com");
+            if(!e.getMessage().contains("401 Unauthorized")) {
+                try {
+                    for (int i = 0; i < emailIds.size(); i++)
+                        ebayService.send("simsapp2020@gmail.com", "8333830600", emailIds.get(i), "Error in Scheduler", e.getMessage());
+                }catch (Exception m){}
+            }
+            schedulerRepository.save(sc);
+        }
+    }
+    public void updateVinted(Accounts s1,Scheduler s2,Date d,Scheduler sc) {
+        try {
+            dropshipService.updateEbaySellingPrice(s1.getId(), s1.getOwnerIdPk());
+            competeService.updateCompeteEbaySellingPrice(s1.getId(), s1.getOwnerIdPk());
+            externalStockLinksService.updateStockLinks(s1.getId(), s1.getOwnerIdPk());
+            relistService.schedulerReList(s1.getOwnerIdPk(),s1.getId());
+            ebayService.updatePreviousOrders(s1.getOwnerIdPk(), s1.getId(), new PageRequest(0, 200));
+            ResponseEntity<List<Orders>> e = ebayService.refreshAllOrdersByOwnerId(s1.getOwnerIdPk(), s1.getId(), new PageRequest(0, 200), d, new Date());//Gets Latest Orders Data
+            resetService.reviseListingPrice(s1.getId(),s1.getOwnerIdPk());
+            arrangeWithPriority(s1.getOwnerIdPk(),s1.getId());
+
+            if ( e == null) {
+                s2.setStatus("IAF Token has Expired");
+                s1.setInactive(true);
+                accountsRepository.save(s1);
+                schedulerRepository.save(s2);
+            } else {
+                s1.setInactive(false);
+                accountsRepository.save(s1);
+            }
+            s2.setStatus(s1.getAccountName()+" executed");
+            schedulerRepository.save(s2);
+        }catch(Exception e){
+            sc.setStatus(e.getMessage());
+            ArrayList<String> emailIds=new ArrayList<>();
+            emailIds.add("meetmajid83@gmail.com");
+            emailIds.add("shaiksazidh@gmail.com");
+            emailIds.add("ibasha36@gmail.com");
             if(!e.getMessage().contains("401 Unauthorized")) {
                 try {
                     for (int i = 0; i < emailIds.size(); i++)
@@ -148,7 +187,6 @@ public class SchedulerService {
                 compete.get(0).setPause(true);
                 competeRepository.save(compete.get(0));
             }
-
         }
         List<Dropship> dropshipList=dropshipRepository.findByOwnerIdAndAccountId(ownerId,accountId);
         for(int j=0;j<dropshipList.size();j++){
@@ -157,7 +195,6 @@ public class SchedulerService {
                 dropshipList.get(j).setPause(false);
                 dropshipRepository.save(dropshipList.get(j));
             }
-
         }
         List<Compete> competeList=competeRepository.findByOwnerIdAndAccountId(ownerId,accountId);
         for(int k=0;k<competeList.size();k++){
@@ -166,11 +203,8 @@ public class SchedulerService {
             if(reset.size()==0 && (dropship.size()==0 || dropship.get(k).getOutOfStockPrice().equals(dropship.get(k).getSellerPrice()))){
                 competeList.get(k).setPause(false);
                 competeRepository.save(competeList.get(k));
-
             }
-
         }
-
     }
 
 

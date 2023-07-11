@@ -24,12 +24,10 @@ public class SchedulerItemService {
     SchedulerItemRepository schedulerItemRepository;
 
     public ResponseEntity<List<SchedulerItemService>> getSchedulerItem(List<Accounts> s,Orders e,Scheduler s2,List<EbayListing> el){
-
          SchedulerItem si= new SchedulerItem();
         for (int i = 0; i < s.size(); i++) {
             Accounts s1 = s.get(i);
                 String orderSku = e.getSku();
-
                 if (orderSku != null) {
                     Stock stockCheck = stockService.getStock(orderSku,s1.getId());
                     Orders order=ordersServiceImpl.getOrders(orderSku);

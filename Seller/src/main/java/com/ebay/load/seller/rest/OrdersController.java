@@ -154,7 +154,6 @@ public class OrdersController {
         return ebayService.getTitle(recordNum);
     }
 
-
     @ResponseBody
     @CrossOrigin
     @RequestMapping(value="/get/postJsonData",method=RequestMethod.POST)

@@ -1,0 +1,89 @@
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="col-md-12">
+
+    </div>
+    <div class="row" style="font-size:13px;">
+        <div class="col-md-12">
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><img style="width: 73px; height: 42px;" src="img/logo.svg"></img>   Stocks &nbsp;({{page.totalElements}})</h3>
+                    <ul class="panel-controls">&nbsp;
+                        <label>
+                            <input type="search" uib-tooltip="Search With SKU or Title" class="form-control" ng-enter="search()" placeholder="Search..." style="border-radius:0px;" ng-model="searchText">
+                        </label>&nbsp;&nbsp;&nbsp;
+                        Minimum Limit:
+                        <select ng-model="value" ng-change="setMinLimit(check,value)">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>                        &nbsp;&nbsp;
+                        Sort By:
+                        <select ng-model="value" ng-change="sortBy(value)">
+                            <option value="quantityAvailable_desc">Quantity More</option>
+                            <option value="quantityAvailable_asc">Quantity Less</option>
+                            <option value="skuNumber_desc">Latest SKU</option>
+                            <option value="skuNumber_asc">Oldest SKU</option>
+                        </select>
+<!--                        <a href="#!/vintedStock/{{params.id}}/new" class="btn btn-info pull-right"  style="border-color: antiquewhite;">New Stock</a>-->
+                        &nbsp;&nbsp
+                        <li ng-if="data.upload">
+                            <a uib-tooltip="Uploading Data from Vinted" class="panel-collapse btn-info disabled">
+                                <span class="btn-info fa fa-refresh fa-spin"></span>
+                            </a
+                            ></li>
+                        <li ng-if="!data.upload">
+                            <a uib-tooltip="Load VintedStock"ng-click="load()" class="panel-refresh">
+                                <span class="fa fa-refresh"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;width:100px;">Id</th>
+                            <th style="text-align: center;width:100px;">StockId</th>
+                            <th style="text-align: center;width:100px;">Status</th>
+                            <th style="text-align: center;width:100px;">Created Date</th>
+                            <th style="text-align: center;width:100px;">Modified Date</th>
+                            <th style="text-align: center;width:100px;"></th>
+                        </tr>
+                        <tr  ng-repeat="x in tableVal" >
+
+                            <td>{{x.id}}</td>
+                            <td>{{x.itemId}}</td>
+                            <td>
+                                <label class="container">
+                                    <input type="checkbox" style="width: 16px; height: 16px; background-color: red;" ng-model="check" ng-change="selected(check, x.id)">
+<!--                                    <span ng-if="x.status === 'not sent'" class="checkmark"></span>-->
+<!--                                    <span ng-if="x.status === 'ready to send'" style="width: 16px; height: 16px; background-color: yellow;" class="checkmark"></span>-->
+                                </label>
+                            </td>
+                            <td>{{x.createdDate | date}}</td>
+                            <td>{{x.modifiedDate|date}}</td>
+                            <td><a href="#!/vintedItemDelete/{{x.accountId}}/{{x.id}}" ><text>Delete</text></a></td>
+
+                        </tr>
+                        <style>
+            .myInput{border-style:none;}
+            .myInput:hover{ border-style:solid; border:1px solid green;}
+            .myInput:focus{ border-style:solid; border:1px solid red;}
+</style>
+
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+            <div>
+                <ul uib-pagination items-per-page="200" max-size="10" total-items="page.totalElements" boundary-links="true" ng-model="page.currentPage" ng-change="sortBy(value)"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- PAGE CONTENT WRAPPER -->

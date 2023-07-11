@@ -260,22 +260,10 @@ var controller1 = angular.module('myApp.view2', ['ngRoute'])
                 $rootScope.deleteStockByAccountId = function() {
                     $http.get('api/stock/entireData/delete/' + $routeParams.id)
                         .then(function successCallback(response) {
-                                noty({
-                                    text: 'Update Successful',
-                                    layout: 'topRight',
-                                    type: 'success',
-                                    killer: true,
-                                    timeout: 2000
-                                });
+                                noty({text: 'Update Successful',layout: 'topRight',type: 'success',killer: true,timeout: 2000});
                             },
                             function errorCallback(response) {
-                                noty({
-                                    text: 'There was an error',
-                                    layout: 'topRight',
-                                    type: 'error',
-                                    killer: true,
-                                    timeout: 5000
-                                });
+                                noty({text: 'There was an error',layout: 'topRight',type: 'error',killer: true,timeout: 5000});
                             });
                 }
 
@@ -473,22 +461,10 @@ var controller1 = angular.module('myApp.view2', ['ngRoute'])
                 $rootScope.listItem = function(obj) {
                     $http.post('api/stock/listFacebookItem/save?id=' + obj + "&accountId=" + $routeParams.id)
                         .then(function successCallback(response) {
-                                noty({
-                                    text: 'Update Successful',
-                                    layout: 'topRight',
-                                    type: 'success',
-                                    killer: true,
-                                    timeout: 2000
-                                });
+                                noty({text: 'Update Successful',layout: 'topRight',type: 'success',killer: true,timeout: 2000});
                             },
                             function errorCallback(response) {
-                                noty({
-                                    text: 'There was an error',
-                                    layout: 'topRight',
-                                    type: 'error',
-                                    killer: true,
-                                    timeout: 5000
-                                });
+                                noty({text: 'There was an error',layout: 'topRight',type: 'error',killer: true,timeout: 5000});
                             });
                 }
 
@@ -503,13 +479,7 @@ var controller1 = angular.module('myApp.view2', ['ngRoute'])
                                 $rootScope.callEbayListingExtension();
                             },
                             function errorCallback(response) {
-                                noty({
-                                    text: 'There was an error',
-                                    layout: 'topRight',
-                                    type: 'error',
-                                    killer: true,
-                                    timeout: 5000
-                                });
+                                noty({text: 'There was an error',layout: 'topRight',type: 'error',killer: true,timeout: 5000});
                             });
 
                     $rootScope.modalInstance.close();
@@ -599,24 +569,12 @@ var controller1 = angular.module('myApp.view2', ['ngRoute'])
                     }
                     $http.post("api/stock/setThirdPartyData/save/" + $routeParams.id, $rootScope.consoleData)
                         .then(function successCallback(response) {
-                                noty({
-                                    text: 'Update Successful',
-                                    layout: 'topRight',
-                                    type: 'success',
-                                    killer: true,
-                                    timeout: 2000
-                                });
+                                noty({text: 'Update Successful',layout: 'topRight',type: 'success',killer: true,timeout: 2000});
                                 $rootScope.consoleData = [];
                                 $rootScope.removeConsoleItems(stockSource);
                             },
                             function errorCallback(response) {
-                                noty({
-                                    text: 'There was an error',
-                                    layout: 'topRight',
-                                    type: 'error',
-                                    killer: true,
-                                    timeout: 5000
-                                });
+                                noty({text: 'There was an error',layout: 'topRight',type: 'error',killer: true,timeout: 5000});
                             });
                     $scope.stock = null;
                 }

@@ -7,11 +7,12 @@
 <!--    <a ng-click="attachToAwaitingDispatch(check)" class="btn btn-info pull-right" style="border-color: antiquewhite;">Stock available</a>-->
 <!--    <a ng-click="deleteStockByAccountId()" class="btn btn-info pull-right" style="display:none;">Delete Entire Stock</a>-->
 <!--    <a class="btn btn-info pull-right" ng-click="removeDuplicates()" style="border-color: antiquewhite;">Remove Duplicates</a>-->
-<!--    <a class="btn btn-info pull-right" ng-click="showItemToListOnEbay(check)" style="border-color: antiquewhite;">List to eBay</a>-->
+    <a class="btn btn-info pull-right" ng-click="showItemToListOnVinted(check)" style="border-color: antiquewhite;">List to Vinted</a>
 <!--    <a class="btn btn-info pull-right" ng-click="getListings()" style="border-color: antiquewhite;">Listings to Stock</a>-->
   </div>
   <div class="row" style="font-size:13px;">
     <div class="col-md-12">
+<!--        <a href="#!/vintedStockListing/{{params.id}}" class="btn btn-info pull-right"  style="border-color: antiquewhite;">Add Listing</a>-->
 
       <!-- START DEFAULT DATATABLE -->
       <div class="panel panel-default">
@@ -81,11 +82,19 @@
 <!--                <input type="text" title="{{x.title}}" data-toggle="tooltip" data-placement="top" ng-show="x.imageUrl!=null" style="font-size:13px;" ng-model="x.imageUrl" ng-change="saveChanges(x)" contenteditable>-->
 <!--              </td>-->
               <td>
-                <label class="container">
-                    <input type="checkbox" style="width: 16px;height: 16px;" ng-model="check" ng-change="selected(check,x.id)">
-                  <span class="checkmark"></span>
-                </label>
-                <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" style="width:46px;height:60px;" src="{{x.imageUrl}}" alt=""><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:36px;height:60px;"></a>
+                  <label class="container">
+                      <label class="container">
+                          <input type="checkbox" style="width: 16px; height: 16px; background-color: red;" ng-model="check" ng-change="selected(check,x.id)">
+                          <span class="checkmark"></span>
+                      </label>
+<!--                      -->
+<!--                      <span ng-if="x.status === 'not sent'" class="checkmark"></span>-->
+<!--                      <span ng-if="x.status === 'ready to send'" style="width: 16px; height: 16px; background-color: yellow;" class="checkmark"></span>-->
+<!--                      <span ng-if="x.status === 'active'" style="width: 16px; height: 16px; background-color: green;" class="checkmark"></span>-->
+<!--                      <span ng-if="x.status === 'dispatched'" style="width: 16px; height: 16px; background-color: green;" class="checkmark"></span>-->
+<!--                      <span ng-if="x.status === 'sold'" style="width: 16px; height: 16px; background-color: green;" class="checkmark"></span>-->
+                  </label>
+                  <a href="{{x.imageUrl}}" target="_blank"><img ng-show="x.imageUrl!=null" style="width:46px;height:60px;" src="{{x.imageUrl}}" alt=""><img ng-show="x.imageUrl==null" src="https://i.ibb.co/bNzntHV/No-Image-Placeholder-svg.png" style="width:36px;height:60px;"></a>
                 <a href="#!/vintedStockEdit/{{x.accountId}}/{{x.id}}">&nbsp;&nbsp;<text>{{x.title}}</text></a>&nbsp;
 <!--                <a href="#!/stock-history/{{x.id}}">-->
 <!--                  <i uib-tooltip="{{x.title}} History" tooltip-placement="right" class="fa fa-history fa-2 text-success" aria-hidden="true"></i>-->

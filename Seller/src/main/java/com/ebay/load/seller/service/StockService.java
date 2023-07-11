@@ -202,7 +202,6 @@ public class StockService {
     }
 
     public ResponseEntity < List < EbayListing >> getListings(Accounts s, Pageable p) {
-
         ItemType[] tempActiveItems = null;
         ApiContext apiContext = new ApiContext();
         ApiCredential cred = apiContext.getApiCredential();

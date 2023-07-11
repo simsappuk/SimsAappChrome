@@ -1,10 +1,25 @@
 package com.ebay.load.seller.rest;
-import com.ebay.load.seller.model.Vinted;
-import com.ebay.load.seller.model.ImageModel;
+import com.ebay.load.seller.config.SessionUserInfo;
+import com.ebay.load.seller.dto.EbayListing;
+import com.ebay.load.seller.model.*;
+import com.ebay.load.seller.repository.AccountsRepository;
+import com.ebay.load.seller.repository.VintedListingRepository;
 import com.ebay.load.seller.repository.VintedRepository;
 import com.ebay.load.seller.repository.ImageRepository;
+import com.ebay.load.seller.seller.schema.beans.base.Message;
+import com.ebay.load.seller.seller.schema.beans.base.MessageType;
 import com.ebay.load.seller.seller.schema.beans.base.ResponseEntity;
+import com.ebay.sdk.ApiContext;
+import com.ebay.sdk.ApiCredential;
+import com.ebay.sdk.call.GetMyeBaySellingCall;
+import com.ebay.soap.eBLBaseComponents.ItemListCustomizationType;
+import com.ebay.soap.eBLBaseComponents.ItemType;
+import com.ebay.soap.eBLBaseComponents.PaginationType;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +49,10 @@ public class VintedListingController {
     VintedRepository vintedRepository;
     @Autowired
     ImageRepository imageRepository;
+    @Autowired
+    VintedListingRepository vintedListingRepository;
+    @Autowired
+    AccountsRepository accountsRepository;
 //    @PostMapping("/uploadMultipleFiles/{accountId}")
 //    public ResponseEntity<List<UploadFileResponse>> uploadMultipleFiles(@PathVariable("accountId") String accountId,@RequestPart("vinted") Vinted vinted,@RequestPart("files") MultipartFile[] files) throws IOException {
 //        //return Arrays.asList(files).stream().map(file -> uploadFile(file)).collect(Collectors.toList());
@@ -171,6 +190,54 @@ public class VintedListingController {
         }
         return new ResponseEntity < Vinted > ().withResults(vinted);
     }
+    @ResponseBody
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    ResponseEntity<VintedListing>  getSingleStock(@PathVariable("id") String id) {
+        List<String> list = Arrays.asList(id.split(","));
+        return findVintedByAccountId(id);
+    }
+    public ResponseEntity<VintedListing> findVintedByAccountId(String id) {
+        Vinted s2 = vintedRepository.findByIds(id);
+        if (s2 != null) {
+            VintedListing vintedListing = new VintedListing();
+            vintedListing.setId(s2.getId());
+            vintedListing.setStockId(s2.getItemId());
+            vintedListing.setCreatedAt(s2.getCreatedAt());
+            vintedListing.setModifiedDate(s2.getModifiedDate());
+            VintedListing k = vintedListingRepository.save(vintedListing);
+            return new ResponseEntity<VintedListing>().withResults(k);
+        } else {
+            return null;
+        }
+
+    }
+//        List<String> list = Arrays.asList(id.split(","));
+//        //SELECT * FROM TABLE WHERE ID IN (id1, id2, ..., idn)
+//
+//        //String replaced = id.replace(",", "','");
+//        for (String id1 : list) {
+//            Vinted s2 = vintedRepository.findByIds(id1);
+//            if (s2 != null)
+//                new ResponseEntity<Vinted>().withResults(s2);
+//            else
+//                return null;
+//        }
+//        return new ResponseEntity<Vinted>().withResults(new Vinted());
+//    }
+
+
+
+
+    @RequestMapping(value="/listings/database",method=RequestMethod.GET)
+    public ResponseEntity<String> getVintedStock(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,@RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize,@RequestParam(value="accountId",defaultValue = "",required = false) String accountId){
+        Pageable p = new PageRequest(page.intValue(),pageSize.intValue());
+        String s = vintedRepository.findIdByAccountId(accountId);
+        VintedListing vintedListing = new VintedListing();
+        //vintedListing.setVinted(vintedListing.getVinted());
+        VintedListing k = vintedListingRepository.save(vintedListing);
+        return new ResponseEntity < String > ().withResults(k.getStatus());
+    }
+
 
     public Vinted updateVinted(Vinted s) {
         //s.setModifiedBy(SessionUserInfo.getLoggedInUser().getUser().getId());
@@ -200,13 +267,13 @@ public class VintedListingController {
 
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<Vinted> postVintedStock(@PathVariable("id") String id){
-        Vinted s2 = vintedRepository.findOneById(id);
-        if (s2 != null)
-            return new ResponseEntity < Vinted> ().withResults(s2);
-        else
-            return null;
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+//    public ResponseEntity<Vinted> postVintedStock(@PathVariable("id") String id){
+//        Vinted s2 = vintedRepository.findOneById(id);
+//        if (s2 != null)
+//            return new ResponseEntity < Vinted> ().withResults(s2);
+//        else
+//            return null;
+//    }
 }
