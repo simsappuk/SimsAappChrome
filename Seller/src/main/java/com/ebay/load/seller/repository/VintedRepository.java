@@ -1,6 +1,7 @@
 package com.ebay.load.seller.repository;
 import com.ebay.load.seller.model.Vinted;
 
+import com.ebay.load.seller.model.VintedListing;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,8 @@ import java.util.Optional;
 
 public interface VintedRepository extends JpaRepository<Vinted,String> {
 
+    VintedListing findByIdAndOwnerIdAndAccountId(String Id, String ownerId, String accountId);
+
     Page<Vinted> findByOwnerIdAndAccountId(String ownerId, String accountId, Pageable p);
 
 
@@ -21,6 +24,11 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
                     "(SELECT id FROM public.vinted where item_id=?1 limit 1 ) a on 1=1",
             nativeQuery = true)
     String findExistingByItemId(String itemId);
+    @Query(
+            value = "SELECT accounts_id FROM public.accounts where account_name= ?1",
+            nativeQuery = true)
+    String findItemIdByAccountId(String accountId);
+
 
     @Query(
             value = "SELECT * FROM vinted  WHERE item_Closing_Action = 'null' and account_id in( select accounts_id from accounts where account_name =?1  and  inactive = 'false' )",
@@ -46,6 +54,11 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
             nativeQuery = true)
     String findExistingAccountByAccountName(String itemId);
     @Query(
+            value = "SELECT * FROM vinted where item_id=?1 and status=?2",
+            nativeQuery = true)
+    List<Vinted>  findByItemIdAndStatus(String accountId,String status);
+
+    @Query(
           value = " SELECT * FROM vinted  WHERE item_Closing_Action = 'Dispatched' and account_id in( select accounts_id from accounts where account_name =?1  and  inactive = 'false' ) and  TO_DATE(created_at,'DD/MM/YYYY') BETWEEN ?2 AND ?3"  ,
             nativeQuery = true)
     List<Vinted>  findAllDispatchListing(String Id, Date start, Date end);
@@ -67,10 +80,15 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
     List<Vinted> deleteStockById(String accountId,String id);
 
     @Query(
-            value="select * from vinted where item_id=?1 and id=?2",
+            value="select * from vinted where account_id=?1",
             nativeQuery = true
     )
     Vinted findByAccountId(String accountId);
+    @Query(
+            value="select * FROM vinted where account_id= ?1 and status=?2",
+            nativeQuery = true
+    )
+    List<Vinted> findByAccountIdAndStatus(String accountId,String status);
 
     @Query(
             value="select accounts.accounts_id from accounts where account_name=?1",
@@ -80,6 +98,7 @@ public interface VintedRepository extends JpaRepository<Vinted,String> {
 
 
     Optional<Vinted> findById(String s);
+
 
     @Query(
             value = "select * from vinted where item_id=?1",

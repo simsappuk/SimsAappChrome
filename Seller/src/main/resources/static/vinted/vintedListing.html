@@ -1,7 +1,7 @@
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
-    <div class="col-md-12">
-
+    <div class="col-md-12" >
+        <a class="btn btn-info pull-right" ng-click="postToListings(check)" style="border-color: antiquewhite;">Post to Listings</a>
     </div>
     <div class="row" style="font-size:13px;">
         <div class="col-md-12">
@@ -45,6 +45,7 @@
                     <table class="table datatable">
                         <thead>
                         <tr>
+                            <th></th>
                             <th style="text-align: center;width:100px;">Id</th>
                             <th style="text-align: center;width:100px;">StockId</th>
                             <th style="text-align: center;width:100px;">Status</th>
@@ -54,15 +55,17 @@
                         </tr>
                         <tr  ng-repeat="x in tableVal" >
 
-                            <td>{{x.id}}</td>
-                            <td>{{x.itemId}}</td>
                             <td>
                                 <label class="container">
-                                    <input type="checkbox" style="width: 16px; height: 16px; background-color: red;" ng-model="check" ng-change="selected(check, x.id)">
-<!--                                    <span ng-if="x.status === 'not sent'" class="checkmark"></span>-->
-<!--                                    <span ng-if="x.status === 'ready to send'" style="width: 16px; height: 16px; background-color: yellow;" class="checkmark"></span>-->
+                                    <label class="container">
+                                        <input type="checkbox" style="width: 16px; height: 16px; background-color: red;" ng-model="check" ng-change="selected(check,x.id)">
+                                        <span class="checkmark"></span>
+                                    </label>
                                 </label>
                             </td>
+                            <td>{{x.id}}</td>
+                            <td>{{x.itemId}}</td>
+                            <td>{{x.status}}</td>
                             <td>{{x.createdDate | date}}</td>
                             <td>{{x.modifiedDate|date}}</td>
                             <td><a href="#!/vintedItemDelete/{{x.accountId}}/{{x.id}}" ><text>Delete</text></a></td>

@@ -8,7 +8,7 @@
 <!--    <a ng-click="deleteStockByAccountId()" class="btn btn-info pull-right" style="display:none;">Delete Entire Stock</a>-->
 <!--    <a class="btn btn-info pull-right" ng-click="removeDuplicates()" style="border-color: antiquewhite;">Remove Duplicates</a>-->
     <a class="btn btn-info pull-right" ng-click="showItemToListOnVinted(check)" style="border-color: antiquewhite;">List to Vinted</a>
-<!--    <a class="btn btn-info pull-right" ng-click="getListings()" style="border-color: antiquewhite;">Listings to Stock</a>-->
+    <a class="btn btn-info pull-right" ng-click="getListings()" style="border-color: antiquewhite;">Listings to Stock</a>
   </div>
   <div class="row" style="font-size:13px;">
     <div class="col-md-12">
@@ -65,6 +65,7 @@
             <thead>
             <tr>
               <th>Name</th>
+                <th>Status</th>
               <th style="text-align: center;width:80px;">Quantity</th>
               <th style="text-align: center;width:100px;">SKU</th>
               <th style="text-align: center;width:117px;">Category</th>
@@ -101,6 +102,7 @@
 <!--                </a>-->
 
               </td>
+                <td>{{x.status}}</td>
               <td>{{x.quantity}}</td>
               <td>{{x.sku}}</td>
 <!--              <td>-->

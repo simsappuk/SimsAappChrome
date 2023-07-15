@@ -10,8 +10,12 @@ import java.util.Date;
 @Table(name="vinted_listing")
 public class VintedListing {
     @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "id")
     private String id;
-    private String stockId;
+    private String itemId;
+    private String accountId;
     private String status;
     private String createdAt;
     @Column(name = "modified_date")
@@ -33,12 +37,12 @@ public class VintedListing {
         this.id = id;
     }
 
-    public String getStockId() {
-        return stockId;
+    public String getItemId() {
+        return itemId;
     }
 
-    public void setStockId(String stockId) {
-        this.stockId = stockId;
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     public String getCreatedAt() {
@@ -52,5 +56,13 @@ public class VintedListing {
     }
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

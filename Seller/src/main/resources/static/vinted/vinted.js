@@ -30,8 +30,8 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
             templateUrl: 'vinted/new.html',
             controller: 'vintedNewCtrl'
         });
-        $routeProvider.when('/vintedStockListing/:id', {
-                    templateUrl: 'vinted/vintedStockListing.html',
+        $routeProvider.when('/vintedListing/:id', {
+                    templateUrl: 'vinted/vintedListing.html',
                     controller: 'vintedListCtrl'
                 });
         $routeProvider.when('/vintedStockEdit/:accountId/:id', {
@@ -144,7 +144,6 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         };
 
         $scope.ititData = function() {
-
             var now = new Date();
             var current = new Date(now.getFullYear(), now.getMonth() - 2, 1);
             if ($scope.page.date1 == '') $scope.page.date1 = now;
@@ -177,35 +176,43 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
          else if (obj1 == false)
              $rootScope.check.pop(obj);
          }
-//         $rootScope.redirect = function() {
-//                             window.location.href = "https://simsapp.co.uk/#!/stock-log/" + $routeParams.id + "/Facebook/Data";
-//                         }
-//         $rootScope.callFacebookExtension = function() {
-//                             window.open("https://bulksell.ebay.co.uk/ws/eBayISAPI.dll?SingleList&sellingMode=SellSimilarItem&lineID=114245247845");
-//                         }
-//
-//                         $rootScope.callEbayListingExtension = function() {
-//                              window.open("https://bulksell.ebay.co.uk/ws/eBayISAPI.dll?SingleList&sellingMode=SellSimilarItem&lineID=115217895585");
-//                         }
-
-        $rootScope.showItemToListOnVinted=function(obj){
-                           $http.get('api/Vinted/'+ obj).then(function(response) {
-                                //response.data.results.stockCode='vinted';
-                                $scope.tableVal = response.data.results;
-                                $http.post('https://simsapp.co.uk/#!/vintedStockListing/' + $scope.params.id).then(function(response) {
-                                    $scope.tableVal.status="send to listing";
-                                    window.location.href = "#!/vintedStockListing/" + $scope.params.id;
-                                    console.log("Successfully POST-ed data");
-                                    }, function errorCallback(response) {
-                                    window.location.href = "#!/vintedStockListing/" + $scope.params.id;
-                                    console.log("POST-ing of data failed");
-                                    });
-                                window.location.href = "#!/vintedStockListing/" + $scope.params.id;
-                                console.log("Successfully POST-ed data");
-                                }, function errorCallback(response) {
-                                 window.location.href = "#!/vintedStockListing/" + $scope.params.id;
-                                 console.log("POST-ing of data failed");
+         $scope.getListings=function() {
+               $scope.params = $routeParams;
+               $http.get("api/Vinted/getVintedListing/" + $scope.params.id+"?status=not sent")
+                                       .then(function successCallback(response) {
+                                     window.location.href = "#!/VintedStockListing/" + $scope.params.id;
+                                     console.log("Successfully POST-ed data");
+                                 }, function errorCallback(response) {
+                                     window.location.href = "#!/VintedStockListing/" + $scope.params.id;
+                                     console.log("POST-ing of data failed");
                                  });
+                         }
+        $scope.postToListings=function(obj) {
+                    $scope.params = $routeParams;
+                    //$http.post('https://135.181.192.92:5000/vintedStockListing/listing',obj,$scope.params.id)
+                    $http.post("api/Vinted/VintedStockListing/listing/" + $scope.params.id, obj)
+                        .then(function successCallback(response) {
+                            window.location.href = "#!/VintedStockListing/" + $scope.params.id;
+                            console.log("Successfully POST-ed data");
+                        }, function errorCallback(response) {
+                            window.location.href = "#!/VintedStockListing/" + $scope.params.id;
+                            console.log("POST-ing of data failed");
+                        });
+                }
+        $rootScope.showItemToListOnVinted=function(obj){
+                      for (let x = 0; x < obj.length; x++) {
+                                $http.post('api/Vinted/postVintedListing/'+ obj[x]+'?status=not sent',$scope.tableVal).then(function(response) {
+                                      $scope.tableVal = response.data.results;
+                                      //$scope.student1 =
+                                      window.location.href = "#!/vintedListing/" + $scope.params.id;
+                                      console.log("Successfully POST-ed data");
+                                      }, function errorCallback(response) {
+                                      window.location.href = "#!/vintedListing/" + $scope.params.id;
+                                      console.log("POST-ing of data failed");
+
+                           })
+
+                           }
                            }
 
     }])//https://www.vinted.co.uk/items/new//https://www.vinted.co.uk/
@@ -236,165 +243,9 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 templateUrl: '/view1/calculator.html',
-                size: 'lg'});
+                size: 'lg'
+            });
         }
-
-//        $scope.save = function(obj) {
-//            $http.post("/api/stock", obj)
-//                .then(function successCallback(response) {
-//                    window.location.href = "#!/stock";
-//                    console.log("Successfully POST-ed data");
-//                }, function errorCallback(response) {
-//                    window.location.href = "#!/stock";
-//                    console.log("POST-ing of data failed");
-//                });
-//        }
-
-//        $scope.searchText = '';
-//        $scope.search = function() {
-//            $http.get('api/ActiveListing/search?q=' + $scope.searchText + "&id=" + ($routeParams.id) + "&page=" + ($scope.page.currentPage - 1) + "&pageSize=" + $scope.page.pageSize).
-//            then(function(response) {
-//                $scope.tableVal = response.data.results;
-//            })
-//        }
-
-//
-
-//        $scope.reviseListing = function(obj, accountId) {
-//            $.mpb("show", {
-//                value: [0, 500],
-//                speed: 0
-//            });
-//            $scope.params = $routeParams;
-//            $http.get("api/ActiveListing/revise/" + accountId + '?itemId=' + (obj.itemId) + "&amount=" + (obj.startPriceValue) + "&quantity=" + (obj.quantityAvailable) + "&listingType=" + (obj.listingType) + "&firstVariationName=" + (obj.firstVariationName) + "&firstVariationValue=" + (obj.firstVariationValue) + "&variantSku=" + (obj.variantSku) + "&secondVariationName=" + (obj.secondVariationName) + "&secondVariationValue=" + (obj.secondVariationValue))
-//                .then(function(response) {
-//                    if (response.data.errors) $rootScope.displayError(response.data.messages);
-//                    $scope.EbayListing = response.data.results;
-//                });
-//        }
-
-//        $scope.check = [];
-//        $scope.selected = function(obj1, obj) {
-//            if (obj1 == true && (obj != null && obj.length != 0))
-//                $scope.check.push(obj);
-//            else if (obj1 == false)
-//                $scope.check.pop(obj);
-//        }
-
-//        $scope.activeRelist = function(obj) {
-//            $scope.params = $routeParams;
-//            if (obj.length == 0 || obj == undefined)
-//                noty({
-//                    text: 'Please Select an Item To ReList',
-//                    layout: 'topRight',
-//                    type: 'warning',
-//                    killer: true,
-//                    timeout: 2000
-//                });
-//            else {
-//                $http.post("/api/ActiveListing/pushListing?listingId=" + obj + "&accountId=" + $scope.params.id)
-//                    .then(function successCallback(response) {
-//                        if (response.data.errors) {
-//                            noty({
-//                                text: response.data.messages[0].messageText,
-//                                layout: 'topRight',
-//                                type: 'error',
-//                                killer: true
-//                            });
-//                            $scope.check = [];
-//                        } else
-//                            noty({
-//                                text: 'Successfully Added to Relist',
-//                                layout: 'topRight',
-//                                type: 'success',
-//                                killer: true,
-//                                timeout: 2000
-//                            });
-//                        window.location.href = "#!/ActiveListing/" + $routeParams.id;
-//                        $scope.check = [];
-//                        console.log("Successfully POST-ed data");
-//                    }, function errorCallback(response) {
-//                        noty({
-//                            text: response.data.messages[0].messageText,
-//                            layout: 'topRight',
-//                            type: 'error',
-//                            killer: true
-//                        });
-//                        window.location.href = "#!/ActiveListing/" + $routeParams.id;
-//                        $scope.check = [];
-//                        console.log("POST-ing of data failed");
-//                    });
-//            }
-//        }
-
-
-//        $scope.reviseSku = function(obj) {
-//            $http.get('api/ActiveListing/reviseSetNewSku?accountId=' + (obj.accountId) + "&itemId=" + (obj.itemId) + "&sku=" + (obj.sku)).then(function(response) {
-//                if (response.data.errors) $rootScope.displayError(response.data.messages);
-//            });
-//        }
-
-
-//        $scope.loadListing = function(obj) {
-//            $.mpb("show", {
-//                value: [0, 500],
-//                speed: 0
-//            });
-//            $http.get('api/ActiveListing/' + (obj.appId) + '/' + obj.id).
-//            then(function(response) {
-//                if (response.data.errors) $rootScope.displayError(response.data.messages);
-//                $scope.EbayListing = response.data.results;
-//                $scope.getEbay();
-//                // $scope.page.currentPage=response.data.totalPages;
-//
-//            });
-//        }
-//        $scope.sortBy = function(id, variable) {
-//            $scope.accountId = id;
-//            $http.get('api/ActiveListing/sorting?page=' + ($scope.page.currentPage - 1) + "&pageSize=" + ($scope.page.pageSize) + "&accountId=" + ($scope.accountId) + "&sortBy=" + variable).then(function(response) {
-//                if (response.data.errors) $rootScope.displayError(response.data.messages);
-//                $scope.tableVal = response.data.results;
-//                $scope.page.totalElements = response.data.totalElements;
-//            });
-//        }
-//        $scope.loadActiveList = function(id) {
-//            $scope.page.loading = true;
-//            noty({
-//                text: 'Please Wait for a While....... ',
-//                layout: 'topRight',
-//                type: 'warning',
-//                killer: true
-//            });
-//            $scope.tableVal = [];
-//            $http.get('/api/ActiveListing/' + id + '/list?page=' + ($scope.page.currentPage) + "&pageSize=" + $scope.page.pageSize).
-//            then(function(response) {
-//                if (response.data.errors) {
-//                    $rootScope.displayError(response.data.messages);
-//                    window.location.href = "#!/ActiveListing/" + $scope.params.id;
-//                }
-//                $scope.tableVal = response.data.results;
-//                $scope.page.totalElements = response.data.totalElements;
-//                $scope.page.loading = false;
-//                window.location.href = "#!/ActiveListing/" + $scope.params.id;
-//            });
-//
-//        }
-//        $scope.loadListingData = function(id, obj) {
-//            if (obj != undefined)
-//                $scope.sortBy(id, obj);
-//            else {
-//                $scope.page.loading = true;
-//                $scope.tableVal = [];
-//                $http.get('/api/ActiveListing/' + id + '/database?page=' + ($scope.page.currentPage - 1) + "&pageSize=" + $scope.page.pageSize).
-//                then(function(response) {
-//                    if (response.data.errors) $rootScope.displayError(response.data.messages);
-//                    $scope.tableVal = response.data.results;
-//                    $scope.page.totalElements = response.data.totalElements;
-//                    $scope.page.loading = false;
-//                });
-//            }
-//
-//        }
     }])
     .controller('vintedNewCtrl', ['$scope', '$http', '$rootScope', '$routeParams', '$uibModal', function($scope, $http, $rootScope, $routeParams, $uibModal) {
         var list = [];
@@ -537,9 +388,9 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 $scope.vintedLastCategory = $scope.vintedDataList1[i];
                 $scope.vintedCategory = $scope.vintedCategory + "--" + $scope.vintedDataList1[i];
             }
-            $scope.student = {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,"imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null}
+            $scope.student = {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,"imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null,"status":"not sent"}
             if(obj.status===true){
-                $scope.student.status = "ready to send";
+                //$scope.student.status = "not sent";
                 $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student)
                             .then(function successCallback(response) {
                                 //formData.imageUrls = $scope.StockListing.imageUrls;
@@ -550,7 +401,7 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                                 console.log("POST-ing of data failed");
                             });
             }else{
-                $scope.student.status = "not sent";
+                $scope.student.status = "submitted";
                 $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student)
                             .then(function successCallback(response) {
                                 //formData.imageUrls = $scope.StockListing.imageUrls;

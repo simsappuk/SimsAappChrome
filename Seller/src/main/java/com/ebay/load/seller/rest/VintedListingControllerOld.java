@@ -41,60 +41,7 @@ public class VintedListingControllerOld {
     ImageRepository imageRepository;
 
     VintedService vintedService;
-    @ResponseBody
-    @RequestMapping(value = "/vinted/getJsonData", method = RequestMethod.GET)
-    public void getJson(@RequestParam(value = "dat", defaultValue = "{}", required = false) String dat) throws IOException {
-        System.out.println("working.....:" + dat);
-        JSONObject json = null;
-        try {
-            json = new JSONObject(dat);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        // System.out.println("ok");
-        String k = "";
-        String itemid;
-        String itemClosingAction;
-        String accountId;
-        String accountName;
-        Double price;
-        try {
-            itemid = json.getString("id");
-            itemClosingAction = json.getString("item_closing_action");
-            accountName = json.getString("account_name");
-            price = json.getDouble("original_price_numeric");
-            k = vintedRepository.findExistingByItemId(itemid);
-            accountId = vintedRepository.findExistingAccountByAccountName(accountName);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        if (k.equals("0")) {
-            Vinted vin = new Vinted();
-            try {
-                vin.setItemId(json.getString("id"));
-                vin.setTitle(json.getString("title"));
-                vin.setUrl(json.getString("url"));
-                vin.setCreatedAt(json.getString("created_at"));
-                vin.setOriginalPriceNumeric(price);
-                vin.setItemClosingAction(json.getString("item_closing_action"));
-                //    vin. setModifiedDate (json.getString("ModifiedDate"));
-                vin.setAccountId(accountId);
-                vintedRepository.save(vin);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            Optional<Vinted> s = vintedRepository.findById(k);
-            Vinted v1 = s.get();
-            v1.setItemClosingAction(itemClosingAction);
-            v1.setOriginalPriceNumeric(price);
-            v1.setModifiedDate(new Date());
-            vintedRepository.save(v1);
-        }
-
-    }
 
     private static String getFileExtension(String fileName) {
         int lastDotIndex = fileName.lastIndexOf(".");
@@ -227,26 +174,6 @@ public class VintedListingControllerOld {
     public ResponseEntity<Vinted> postVintedListing2(@PathVariable("accountId") String accountId){
         return new ResponseEntity<Vinted>().withResults(new Vinted());
     }
-//    @RequestMapping(value = "/{accountId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, method = RequestMethod.POST)
-//    public ResponseEntity<Vinted> handleImageUpload(@PathVariable("accountId") String accountId, @RequestPart("vinted") Vinted vinted,@RequestPart("imageFiles") MultipartFile[] imageFiles) throws IOException {
-//        String path = "/dev-data/Projects/java/SimsAappChrome/Seller/src/main/resources/static";
-//        for (MultipartFile imageFile : imageFiles) {
-//            // Get the file data
-//            byte[] fileData = imageFile.getBytes();
-//            // Get the file name
-//            String fileName = imageFile.getOriginalFilename();
-//            // Get the file URL
-//            String fileUrl = "http://localhost:8080/vintedStock/71527462-excelstuff/" + fileName;
-//            // Perform operations with the file data and URL
-//            // For example, save the file to disk or store the URL in the database
-//        }
-//
-//        Vinted savedVinted = vintedRepository.save(vinted);
-//        String uploadDir = path+"/"+accountId+"/" + savedVinted.getId();
-//        return new ResponseEntity<Vinted>().withResults(new Vinted());
-//    }
-
-
     @RequestMapping(value = "/vintedStock/{accountId}",method = RequestMethod.GET)
     public ResponseEntity<List<Vinted>> postVintedListing1(@PathVariable("accountId") String accountId){
         String s = vintedRepository.findIdByAccountId(accountId);
@@ -263,47 +190,4 @@ public class VintedListingControllerOld {
 
     }
 
-    @RequestMapping(value = "/{id}/list/vinted", method = RequestMethod.GET)
-    public ResponseEntity<List<Vinted>> loadCurrent(@PathVariable("id") String id,
-                                                    @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-
-                                                    @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize) {
-
-        return new ResponseEntity<List<Vinted>>().withResults(vintedRepository.findAllActiveListing(id));
-    }
-
-    @RequestMapping(value = "/{id}/list/vintedSold", method = RequestMethod.GET)
-    public ResponseEntity<List<Vinted>> loadSold(@PathVariable("id") String id,
-                                                 @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-
-                                                 @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize) {
-
-        return new ResponseEntity<List<Vinted>>().withResults(vintedRepository.findAllSoldListing(id));
-    }
-
-    @RequestMapping(value = "/{id}/list/vintedUpdateDispatch", method = RequestMethod.GET)
-    public void getIds(@PathVariable("id") String id, @RequestParam(value = "data", defaultValue = "", required = false) String dat) throws IOException {
-        System.out.println("working.....:" + dat);
-        String[] s = dat.split(",");
-        for (int i = 0; i < s.length; i++) {
-            Optional<Vinted> s2 = vintedRepository.findById(s[i]);
-            if (s2.isPresent()) {
-                Vinted v1 = s2.get();
-                v1.setItemClosingAction("Dispatched");
-                vintedRepository.save(v1);
-
-            }
-        }
-    }
-
-
-    @RequestMapping(value = "/{id}/list/vintedDispatch", method = RequestMethod.GET)
-    public ResponseEntity<List<Vinted>> loadDispatch(@PathVariable("id") String id,
-                                                     @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-                                                     @RequestParam("startDate") Date startDate,
-                                                     @RequestParam("endDate") Date endDate,
-                                                     @RequestParam(value = "pageSize", defaultValue = "20", required = false) Integer pageSize) {
-        System.out.println(startDate);
-        return new ResponseEntity<List<Vinted>>().withResults(vintedRepository.findAllDispatchListing(id,startDate, endDate));
-    }
 }
