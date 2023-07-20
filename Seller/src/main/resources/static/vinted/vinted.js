@@ -331,10 +331,13 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                     }
                     if ($scope.myCategory.catalogs[$scope.selected].author_field_visibility != 0) {
                        $scope.authorValue = $scope.myCategory.catalogs[$scope.selected].title;
-                    }
+                    }unisex_catalog_id
                     if ($scope.myCategory.catalogs[$scope.selected].book_title_field_visibility != 0) {
                         $scope.bookTitle = $scope.myCategory.catalogs[$scope.selected].title;
                     }
+                    if ($scope.myCategory.catalogs[$scope.selected].unisex_catalog_id != 0) {
+                                            $scope.unisex_catalog_id = $scope.myCategory.catalogs[$scope.selected].title;
+                                        }
                     if ($scope.myCategory.catalogs[$scope.selected].brand_field_visibility == 1) {
                         $scope.brandValue = $scope.myCategory.catalogs[$scope.selected].title;
                     }
@@ -344,6 +347,9 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                     if ($scope.myCategory.catalogs[$scope.selected].isbn_field_visibility != null) {
                         $scope.isbnValue = $scope.myCategory.catalogs[$scope.selected].isbn_field_visibility;
                     }
+                    if ($scope.myCategory.catalogs[$scope.selected].url != null) {
+                                            $scope.tooltip = $scope.myCategory.catalogs[$scope.selected].url;
+                                        }
                     if ($scope.myCategory.catalogs[$scope.selected].material_field_visibility != 0) {
                         $scope.materialFieldValue = $scope.myCategory.catalogs[$scope.selected].material_group_id;
                     }
@@ -368,27 +374,14 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
                 }
             }
         }
-//        $scope.showStatus = function(a,b,c) {
-//                            if (confirm("WARNING:You are about to override stock with Active Listings.Please click ok to Continue"))
-//                                $http.get('api/Vinted/listings/database?accountId=' + $routeParams.id).then(function(response) {
-//                                    $scope.page.loading = true;
-//                                    noty({text: 'Please wait while updating data',layout: 'topRight',type: 'success',killer: true,timeout: 2000});
-//                                    if (response.data.errors)
-//                                        $scope.displayError(response.data.messages);
-//                                    else {
-//                                        //$scope.loadStocks();
-//                                        noty({text: 'Stock Updated',layout: 'topRight',type: 'success',killer: true,timeout: 2000});
-//                                        $scope.page.loading = false;
-//                                    }
-//                                });
-//                        }
+
         $scope.postListing = function(obj, accountId) {
             $scope.params = $routeParams;
             for (let i = 0; i < $scope.vintedDataList1.length; i++) {
                 $scope.vintedLastCategory = $scope.vintedDataList1[i];
                 $scope.vintedCategory = $scope.vintedCategory + "--" + $scope.vintedDataList1[i];
             }
-            $scope.student = {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.vintedCategory,"imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null,"status":"not sent"}
+            $scope.student = {"id": null,"itemId": obj.itemId,"url": obj.url,"category": $scope.vintedLastCategory,"tooltip": $scope.tooltip,"imageUrl": obj.imageUrl,"image": obj.image,"description": obj.description,"platform": obj.platform,"isbn": obj.isbn,"brand": obj.brand,"mpn": obj.mpn,"color": obj.color,"size": obj.size,"parcelSize": obj.parcelSize,"price": obj.buyItNowPriceValue,"quantity": obj.quantityAvailable,"title": obj.title,"ean": obj.ean,"conditionId": obj.conditionID,"sku": obj.sku,"rating": obj.rating,"measurements": obj.measurements,"ownerId": obj.ownerId,"accountId": accountId,"createdAt": null,"originalPriceNumeric": 0.0,"itemClosingAction": null,"modifiedDate": null,"status":"not sent"}
             if(obj.status===true){
                 //$scope.student.status = "not sent";
                 $http.post("/api/Vinted/post/" + $scope.params.id, $scope.student)
@@ -416,8 +409,16 @@ var controller1 = angular.module('myApp.vinted', ['ngRoute'])
         }
         $http.get("/vintedData/" + $scope.params.id + "/category")
             .then(function successCallback(response) {
+                $scope.endPointUrls=[];
                 var s = response.data.description;
                 $scope.myCategory = eval(s);
+//                for(let j=0;j<3000;j++){
+//                    if($scope.myCategory['catalogs'][j]!=null){
+//                        if($scope.myCategory['catalog_children_tree'][$scope.myCategory['catalogs'][j]['id']]==null)
+//                            $scope.endPointUrls.push($scope.myCategory['catalogs'][j]['url'])
+//                    }
+//                }
+//                console.log($scope.endPointUrls)
                 for (let i = 0; i < $scope.myCategory.catalog_children_tree[0].length; i++) {
                     $scope.tableVal.push($scope.myCategory.catalogs[$scope.myCategory.catalog_children_tree[0][i]]);
                 }
